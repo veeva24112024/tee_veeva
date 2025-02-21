@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จะเป็นแฟนกันไหม ♥</title>
+    <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
@@ -45,90 +45,6 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            padding: 80px 30px;
-            background: url('https://www.transparenttextures.com/patterns/rose.png'), rgba(255, 255, 255, 0.95);
-            background-size: cover;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(255, 75, 110, 0.4);
-            border: 3px solid #ff4b6e;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: linear-gradient(90deg, #ffffff, #ffffff, #fefbfc);
-            animation: shimmer 2s infinite linear;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 25px;
-            color: #ff4b6e;
-            animation: glowTitle 2s ease-in-out infinite;
-        }
-
-        .header p {
-            font-size: 1.3rem;
-            color: #ff4b6e;
-        }
-
-        @keyframes glowTitle {
-            0% { text-shadow: 0 0 15px rgba(255, 75, 110, 0.8), 0 0 25px rgba(255, 75, 110, 0.6); }
-            50% { text-shadow: 0 0 25px rgba(255, 75, 110, 1), 0 0 35px rgba(255, 75, 110, 0.8); }
-            100% { text-shadow: 0 0 15px rgba(255, 75, 110, 0.8), 0 0 25px rgba(255, 75, 110, 0.6); }
-        }
-
-        .header-stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .header-stars::before,
-        .header-stars::after {
-            content: '✨';
-            position: absolute;
-            font-size: 20px;
-            color: #fff;
-            animation: twinkle 2s infinite;
-        }
-
-        .header-stars::before {
-            top: 15%;
-            left: 20%;
-            animation-delay: 0.5s;
-        }
-
-        .header-stars::after {
-            top: 85%;
-            left: 80%;
-            animation-delay: 1s;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0; transform: scale(0.5); }
         }
 
         .moment-card {
@@ -219,9 +135,8 @@
             100% { background-position: 0 100%; }
         }
 
-        /* ลบกรอบตัวควบคุมเสียงออก */
         .music-player {
-            display: none; /* ซ่อนกรอบ UI */
+            display: none;
         }
 
         .final-question {
@@ -624,7 +539,6 @@
 
         @media (max-width: 768px) {
             .container { padding: 10px; }
-            .header h1 { font-size: 1.8rem; }
             .moment-card { padding: 15px; }
             .gallery { grid-template-columns: repeat(2, 1fr); }
         }
@@ -881,6 +795,12 @@
             animation: twinkle 1s infinite;
         }
 
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
         .memory-game {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -937,46 +857,13 @@
             color: white;
         }
 
-        .sweet-words-btn {
-            background: #ff4b6e;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin: 20px auto;
-            display: block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .sweet-words-btn:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 5px 15px rgba(255, 75, 110, 0.5);
-        }
-
-        .sweet-words-display {
-            text-align: center;
-            font-size: 1.5rem;
-            color: #ff4b6e;
-            margin-top: 10px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .sweet-words-display.show {
-            opacity: 1;
-        }
-
-        
-        
-        
         .love-calendar {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             text-align: center;
         }
+
         .calendar-day {
             background: #fff;
             padding: 10px;
@@ -984,11 +871,13 @@
             box-shadow: 0 3px 10px rgba(255, 75, 110, 0.2);
             transition: transform 0.3s ease;
         }
+
         .calendar-day:hover {
             transform: scale(1.1);
             background: #ff4b6e;
             color: #fff;
         }
+
         .firework {
             position: fixed;
             width: 10px;
@@ -997,19 +886,20 @@
             border-radius: 50%;
             animation: fireworkBurst 1s forwards;
         }
+
         @keyframes fireworkBurst {
             0% { transform: scale(0); opacity: 1; }
             50% { transform: scale(2); opacity: 0.8; }
             100% { transform: scale(0); opacity: 0; }
         }
 
-        /* CSS สำหรับรุ้งกินน้ำแห่งความรัก */
         .rainbow-container {
             position: relative;
             width: 100%;
             height: 100px;
             overflow: hidden;
         }
+
         .rainbow {
             position: absolute;
             top: 50%;
@@ -1022,11 +912,13 @@
             opacity: 0;
             transition: width 2s ease, opacity 0.5s ease;
         }
+
         .rainbow.visible {
             height: 80%;
             width: 80%;
             opacity: 1;
         }
+
         .rainbow-text {
             position: absolute;
             top: 50%;
@@ -1039,11 +931,11 @@
             transition: opacity 1s ease 1s;
             z-index: 1;
         }
+
         .rainbow.visible + .rainbow-text {
             opacity: 1;
         }
 
-        /* CSS สำหรับประตูสู่นิรันดร์ */
         .gate-container {
             position: relative;
             width: 300px;
@@ -1051,12 +943,14 @@
             perspective: 1000px;
             margin: 0 auto;
         }
+
         .gate {
             position: absolute;
             width: 100%;
             height: 100%;
             cursor: pointer;
         }
+
         .gate-door {
             position: absolute;
             width: 150px;
@@ -1064,20 +958,25 @@
             background: #ff4b6e;
             transition: transform 1.5s ease;
         }
+
         .left-door {
             left: 0;
             transform-origin: left;
         }
+
         .right-door {
             right: 0;
             transform-origin: right;
         }
+
         .gate.opened .left-door {
             transform: rotateY(-90deg);
         }
+
         .gate.opened .right-door {
             transform: rotateY(90deg);
         }
+
         .gate-light {
             position: absolute;
             top: 50%;
@@ -1089,11 +988,13 @@
             opacity: 0;
             transition: width 1s ease, height 1s ease, opacity 0.5s ease;
         }
+
         .gate.opened .gate-light {
             width: 500px;
             height: 500px;
             opacity: 1;
         }
+
         .gate-message {
             position: absolute;
             top: 50%;
@@ -1106,14 +1007,55 @@
             transition: opacity 0.5s ease 1s;
             z-index: 1;
         }
+
         .gate.opened .gate-message {
             opacity: 1;
+        }
+
+        /* CSS สำหรับดวงดาวแห่งความทรงจำ */
+        .starry-sky {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(180deg, #1a1a3d, #3b2f5d);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .starry-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            opacity: 0.7;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: twinkleStar 1.5s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes twinkleStar {
+            0% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.5; transform: scale(0.8); }
         }
     </style>
 </head>
 <body>
-    
-
+    <div class="container">
         <div class="time-counter" data-aos="fade-up">
             <h2>เวลาที่เรารู้จักกัน</h2>
             <div class="time-digits">
@@ -1153,13 +1095,6 @@
             <div class="memory-game" id="memoryGame"></div>
         </div>
 
-        <div class="moment-card" data-aos="fade-up">
-            <h2>คำหวานจากตี๋ถึงวีวา</h2>
-            <p>กดปุ่มเพื่อสุ่มคำหวาน!</p>
-            <button class="sweet-words-btn" onclick="showSweetWords()">สุ่มคำหวาน ♥</button>
-            <div class="sweet-words-display" id="sweetWords"></div>
-        </div>
-
         <div class="timeline">
             <div class="moment-card" data-aos="fade-right">
                 <img src="images/memory3.png" alt="โมเมนต์แรกที่เราเจอกัน">
@@ -1174,9 +1109,8 @@
             </div>
 
             <div class="moment-card" data-aos="fade-right">
-                <h2>ความรักที่ระเบิดออกมา</h2>
-                <p>กดปุ่มนี้เพื่อดูความรักของตี๋!</p>
-                <button class="heart-explosion-btn" onclick="explodeHearts()">ระเบิดหัวใจ ♥</button>
+                <h2>อยากรู้ไหมตี๋รักวีวาแค่ไหน</h2>
+                <button class="heart-explosion-btn" onclick="explodeHearts()">วีวาลองกดปุ่มนี้ดู ♥</button>
             </div>
 
             <div class="moment-card" data-aos="fade-right">
@@ -1215,8 +1149,6 @@
                 <div class="memory-light"></div>
             </div>
 
-            
-
             <div class="moment-card" data-aos="fade-up">
                 <h2>ปฏิทินความรักของเรา</h2>
                 <div class="love-calendar">
@@ -1226,63 +1158,69 @@
                 </div>
             </div>
 
-            <!-- เพิ่มรุ้งกินน้ำแห่งความรัก -->
             <div class="moment-card" data-aos="fade-right">
-                <h2>รุ้งกินน้ำแห่งความรัก</h2>
-                <p>คลิกเพื่อให้รุ้งกินน้ำแห่งรักของเราปรากฏ!</p>
+                <h2>อยากเห็นรุ้งกินน้ำไหม ?</h2>
+                <p>ลองกดดูครับ</p>
                 <div class="rainbow-container" onclick="showRainbow(this)">
                     <div class="rainbow"></div>
-                    <div class="rainbow-text">ขอบคุณที่ทำให้ชีวิตตี๋มีสีสันนะ</div>
+                    <div class="rainbow-text">ชีวิตมีสีสันขึ้นเยอะเลย ตั้งแต่รู้จักวีวา</div>
                 </div>
             </div>
 
-            <!-- เพิ่มประตูสู่นิรันดร์ -->
             <div class="moment-card" data-aos="fade-left">
-                <h2>ประตูสู่นิรันดร์</h2>
-                <p>คลิกเพื่อเปิดประตูแห่งรักนิรันดร์ของเรา!</p>
+                <h2>ตี๋มีสิ่งที่สำคัญมากจะบอกด้วย ♥</h2>
+                <p>วีวากดลองเปิดการ์ดดูครับ</p>
                 <div class="gate-container">
                     <div class="gate" onclick="openGate(this)">
                         <div class="gate-door left-door"></div>
                         <div class="gate-door right-door"></div>
                         <div class="gate-light"></div>
-                        <div class="gate-message">รักวีวานิรันดร์</div>
+                        <div class="gate-message">ขอบคุณที่เกิดมาให้ตี๋รักและเป็นความน่ารักสดใสให้โลกใบนี้นะ 💖✨</div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="final-question" data-aos="zoom-in">
-            <div class="question-frame">
-                <h2>เป็นแฟนกันนะ ♥</h2>
+            <!-- ดวงดาวแห่งความทรงจำ -->
+            <div class="moment-card" data-aos="fade-left">
+                <h2>ดวงดาวของเรา 🌟</h2>
+                <p>ลองลากเมาส์ไปบนท้องฟ้าดูสิ!</p>
+                <div class="starry-sky" onmousemove="createStar(event, this)" onmouseleave="stopStars(this)">
+                    <div class="starry-message">ทุกครั้งที่อยู่กับวีวาเหมือนได้อยู่ท่ามกลางดวงดาว ✨</div>
+                </div>
             </div>
-            <div class="love-ring"></div>
-            <div class="sparkles"></div>
-            <div class="love-bubble-container">
-                <div class="love-bubble"></div>
-                <div class="love-bubble"></div>
-                <div class="love-bubble"></div>
+
+            <div class="final-question" data-aos="zoom-in">
+                <div class="question-frame">
+                    <h2>เป็นแฟนกันนะ ♥</h2>
+                </div>
+                <div class="love-ring"></div>
+                <div class="sparkles"></div>
+                <div class="love-bubble-container">
+                    <div class="love-bubble"></div>
+                    <div class="love-bubble"></div>
+                    <div class="love-bubble"></div>
+                </div>
+                <div class="floating-hearts"></div>
+                <div class="choice-buttons">
+                    <button class="btn glowing-btn yes-btn" onclick="sayYes()">
+                        <span class="btn-text">ตกลง ♥</span>
+                        <div class="heart-particles"></div>
+                    </button>
+                    <button class="btn escape-btn no-btn" onclick="moveButton(this)" style="background: #999999;">
+                        <span class="btn-text">ไม่ตกลง</span>
+                        <div class="sad-particles"></div>
+                    </button>
+                </div>
+                <div class="love-message-container">
+                    <span class="love-message">อยู่เป็นความสุข</span>
+                    <span class="love-message">ตี๋รักวีวานะ</span>
+                    <span class="love-message">วีวาคือของขวัญที่ดีที่สุดของตี๋</span>
+                </div>
+                <div class="shooting-star-container"></div>
             </div>
-            <div class="floating-hearts"></div>
-            <div class="choice-buttons">
-                <button class="btn glowing-btn yes-btn" onclick="sayYes()">
-                    <span class="btn-text">ตกลง ♥</span>
-                    <div class="heart-particles"></div>
-                </button>
-                <button class="btn escape-btn no-btn" onclick="moveButton(this)" style="background: #999999;">
-                    <span class="btn-text">ไม่ตกลง</span>
-                    <div class="sad-particles"></div>
-                </button>
-            </div>
-            <div class="love-message-container">
-                <span class="love-message">รักวีวานะ</span>
-                <span class="love-message">อยู่ด้วยกันตลอดไป</span>
-                <span class="love-message">เป็นคนพิเศษของตี๋</span>
-            </div>
-            <div class="shooting-star-container"></div>
         </div>
     </div>
 
-    <!-- เสียงพื้นหลังแบบไม่มีกรอบ -->
     <audio id="bgMusic" autoplay loop>
         <source src="music/RakTae.mp3" type="audio/mpeg">
     </audio>
@@ -1296,10 +1234,8 @@
     <button id="backToTop" class="btn">↑ กลับขึ้นด้านบน</button>
 
     <script>
-        // Initialize AOS
         AOS.init({ duration: 1000, once: true });
 
-        // Timer variables
         let prevMonths = 0, prevDays = 0, prevHours = 0, prevMinutes = 0, prevSeconds = 0;
 
         function updateTimer() {
@@ -1337,7 +1273,6 @@
             }
         }
 
-        // Floating hearts
         function createHeart() {
             const heart = document.createElement('div');
             heart.className = 'floating-heart';
@@ -1349,7 +1284,6 @@
             setTimeout(() => heart.remove(), 5000);
         }
 
-        // Memory popup
         function showMemory(id) {
             const popup = document.getElementById('memoryPopup');
             const content = document.getElementById('memoryContent');
@@ -1367,10 +1301,8 @@
             document.getElementById('memoryPopup').style.display = 'none';
         }
 
-        // Yes button action
         function sayYes() {
             localStorage.setItem('saidYes', 'true');
-
             for (let i = 0; i < 150; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
@@ -1384,7 +1316,6 @@
                     setTimeout(() => heart.remove(), 5000);
                 }, i * 30);
             }
-
             for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     const firework = document.createElement('div');
@@ -1395,7 +1326,6 @@
                     setTimeout(() => firework.remove(), 1000);
                 }, i * 50);
             }
-
             for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
                     const star = document.createElement('div');
@@ -1406,20 +1336,17 @@
                     setTimeout(() => star.remove(), 2000);
                 }, i * 50);
             }
-
             setTimeout(() => {
                 window.location.href = 'congratulations.html';
             }, 2000);
         }
 
-        // No button action
         function moveButton(btn) {
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
             const y = Math.random() * (window.innerHeight - btn.offsetHeight);
             btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
-
             const sadFace = document.createElement('div');
             sadFace.innerHTML = '😢';
             sadFace.style.position = 'absolute';
@@ -1432,7 +1359,6 @@
             setTimeout(() => sadFace.remove(), 1000);
         }
 
-        // Explode hearts button
         function explodeHearts() {
             for (let i = 0; i < 50; i++) {
                 const heart = document.createElement('div');
@@ -1447,7 +1373,6 @@
             }
         }
 
-        // Puzzle
         function solvePuzzle(card) {
             const answer = card.querySelector('.puzzle-text');
             if (answer) {
@@ -1455,7 +1380,6 @@
             }
         }
 
-        // Memory light
         function toggleLight(card) {
             const light = card.querySelector('.memory-light');
             if (light) {
@@ -1463,7 +1387,6 @@
             }
         }
 
-        // Memory game
         const memoryGame = document.getElementById('memoryGame');
         const images = [
             'images/memory1.png',
@@ -1537,26 +1460,6 @@
             flippedCards = [];
         }
 
-        // Sweet words
-        const sweetWords = [
-            "วีวาคือโลกทั้งใบของตี๋เลยนะ ♥",
-            "ตี๋รักวีวามากนะครับ",
-            "อยู่กับวีวาแล้วมีความสุขที่สุด",
-            "วีวาคือของขวัญที่ดีที่สุดของตี๋",
-            "คิดถึงวีวาทุกวันเลยนะ ♥",
-            "ขอบคุณที่เกิดมาทำให้โลกสดใสขึ้น ♥"
-        ];
-
-        function showSweetWords() {
-            const display = document.getElementById('sweetWords');
-            if (display) {
-                display.textContent = sweetWords[Math.floor(Math.random() * sweetWords.length)];
-                display.classList.add('show');
-                setTimeout(() => display.classList.remove('show'), 3000);
-            }
-        }
-
-        // Rainbow of Love function
         function showRainbow(container) {
             const rainbow = container.querySelector('.rainbow');
             if (rainbow && !rainbow.classList.contains('visible')) {
@@ -1564,33 +1467,55 @@
             }
         }
 
-        // Gate to Eternity function
         function openGate(gate) {
             if (!gate.classList.contains('opened')) {
                 gate.classList.add('opened');
             }
         }
 
-        // Initialize on load
+        // ฟังก์ชันสำหรับดวงดาวแห่งความทรงจำ
+        let starInterval;
+
+        function createStar(event, sky) {
+            const rect = sky.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = `${x}px`;
+            star.style.top = `${y}px`;
+            sky.appendChild(star);
+
+            setTimeout(() => star.remove(), 1500);
+
+            if (!starInterval) {
+                starInterval = setInterval(() => {
+                    const autoStar = document.createElement('div');
+                    autoStar.className = 'star';
+                    autoStar.style.left = `${Math.random() * rect.width}px`;
+                    autoStar.style.top = `${Math.random() * rect.height}px`;
+                    sky.appendChild(autoStar);
+                    setTimeout(() => autoStar.remove(), 1500);
+                }, 200);
+            }
+        }
+
+        function stopStars(sky) {
+            clearInterval(starInterval);
+            starInterval = null;
+        }
+
         function initialize() {
-            // Start timer
             updateTimer();
             setInterval(updateTimer, 1000);
-
-            // Start floating hearts
             setInterval(createHeart, 500);
-
-            // Create memory game
             createMemoryGame();
-
-            // Play music automatically
             const bgMusic = document.getElementById('bgMusic');
             bgMusic.play().catch(error => {
                 console.log("Autoplay prevented:", error);
                 document.addEventListener('click', () => bgMusic.play(), { once: true });
             });
-
-            // Back to top button
             const backToTopBtn = document.getElementById('backToTop');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 300) {
@@ -1599,12 +1524,9 @@
                     backToTopBtn.style.display = 'none';
                 }
             });
-
             backToTopBtn.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
-
-            // Shooting stars in final question
             setInterval(() => {
                 const finalQuestion = document.querySelector('.final-question');
                 if (finalQuestion) {
@@ -1617,7 +1539,6 @@
             }, 2000);
         }
 
-        // Call initialize when the page loads
         window.addEventListener('load', initialize);
     </script>
 </body>
