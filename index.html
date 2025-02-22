@@ -1052,6 +1052,38 @@
             50% { opacity: 1; transform: scale(1.2); }
             100% { opacity: 0.5; transform: scale(0.8); }
         }
+
+        /* CSS สำหรับลูกโป่งหัวใจลอยขึ้น (ปรับให้มีหลายสี) */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 60px;
+            height: 80px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: floatBalloon 5s ease-in forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+        }
+
+        @keyframes floatBalloon {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(-50vh) rotate(10deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -1189,6 +1221,13 @@
                 </div>
             </div>
 
+            <!-- ลูกโป่งหัวใจลอยขึ้น (ปรับให้มีหลายสี) -->
+            <div class="moment-card" data-aos="fade-left">
+                <h2>ลูกโป่งหัวใจของเรา 🎈</h2>
+                <p>กดปุ่มเพื่อปล่อยลูกโป่ง!</p>
+                <button class="btn" onclick="releaseBalloons()">ปล่อยลูกโป่ง ♥</button>
+            </div>
+
             <div class="final-question" data-aos="zoom-in">
                 <div class="question-frame">
                     <h2>เป็นแฟนกันนะ ♥</h2>
@@ -1231,7 +1270,7 @@
         <button class="btn" onclick="closePopup()">ปิด</button>
     </div>
 
-    <button id="backToTop" class="btn">↑ กลับขึ้นด้านบน</button>
+   
 
     <script>
         AOS.init({ duration: 1000, once: true });
@@ -1505,6 +1544,42 @@
             clearInterval(starInterval);
             starInterval = null;
         }
+
+        // ฟังก์ชันสำหรับลูกโป่งหัวใจลอยขึ้น (ปรับให้มีหลายสี)
+        function releaseBalloons() {
+            const messages = ["รักวีวา", "วีวาน่ารัก", "ตี๋คิดถึงวีวา"];
+            const colors = [
+                '#ff4b6e', // ชมพู
+                '#ffeb3b', // เหลือง
+                '#42a5f5', // ฟ้า
+                '#66bb6a', // เขียว
+                '#ab47bc', // ม่วง
+                '#ff7043'  // ส้ม
+            ];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const balloon = document.createElement('div');
+                    balloon.className = 'balloon';
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    balloon.style.background = `radial-gradient(circle at 50% 30%, #ffffff, ${randomColor})`;
+                    balloon.style.setProperty('--string-color', randomColor); // กำหนดสีเชือกให้ตรงกับลูกโป่ง
+                    balloon.textContent = messages[Math.floor(Math.random() * messages.length)];
+                    balloon.style.left = `${Math.random() * 90 + 5}vw`;
+                    balloon.style.animationDuration = `${Math.random() * 2 + 4}s`;
+                    document.body.appendChild(balloon);
+                    setTimeout(() => balloon.remove(), 5000);
+                }, i * 200);
+            }
+        }
+
+        // เพิ่มตัวแปร CSS สำหรับสีเชือก
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .balloon::after {
+                    background: var(--string-color, #ff4b6e);
+                }
+            </style>
+        `);
 
         function initialize() {
             updateTimer();
