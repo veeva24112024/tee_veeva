@@ -745,7 +745,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
         }
 
         .moment-card:hover .heart-box::before {
@@ -876,21 +876,6 @@
             transform: scale(1.1);
             background: #ff4b6e;
             color: #fff;
-        }
-
-        .firework {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #ff4b6e;
-            border-radius: 50%;
-            animation: fireworkBurst 1s forwards;
-        }
-
-        @keyframes fireworkBurst {
-            0% { transform: scale(0); opacity: 1; }
-            50% { transform: scale(2); opacity: 0.8; }
-            100% { transform: scale(0); opacity: 0; }
         }
 
         .rainbow-container {
@@ -1025,7 +1010,7 @@
 
         .starry-message {
             position: absolute;
-            top: 50%;
+            top: 70%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fff;
@@ -1053,20 +1038,38 @@
             100% { opacity: 0.5; transform: scale(0.8); }
         }
 
-        /* CSS สำหรับลูกโป่งหัวใจลอยขึ้น (ปรับให้มีหลายสี) */
+        /* ดาวประกอบตัวอักษร V และ E */
+        .veeva-star {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 75, 110, 0.8);
+            animation: glowStar 2s infinite ease-in-out;
+        }
+
+        @keyframes glowStar {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* CSS สำหรับลูกโป่งหัวใจลอยขึ้น */
         .balloon {
             position: absolute;
             bottom: -100px;
             width: 60px;
             height: 80px;
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: floatBalloon 5s ease-in forwards;
+            animation: floatBalloon 6s ease-in forwards;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 0.9rem;
             text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
         }
 
         .balloon::after {
@@ -1081,8 +1084,8 @@
 
         @keyframes floatBalloon {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            50% { transform: translateY(-50vh) rotate(10deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-100vh) rotate(10deg); opacity: 1; }
+            100% { transform: translateY(-180vh) rotate(0deg); opacity: 0; }
         }
     </style>
 </head>
@@ -1212,19 +1215,18 @@
                 </div>
             </div>
 
-            <!-- ดวงดาวแห่งความทรงจำ -->
+            <!-- ดวงดาวแห่งความทรงจำ (แสดง V E ชัดเจนและแยกกัน) -->
             <div class="moment-card" data-aos="fade-left">
-                <h2>ดวงดาวของเรา 🌟</h2>
-                <p>ลองลากเมาส์ไปบนท้องฟ้าดูสิ!</p>
-                <div class="starry-sky" onmousemove="createStar(event, this)" onmouseleave="stopStars(this)">
-                    <div class="starry-message">ทุกครั้งที่อยู่กับวีวาเหมือนได้อยู่ท่ามกลางดวงดาว ✨</div>
+                <h2>ดวงดาวของตี๋ 🌟</h2>
+                <div class="starry-sky" id="starrySky" onmousemove="createStar(event, this)" onmouseleave="stopStars(this)">
+                    <div class="starry-message">วีวาเหมือนดวงดาวที่ส่องแสง อยู่เคียงข้างเสมอแม้ในคืนที่มืดมิด ✨</div>
                 </div>
             </div>
 
-            <!-- ลูกโป่งหัวใจลอยขึ้น (ปรับให้มีหลายสี) -->
+            <!-- ลูกโป่งหัวใจของเรา -->
             <div class="moment-card" data-aos="fade-left">
                 <h2>ลูกโป่งหัวใจของเรา 🎈</h2>
-                <p>กดปุ่มเพื่อปล่อยลูกโป่ง!</p>
+                <p>กดปุ่มเพื่อปล่อยลูกโป่งเต็มจอ!</p>
                 <button class="btn" onclick="releaseBalloons()">ปล่อยลูกโป่ง ♥</button>
             </div>
 
@@ -1269,8 +1271,6 @@
         <p id="memoryContent"></p>
         <button class="btn" onclick="closePopup()">ปิด</button>
     </div>
-
-   
 
     <script>
         AOS.init({ duration: 1000, once: true });
@@ -1545,30 +1545,25 @@
             starInterval = null;
         }
 
-        // ฟังก์ชันสำหรับลูกโป่งหัวใจลอยขึ้น (ปรับให้มีหลายสี)
+        
+
+        // ฟังก์ชันสำหรับลูกโป่งหัวใจลอยขึ้น
         function releaseBalloons() {
             const messages = ["รักวีวา", "วีวาน่ารัก", "ตี๋คิดถึงวีวา"];
-            const colors = [
-                '#ff4b6e', // ชมพู
-                '#ffeb3b', // เหลือง
-                '#42a5f5', // ฟ้า
-                '#66bb6a', // เขียว
-                '#ab47bc', // ม่วง
-                '#ff7043'  // ส้ม
-            ];
-            for (let i = 0; i < 15; i++) {
+            const colors = ['#ff4b6e', '#ffeb3b', '#42a5f5', '#66bb6a', '#ab47bc', '#ff7043'];
+            for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     const balloon = document.createElement('div');
                     balloon.className = 'balloon';
                     const randomColor = colors[Math.floor(Math.random() * colors.length)];
                     balloon.style.background = `radial-gradient(circle at 50% 30%, #ffffff, ${randomColor})`;
-                    balloon.style.setProperty('--string-color', randomColor); // กำหนดสีเชือกให้ตรงกับลูกโป่ง
+                    balloon.style.setProperty('--string-color', randomColor);
                     balloon.textContent = messages[Math.floor(Math.random() * messages.length)];
-                    balloon.style.left = `${Math.random() * 90 + 5}vw`;
+                    balloon.style.left = `${Math.random() * 100}vw`;
                     balloon.style.animationDuration = `${Math.random() * 2 + 4}s`;
                     document.body.appendChild(balloon);
-                    setTimeout(() => balloon.remove(), 5000);
-                }, i * 200);
+                    setTimeout(() => balloon.remove(), 6000);
+                }, i * 100);
             }
         }
 
