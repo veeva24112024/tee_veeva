@@ -18,9 +18,32 @@
             position: relative;
         }
 
+        /* 1. รูปภาพหัวใจใหญ่เป็นฉากหลัง */
+        body::before {
+            content: '';
+            position: absolute;
+            width: clamp(200px, 50vw, 400px);
+            height: clamp(200px, 50vw, 400px);
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.3), transparent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            z-index: 1;
+        }
+
+        /* 2. แสงพื้นหลังแบบนุ่ม */
+        body::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+            z-index: 0;
+        }
+
         .slide {
             position: absolute;
-            font-size: clamp(3.5em, 10vw, 5em); /* ปรับจาก 2.5em, 7vw, 5em เป็น 3.5em, 10vw, 5em */
+            font-size: clamp(3.5em, 10vw, 5em);
             color: #FFFFFF;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px #FF9999;
             opacity: 0;
@@ -31,7 +54,7 @@
             box-sizing: border-box;
             width: 90%;
         }
-        /* 1. ข้อความโผล่แบบนิ่ง */
+        /* 3. ข้อความโผล่แบบนิ่ง */
         .active {
             opacity: 1;
             animation: fadeInStatic 2s ease-in-out;
@@ -43,7 +66,7 @@
         .active:not(#slide7) {
             animation: fadeInStatic 2s ease-in-out, glowPulse 3s infinite ease;
         }
-        /* 2. แสงเงานุ่ม ๆ */
+        /* 4. แสงเงานุ่ม ๆ */
         @keyframes glowPulse {
             0% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px #FF9999; }
             50% { text-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 40px #FF9999; }
@@ -55,7 +78,7 @@
             animation: fadeInStatic 2s ease-in-out;
         }
         .button {
-            font-size: clamp(1em, 4vw, 1.25em); /* ปรับจาก 0.75em, 3vw, 1.25em เป็น 1em, 4vw, 1.25em */
+            font-size: clamp(1em, 4vw, 1.25em);
             padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
             background: #FF9999;
             border: none;
@@ -68,31 +91,36 @@
             display: inline-block;
             z-index: 20;
         }
-        /* 3. ปุ่มลอยขึ้นเล็กน้อยเมื่อ Hover */
+        /* 5. ปุ่มลอยขึ้นเล็กน้อยเมื่อ Hover */
         .button:hover {
             transform: scale(1.05) translateY(-5px);
             box-shadow: 0 0 30px rgba(255, 153, 153, 0.8);
         }
 
-        /* 4. หัวใจลอยช้า ๆ */
+        /* 6. หัวใจลอยช้า ๆ (สีพาสเทลหลากสี) */
         .heart {
             position: absolute;
             width: clamp(10px, 2vw, 20px);
             height: clamp(10px, 2vw, 20px);
-            background: #FF9999;
             transform: rotate(45deg);
             animation: floatSoft 6s ease-in-out infinite;
             opacity: 0.7;
+            z-index: 2;
         }
+        .heart.color1 { background: #FF9999; }
+        .heart.color2 { background: #FFB6C1; }
+        .heart.color3 { background: #FFD1DC; }
         .heart:before, .heart:after {
             content: '';
             position: absolute;
             width: clamp(10px, 2vw, 20px);
             height: clamp(10px, 2vw, 20px);
-            background: #FF9999;
             border-radius: 50%;
             opacity: 0.7;
         }
+        .heart.color1:before, .heart.color1:after { background: #FF9999; }
+        .heart.color2:before, .heart.color2:after { background: #FFB6C1; }
+        .heart.color3:before, .heart.color3:after { background: #FFD1DC; }
         .heart:before { top: -50%; left: 0; }
         .heart:after { left: -50%; top: 0; }
         @keyframes floatSoft {
@@ -101,7 +129,7 @@
             100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
         }
 
-        /* 5. อนุภาคนุ่มนวล */
+        /* 7. อนุภาคนุ่มนวล */
         .particle {
             position: absolute;
             width: clamp(3px, 0.5vw, 5px);
@@ -110,6 +138,7 @@
             border-radius: 50%;
             animation: floatParticle 5s ease-in-out infinite;
             opacity: 0.5;
+            z-index: 2;
         }
         @keyframes floatParticle {
             0% { transform: translateY(100vh); opacity: 0; }
@@ -117,22 +146,25 @@
             100% { transform: translateY(-100vh); opacity: 0; }
         }
 
-        /* 6. แสงระยิบระยับพื้นหลัง */
+        /* 8. แสงระยิบระยับพื้นหลัง (ดาวกระจายหลากสี) */
         .sparkle {
             position: absolute;
             width: clamp(2px, 0.3vw, 3px);
             height: clamp(2px, 0.3vw, 3px);
-            background: #FFFFFF;
             border-radius: 50%;
             animation: sparkleSoft 4s infinite ease;
+            z-index: 2;
         }
+        .sparkle.color1 { background: #FFFFFF; }
+        .sparkle.color2 { background: #FFCCCC; }
+        .sparkle.color3 { background: #FFE1E9; }
         @keyframes sparkleSoft {
             0% { opacity: 0; transform: scale(0); }
             50% { opacity: 0.6; transform: scale(1.5); }
             100% { opacity: 0; transform: scale(0); }
         }
 
-        /* 7. แสงนุ่ม ๆ รอบข้อความ */
+        /* 9. แสงนุ่ม ๆ รอบข้อความ */
         .glow-dot {
             position: absolute;
             width: clamp(5px, 1vw, 10px);
@@ -140,6 +172,7 @@
             background: rgba(255, 153, 153, 0.5);
             border-radius: 50%;
             animation: glowDot 6s infinite ease;
+            z-index: 2;
         }
         @keyframes glowDot {
             0% { opacity: 0; transform: scale(0); }
@@ -147,23 +180,28 @@
             100% { opacity: 0; transform: scale(0); }
         }
 
-        /* 8. หัวใจเล็ก ๆ ลอยข้างข้อความ */
+        /* 10. หัวใจเล็ก ๆ ลอยข้างข้อความ (สีพาสเทลหลากสี) */
         .mini-heart {
             position: absolute;
             width: clamp(5px, 1vw, 10px);
             height: clamp(5px, 1vw, 10px);
-            background: #FFB6C1;
             transform: rotate(45deg);
             animation: miniHeartFloat 4s infinite ease-in-out;
+            z-index: 2;
         }
+        .mini-heart.color1 { background: #FFB6C1; }
+        .mini-heart.color2 { background: #FFD1DC; }
+        .mini-heart.color3 { background: #FF9999; }
         .mini-heart:before, .mini-heart:after {
             content: '';
             position: absolute;
             width: clamp(5px, 1vw, 10px);
             height: clamp(5px, 1vw, 10px);
-            background: #FFB6C1;
             border-radius: 50%;
         }
+        .mini-heart.color1:before, .mini-heart.color1:after { background: #FFB6C1; }
+        .mini-heart.color2:before, .mini-heart.color2:after { background: #FFD1DC; }
+        .mini-heart.color3:before, .mini-heart.color3:after { background: #FF9999; }
         .mini-heart:before { top: -50%; left: 0; }
         .mini-heart:after { left: -50%; top: 0; }
         @keyframes miniHeartFloat {
@@ -172,51 +210,61 @@
             100% { transform: translateY(-20px) rotate(45deg); opacity: 0; }
         }
 
-        /* 9. ฟองอากาศลอยขึ้น */
+        /* 11. ฟองอากาศลอยขึ้น (หลากสี) */
         .bubble {
             position: absolute;
             width: clamp(8px, 1.5vw, 15px);
             height: clamp(8px, 1.5vw, 15px);
-            background: rgba(255, 182, 193, 0.3);
             border-radius: 50%;
             animation: bubbleRise 7s infinite ease-in-out;
+            opacity: 0.6;
+            z-index: 2;
         }
+        .bubble.color1 { background: rgba(255, 182, 193, 0.3); }
+        .bubble.color2 { background: rgba(255, 204, 204, 0.3); }
+        .bubble.color3 { background: rgba(255, 153, 153, 0.3); }
         @keyframes bubbleRise {
             0% { transform: translateY(100vh); opacity: 0.6; }
             100% { transform: translateY(-100vh); opacity: 0; }
         }
 
-        /* 10. อนุภาคลอยวน */
+        /* 12. อนุภาคลอยวน (หลากสี) */
         .orbit-particle {
             position: absolute;
             width: clamp(2px, 0.4vw, 4px);
             height: clamp(2px, 0.4vw, 4px);
-            background: #FFCCCC;
             border-radius: 50%;
             animation: orbit 6s infinite ease-in-out;
+            z-index: 2;
         }
+        .orbit-particle.color1 { background: #FFCCCC; }
+        .orbit-particle.color2 { background: #FFB6C1; }
+        .orbit-particle.color3 { background: #FFD1DC; }
         @keyframes orbit {
             0% { transform: rotate(0deg) translateX(clamp(20px, 5vw, 50px)); opacity: 0.5; }
             50% { opacity: 0.8; }
             100% { transform: rotate(360deg) translateX(clamp(20px, 5vw, 50px)); opacity: 0.5; }
         }
 
-        /* 11. ดวงดาวเล็ก ๆ ลอยวน */
+        /* 13. ดวงดาวเล็ก ๆ ลอยวน (หลากสี) */
         .star {
             position: absolute;
             width: clamp(3px, 0.6vw, 6px);
             height: clamp(3px, 0.6vw, 6px);
-            background: #FFFFFF;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             animation: starFloat 5s infinite ease-in-out;
+            z-index: 2;
         }
+        .star.color1 { background: #FFFFFF; }
+        .star.color2 { background: #FFCCCC; }
+        .star.color3 { background: #FFE1E9; }
         @keyframes starFloat {
             0% { transform: translateY(20px); opacity: 0.6; }
             50% { opacity: 1; }
             100% { transform: translateY(-20px); opacity: 0.6; }
         }
 
-        /* 12. แสงลอยจากข้อความ */
+        /* 14. แสงลอยจากข้อความ */
         .text-light {
             position: absolute;
             width: clamp(4px, 0.8vw, 8px);
@@ -224,6 +272,7 @@
             background: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
             animation: textLight 4s infinite ease-in-out;
+            z-index: 2;
         }
         @keyframes textLight {
             0% { transform: translateY(0); opacity: 0; }
@@ -231,14 +280,111 @@
             100% { transform: translateY(-50px); opacity: 0; }
         }
 
+        /* 15. ดาวตก (Falling Stars) */
+        .falling-star {
+            position: absolute;
+            width: 2px;
+            height: clamp(10px, 2vw, 20px);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
+            animation: fall 3s infinite linear;
+            z-index: 3;
+        }
+        .falling-star.color1 { background: linear-gradient(to bottom, #FF9999, transparent); }
+        .falling-star.color2 { background: linear-gradient(to bottom, #FFB6C1, transparent); }
+        .falling-star.color3 { background: linear-gradient(to bottom, #FFD1DC, transparent); }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) translateX(0); opacity: 1; }
+            100% { transform: translateY(100vh) translateX(clamp(-50px, -10vw, -100px)); opacity: 0; }
+        }
+
+        /* 16. เมฆสีชมพูอ่อน */
+        .cloud {
+            position: absolute;
+            width: clamp(50px, 15vw, 150px);
+            height: clamp(20px, 6vw, 60px);
+            background: rgba(255, 182, 193, 0.2);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 182, 193, 0.2);
+            border-radius: 50%;
+        }
+        .cloud::before {
+            width: clamp(30px, 10vw, 100px);
+            height: clamp(15px, 4vw, 40px);
+            top: -50%;
+            left: 20%;
+        }
+        .cloud::after {
+            width: clamp(20px, 8vw, 80px);
+            height: clamp(10px, 3vw, 30px);
+            top: -30%;
+            left: 60%;
+        }
+
+        /* 17. ดอกไม้ร่วง (Falling Petals) */
+        .petal {
+            position: absolute;
+            width: clamp(5px, 1vw, 10px);
+            height: clamp(5px, 1vw, 10px);
+            background: #FF9999;
+            border-radius: 50% 0 50% 50%;
+            animation: petalFall 6s infinite linear;
+            z-index: 3;
+        }
+        .petal.color1 { background: #FF9999; }
+        .petal.color2 { background: #FFB6C1; }
+        .petal.color3 { background: #FFD1DC; }
+        @keyframes petalFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* 18. แสงระยิบระยับใหญ่ (Large Glitter) */
+        .large-glitter {
+            position: absolute;
+            width: clamp(10px, 2vw, 20px);
+            height: clamp(10px, 2vw, 20px);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+            border-radius: 50%;
+            animation: glitterShine 4s infinite ease;
+            z-index: 2;
+        }
+        @keyframes glitterShine {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.5); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
+        /* 19. ลูกโป่งลอย (Floating Balloons) */
+        .balloon {
+            position: absolute;
+            width: clamp(15px, 3vw, 30px);
+            height: clamp(20px, 4vw, 40px);
+            border-radius: 50% 50% 40% 40%;
+            animation: balloonFloat 7s infinite ease-in-out;
+            z-index: 3;
+        }
+        .balloon.color1 { background: #FF9999; }
+        .balloon.color2 { background: #FFB6C1; }
+        .balloon.color3 { background: #FFD1DC; }
+        @keyframes balloonFloat {
+            0% { transform: translateY(100vh); opacity: 0.8; }
+            50% { transform: translateY(50vh) translateX(clamp(-10px, -2vw, -20px)); opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(clamp(10px, 2vw, 20px)); opacity: 0; }
+        }
+
         /* Media Queries สำหรับจอเล็ก */
         @media (max-width: 600px) {
             .slide {
-                font-size: clamp(2.5em, 9vw, 4em); /* ปรับให้ใหญ่ขึ้นในจอเล็ก */
+                font-size: clamp(2.5em, 9vw, 4em);
                 width: 95%;
             }
             .button {
-                font-size: clamp(0.8em, 3.5vw, 1.1em); /* ปรับให้ใหญ่ขึ้นในจอเล็ก */
+                font-size: clamp(0.8em, 3.5vw, 1.1em);
                 padding: clamp(8px, 1.5vw, 12px) clamp(15px, 3vw, 25px);
             }
         }
@@ -259,44 +405,78 @@
     <div class="slide" id="slide6">เธอคือความฝันที่ฉันไม่เคยกล้าฝันมาก่อน</div>
     <div class="slide" id="slide7"><a href="Index1.html" class="button" id="nextButton">ไปต่อกันไหม?</a></div>
 
-    <!-- 4. หัวใจลอยช้า ๆ -->
-    <div class="heart" style="left: 20%; animation-delay: 0s;"></div>
-    <div class="heart" style="left: 50%; animation-delay: 2s;"></div>
-    <div class="heart" style="left: 80%; animation-delay: 4s;"></div>
+    <!-- 6. หัวใจลอยช้า ๆ (หลากสี) -->
+    <div class="heart color1" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="heart color2" style="left: 50%; animation-delay: 2s;"></div>
+    <div class="heart color3" style="left: 80%; animation-delay: 4s;"></div>
 
-    <!-- 5. อนุภาคนุ่มนวล -->
+    <!-- 7. อนุภาคนุ่มนวล -->
     <div class="particle" style="left: 30%; animation-delay: 0s;"></div>
     <div class="particle" style="left: 60%; animation-delay: 1s;"></div>
     <div class="particle" style="left: 90%; animation-delay: 2s;"></div>
 
-    <!-- 6. แสงระยิบระยับพื้นหลัง -->
-    <div class="sparkle" style="top: 20%; left: 25%; animation-delay: 0s;"></div>
-    <div class="sparkle" style="top: 40%; left: 75%; animation-delay: 1s;"></div>
-    <div class="sparkle" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
+    <!-- 8. แสงระยิบระยับพื้นหลัง (หลากสี) -->
+    <div class="sparkle color1" style="top: 20%; left: 25%; animation-delay: 0s;"></div>
+    <div class="sparkle color2" style="top: 40%; left: 75%; animation-delay: 1s;"></div>
+    <div class="sparkle color3" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
+    <div class="sparkle color1" style="top: 10%; left: 40%; animation-delay: 3s;"></div>
+    <div class="sparkle color2" style="top: 70%; left: 60%; animation-delay: 0.5s;"></div>
 
-    <!-- 7. แสงนุ่ม ๆ รอบข้อความ -->
+    <!-- 9. แสงนุ่ม ๆ รอบข้อความ -->
     <div class="glow-dot" style="top: 30%; left: 20%; animation-delay: 0s;"></div>
     <div class="glow-dot" style="top: 50%; left: 80%; animation-delay: 1s;"></div>
+    <div class="glow-dot" style="top: 80%; left: 30%; animation-delay: 2s;"></div>
 
-    <!-- 8. หัวใจเล็ก ๆ ลอยข้างข้อความ -->
-    <div class="mini-heart" style="top: 45%; left: 30%; animation-delay: 0s;"></div>
-    <div class="mini-heart" style="top: 55%; left: 70%; animation-delay: 2s;"></div>
+    <!-- 10. หัวใจเล็ก ๆ ลอยข้างข้อความ (หลากสี) -->
+    <div class="mini-heart color1" style="top: 45%; left: 30%; animation-delay: 0s;"></div>
+    <div class="mini-heart color2" style="top: 55%; left: 70%; animation-delay: 2s;"></div>
+    <div class="mini-heart color3" style="top: 35%; left: 50%; animation-delay: 1s;"></div>
 
-    <!-- 9. ฟองอากาศลอยขึ้น -->
-    <div class="bubble" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="bubble" style="left: 85%; animation-delay: 3s;"></div>
+    <!-- 11. ฟองอากาศลอยขึ้น (หลากสี) -->
+    <div class="bubble color1" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="bubble color2" style="left: 85%; animation-delay: 3s;"></div>
+    <div class="bubble color3" style="left: 40%; animation-delay: 1.5s;"></div>
+    <div class="bubble color1" style="left: 60%; animation-delay: 2.5s;"></div>
 
-    <!-- 10. อนุภาคลอยวน -->
-    <div class="orbit-particle" style="top: 20%; left: 40%; animation-delay: 0s;"></div>
-    <div class="orbit-particle" style="top: 70%; left: 60%; animation-delay: 2s;"></div>
+    <!-- 12. อนุภาคลอยวน (หลากสี) -->
+    <div class="orbit-particle color1" style="top: 20%; left: 40%; animation-delay: 0s;"></div>
+    <div class="orbit-particle color2" style="top: 70%; left: 60%; animation-delay: 2s;"></div>
+    <div class="orbit-particle color3" style="top: 50%; left: 20%; animation-delay: 1s;"></div>
 
-    <!-- 11. ดวงดาวเล็ก ๆ ลอยวน -->
-    <div class="star" style="top: 25%; left: 35%; animation-delay: 0s;"></div>
-    <div class="star" style="top: 65%; left: 65%; animation-delay: 2s;"></div>
+    <!-- 13. ดวงดาวเล็ก ๆ ลอยวน (หลากสี) -->
+    <div class="star color1" style="top: 25%; left: 35%; animation-delay: 0s;"></div>
+    <div class="star color2" style="top: 65%; left: 65%; animation-delay: 2s;"></div>
+    <div class="star color3" style="top: 15%; left: 80%; animation-delay: 1s;"></div>
 
-    <!-- 12. แสงลอยจากข้อความ -->
+    <!-- 14. แสงลอยจากข้อความ -->
     <div class="text-light" style="top: 50%; left: 45%; animation-delay: 0s;"></div>
     <div class="text-light" style="top: 50%; left: 55%; animation-delay: 2s;"></div>
+    <div class="text-light" style="top: 60%; left: 50%; animation-delay: 3s;"></div>
+
+    <!-- 15. ดาวตก (Falling Stars) -->
+    <div class="falling-star color1" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="falling-star color2" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="falling-star color3" style="left: 70%; animation-delay: 2s;"></div>
+
+    <!-- 16. เมฆสีชมพูอ่อน -->
+    <div class="cloud" style="top: 20%; left: 10%;"></div>
+    <div class="cloud" style="top: 80%; left: 70%;"></div>
+    <div class="cloud" style="top: 30%; left: 80%;"></div>
+
+    <!-- 17. ดอกไม้ร่วง (Falling Petals) -->
+    <div class="petal color1" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="petal color2" style="left: 50%; animation-delay: 1.5s;"></div>
+    <div class="petal color3" style="left: 80%; animation-delay: 3s;"></div>
+
+    <!-- 18. แสงระยิบระยับใหญ่ (Large Glitter) -->
+    <div class="large-glitter" style="top: 25%; left: 30%; animation-delay: 0s;"></div>
+    <div class="large-glitter" style="top: 65%; left: 70%; animation-delay: 2s;"></div>
+    <div class="large-glitter" style="top: 15%; left: 50%; animation-delay: 1s;"></div>
+
+    <!-- 19. ลูกโป่งลอย (Floating Balloons) -->
+    <div class="balloon color1" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="balloon color2" style="left: 40%; animation-delay: 2s;"></div>
+    <div class="balloon color3" style="left: 70%; animation-delay: 1s;"></div>
 
     <script>
         const slides = document.querySelectorAll('.slide');
