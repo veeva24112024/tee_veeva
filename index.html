@@ -59,7 +59,7 @@
 
         .slide {
             position: absolute;
-            font-size: 3em; /* ลดจาก 4em เป็น 3em */
+            font-size: 3em;
             color: #FFFFFF;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px #FF9999;
             opacity: 0;
@@ -67,17 +67,17 @@
             transition: opacity 1.5s ease-in-out;
             z-index: 10;
         }
-        /* 3. ข้อความลอยขึ้นนุ่มนวล */
+        /* 3. ข้อความโผล่แบบนิ่ง ไม่ขยับ */
         .active {
             opacity: 1;
-            animation: fadeInSoft 2s ease-in-out;
+            animation: fadeInStatic 2s ease-in-out;
         }
-        @keyframes fadeInSoft {
-            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes fadeInStatic {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
         .active:not(#slide7) {
-            animation: fadeInSoft 2s ease-in-out, glowPulse 3s infinite ease;
+            animation: fadeInStatic 2s ease-in-out, glowPulse 3s infinite ease;
         }
         /* 4. แสงเงานุ่ม ๆ */
         @keyframes glowPulse {
@@ -88,14 +88,14 @@
 
         /* ปุ่มนุ่มนวล */
         #slide7.active .button {
-            animation: slideInSoft 2s ease-in-out;
+            animation: fadeInStatic 2s ease-in-out; /* ปรับให้ปุ่มโผล่แบบนิ่งด้วย */
         }
-        @keyframes slideInSoft {
-            0% { opacity: 0; transform: translateX(50px); }
-            100% { opacity: 1; transform: translateX(0); }
+        @keyframes fadeInStatic {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
         .button {
-            font-size: 0.75em; /* ลดจาก 1em เป็น 0.75em */
+            font-size: 0.75em;
             padding: 15px 30px;
             background: #FF9999;
             border: none;
