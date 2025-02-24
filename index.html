@@ -7,8 +7,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(45deg, #FFC1CC, #FF9999, #F8BBD0, #F8E1E9);
-            background-size: 200% 200%;
+            background: linear-gradient(45deg, #FFC1CC, #F8E1E9); /* ลบการเปลี่ยนสี */
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -16,45 +15,6 @@
             font-family: 'Dancing Script', cursive;
             overflow: hidden;
             position: relative;
-            animation: gradientShift 20s ease infinite;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
-        }
-
-        /* 1. คลื่นพื้นหลังนุ่มนวล */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 182, 193, 0.1), transparent);
-            animation: wave 15s infinite ease-in-out;
-        }
-        @keyframes wave {
-            0% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.1); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 0.3; }
-        }
-
-        /* 2. หมอกสีชมพูนุ่ม ๆ */
-        body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(255, 182, 193, 0.2), transparent);
-            animation: mist 12s infinite ease-in-out;
-        }
-        @keyframes mist {
-            0% { transform: translateY(50%); opacity: 0.4; }
-            100% { transform: translateY(-50%); opacity: 0.4; }
         }
 
         .slide {
@@ -67,7 +27,7 @@
             transition: opacity 1.5s ease-in-out;
             z-index: 10;
         }
-        /* 3. ข้อความโผล่แบบนิ่ง ไม่ขยับ */
+        /* 1. ข้อความโผล่แบบนิ่ง */
         .active {
             opacity: 1;
             animation: fadeInStatic 2s ease-in-out;
@@ -79,7 +39,7 @@
         .active:not(#slide7) {
             animation: fadeInStatic 2s ease-in-out, glowPulse 3s infinite ease;
         }
-        /* 4. แสงเงานุ่ม ๆ */
+        /* 2. แสงเงานุ่ม ๆ */
         @keyframes glowPulse {
             0% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px #FF9999; }
             50% { text-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 40px #FF9999; }
@@ -88,11 +48,7 @@
 
         /* ปุ่มนุ่มนวล */
         #slide7.active .button {
-            animation: fadeInStatic 2s ease-in-out; /* ปรับให้ปุ่มโผล่แบบนิ่งด้วย */
-        }
-        @keyframes fadeInStatic {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+            animation: fadeInStatic 2s ease-in-out;
         }
         .button {
             font-size: 0.75em;
@@ -108,13 +64,13 @@
             display: inline-block;
             z-index: 20;
         }
-        /* 5. ปุ่มลอยขึ้นเล็กน้อยเมื่อ Hover */
+        /* 3. ปุ่มลอยขึ้นเล็กน้อยเมื่อ Hover */
         .button:hover {
             transform: scale(1.05) translateY(-5px);
             box-shadow: 0 0 30px rgba(255, 153, 153, 0.8);
         }
 
-        /* 6. หัวใจลอยช้า ๆ */
+        /* 4. หัวใจลอยช้า ๆ */
         .heart {
             position: absolute;
             width: 20px;
@@ -141,7 +97,7 @@
             100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
         }
 
-        /* 7. อนุภาคนุ่มนวล */
+        /* 5. อนุภาคนุ่มนวล */
         .particle {
             position: absolute;
             width: 5px;
@@ -157,7 +113,7 @@
             100% { transform: translateY(-50vh); opacity: 0; }
         }
 
-        /* 8. แสงระยิบระยับพื้นหลัง */
+        /* 6. แสงระยิบระยับพื้นหลัง */
         .sparkle {
             position: absolute;
             width: 3px;
@@ -172,7 +128,7 @@
             100% { opacity: 0; transform: scale(0); }
         }
 
-        /* 9. แสงนุ่ม ๆ รอบข้อความ */
+        /* 7. แสงนุ่ม ๆ รอบข้อความ */
         .glow-dot {
             position: absolute;
             width: 10px;
@@ -187,7 +143,7 @@
             100% { opacity: 0; transform: scale(0); }
         }
 
-        /* 10. หัวใจเล็ก ๆ ลอยข้างข้อความ */
+        /* 8. หัวใจเล็ก ๆ ลอยข้างข้อความ */
         .mini-heart {
             position: absolute;
             width: 10px;
@@ -212,7 +168,7 @@
             100% { transform: translateY(-20px) rotate(45deg); opacity: 0; }
         }
 
-        /* 11. ฟองอากาศลอยขึ้น */
+        /* 9. ฟองอากาศลอยขึ้น */
         .bubble {
             position: absolute;
             width: 15px;
@@ -226,7 +182,7 @@
             100% { transform: translateY(-100vh); opacity: 0; }
         }
 
-        /* 12. อนุภาคลอยวน */
+        /* 10. อนุภาคลอยวน */
         .orbit-particle {
             position: absolute;
             width: 4px;
@@ -241,7 +197,7 @@
             100% { transform: rotate(360deg) translateX(50px); opacity: 0.5; }
         }
 
-        /* 13. ดวงดาวเล็ก ๆ ลอยวน */
+        /* 11. ดวงดาวเล็ก ๆ ลอยวน */
         .star {
             position: absolute;
             width: 6px;
@@ -256,7 +212,7 @@
             100% { transform: translateY(-20px); opacity: 0.6; }
         }
 
-        /* 14. แสงลอยจากข้อความ */
+        /* 12. แสงลอยจากข้อความ */
         .text-light {
             position: absolute;
             width: 8px;
@@ -287,42 +243,42 @@
     <div class="slide" id="slide6">เธอคือความฝันที่ฉันไม่เคยกล้าฝันมาก่อน</div>
     <div class="slide" id="slide7"><a href="Index1.html" class="button" id="nextButton">ไปต่อกันไหม?</a></div>
 
-    <!-- 6. หัวใจลอยช้า ๆ -->
+    <!-- 4. หัวใจลอยช้า ๆ -->
     <div class="heart" style="left: 20%; animation-delay: 0s;"></div>
     <div class="heart" style="left: 50%; animation-delay: 2s;"></div>
     <div class="heart" style="left: 80%; animation-delay: 4s;"></div>
 
-    <!-- 7. อนุภาคนุ่มนวล -->
+    <!-- 5. อนุภาคนุ่มนวล -->
     <div class="particle" style="left: 30%; animation-delay: 0s;"></div>
     <div class="particle" style="left: 60%; animation-delay: 1s;"></div>
     <div class="particle" style="left: 90%; animation-delay: 2s;"></div>
 
-    <!-- 8. แสงระยิบระยับพื้นหลัง -->
+    <!-- 6. แสงระยิบระยับพื้นหลัง -->
     <div class="sparkle" style="top: 20%; left: 25%; animation-delay: 0s;"></div>
     <div class="sparkle" style="top: 40%; left: 75%; animation-delay: 1s;"></div>
     <div class="sparkle" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
 
-    <!-- 9. แสงนุ่ม ๆ รอบข้อความ -->
+    <!-- 7. แสงนุ่ม ๆ รอบข้อความ -->
     <div class="glow-dot" style="top: 30%; left: 20%; animation-delay: 0s;"></div>
     <div class="glow-dot" style="top: 50%; left: 80%; animation-delay: 1s;"></div>
 
-    <!-- 10. หัวใจเล็ก ๆ ลอยข้างข้อความ -->
+    <!-- 8. หัวใจเล็ก ๆ ลอยข้างข้อความ -->
     <div class="mini-heart" style="top: 45%; left: 30%; animation-delay: 0s;"></div>
     <div class="mini-heart" style="top: 55%; left: 70%; animation-delay: 2s;"></div>
 
-    <!-- 11. ฟองอากาศลอยขึ้น -->
+    <!-- 9. ฟองอากาศลอยขึ้น -->
     <div class="bubble" style="left: 15%; animation-delay: 0s;"></div>
     <div class="bubble" style="left: 85%; animation-delay: 3s;"></div>
 
-    <!-- 12. อนุภาคลอยวน -->
+    <!-- 10. อนุภาคลอยวน -->
     <div class="orbit-particle" style="top: 20%; left: 40%; animation-delay: 0s;"></div>
     <div class="orbit-particle" style="top: 70%; left: 60%; animation-delay: 2s;"></div>
 
-    <!-- 13. ดวงดาวเล็ก ๆ ลอยวน -->
+    <!-- 11. ดวงดาวเล็ก ๆ ลอยวน -->
     <div class="star" style="top: 25%; left: 35%; animation-delay: 0s;"></div>
     <div class="star" style="top: 65%; left: 65%; animation-delay: 2s;"></div>
 
-    <!-- 14. แสงลอยจากข้อความ -->
+    <!-- 12. แสงลอยจากข้อความ -->
     <div class="text-light" style="top: 50%; left: 45%; animation-delay: 0s;"></div>
     <div class="text-light" style="top: 50%; left: 55%; animation-delay: 2s;"></div>
 
