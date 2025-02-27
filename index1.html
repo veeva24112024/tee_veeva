@@ -6,6 +6,9 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -685,7 +688,7 @@
             height: 100px;
             object-fit: cover;
             border-radius: 50%;
-            transition: transform 0.5s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .moment-card:hover .rotating-gallery img {
@@ -857,27 +860,6 @@
             color: white;
         }
 
-        .love-calendar {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            text-align: center;
-        }
-
-        .calendar-day {
-            background: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(255, 75, 110, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .calendar-day:hover {
-            transform: scale(1.1);
-            background: #ff4b6e;
-            color: #fff;
-        }
-
         .rainbow-container {
             position: relative;
             width: 100%;
@@ -892,7 +874,16 @@
             transform: translate(-50%, -50%);
             width: 0;
             height: 50px;
-            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            /* ปรับสีพาสเทลให้เข้มขึ้น */
+            background: linear-gradient(90deg, 
+                #ff9999, /* ชมพูพาสเทลเข้ม */
+                #ffad80, /* ส้มพาสเทลเข้ม */
+                #ffe066, /* เหลืองพาสเทลเข้ม */
+                #99e6b3, /* เขียวพาสเทลเข้ม */
+                #80ccff, /* ฟ้าพาสเทลเข้ม */
+                #cc99ff, /* ม่วงพาสเทลเข้ม */
+                #99c2ff  /* น้ำเงินพาสเทลเข้ม */
+            );
             border-radius: 25px;
             opacity: 0;
             transition: width 2s ease, opacity 0.5s ease;
@@ -986,18 +977,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #ff4b6e;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             text-shadow: 0 0 20px #ffebec;
             opacity: 0;
             transition: opacity 0.5s ease 1s;
             z-index: 1;
+            font-family: "Sriracha", serif;
+            font-weight: 400;
+            font-style: normal;
+            line-height: 1.4;
         }
 
         .gate.opened .gate-message {
             opacity: 1;
         }
 
-        /* CSS สำหรับดวงดาวแห่งความทรงจำ (ไม่มีตัวอักษร) */
         .starry-sky {
             position: relative;
             width: 100%;
@@ -1038,9 +1032,6 @@
             100% { opacity: 0.5; transform: scale(0.8); }
         }
 
-        /* ลบ .veeva-star ออกเพราะไม่ใช้ตัวอักษร V E อีกต่อไป */
-
-        /* CSS สำหรับลูกโป่งหัวใจลอยขึ้น */
         .balloon {
             position: absolute;
             bottom: -100px;
@@ -1169,21 +1160,13 @@
                 <div class="memory-light"></div>
             </div>
 
-            <div class="moment-card" data-aos="fade-up">
-                <h2>ปฏิทินความรักของเรา</h2>
-                <div class="love-calendar">
-                    <div class="calendar-day">24 พ.ย. 67<br>วันแรกที่เจอกัน</div>
-                    <div class="calendar-day">20 ก.พ. 68<br>วันที่ตี๋ขอวีวา</div>
-                    <div class="calendar-day">??<br>วันครบรอบของเรา ♥</div>
-                </div>
-            </div>
-
             <div class="moment-card" data-aos="fade-right">
                 <h2>อยากเห็นรุ้งกินน้ำไหม ?</h2>
-                <p>ลองกดดูครับ</p>
-                <div class="rainbow-container" onclick="showRainbow(this)">
+                <p>ลองกดปุ่มนี้ดูครับ</p>
+                <button class="btn" onclick="showRainbow(this.parentElement.querySelector('.rainbow-container'))">กดเพื่อดูรุ้งกินน้ำ 🌈</button>
+                <div class="rainbow-container">
                     <div class="rainbow"></div>
-                    <div class="rainbow-text">ชีวิตมีสีสันขึ้นเยอะเลย ตั้งแต่รู้จักวีวา</div>
+                    <div class="rainbow-text">วีวาทำให้ชีวิตตี๋มีสีสันขึ้นเยอะเลยนะ 💖 </div>
                 </div>
             </div>
 
@@ -1195,12 +1178,11 @@
                         <div class="gate-door left-door"></div>
                         <div class="gate-door right-door"></div>
                         <div class="gate-light"></div>
-                        <div class="gate-message">ขอบคุณที่เกิดมาให้ตี๋รักและเป็นความน่ารักสดใสให้โลกใบนี้นะ 💖✨</div>
+                        <div class="gate-message">ขอบคุณที่เกิดมาให้ตี๋รักและเป็นความน่ารักสดใสให้โลกใบนี้นะ 🍀</div>
                     </div>
                 </div>
             </div>
 
-            <!-- ดวงดาวแห่งความทรงจำ (ไม่มีตัวอักษร) -->
             <div class="moment-card" data-aos="fade-left">
                 <h2>ดวงดาวของตี๋ 🌟</h2>
                 <div class="starry-sky" id="starrySky" onmousemove="createStar(event, this)" onmouseleave="stopStars(this)">
@@ -1208,7 +1190,6 @@
                 </div>
             </div>
 
-            <!-- ลูกโป่งหัวใจของเรา -->
             <div class="moment-card" data-aos="fade-left">
                 <h2>ลูกโป่งหัวใจของเรา 🎈</h2>
                 <p>กดปุ่มเพื่อปล่อยลูกโป่งเต็มจอ!</p>
@@ -1499,7 +1480,6 @@
             }
         }
 
-        // ฟังก์ชันสำหรับดวงดาวแห่งความทรงจำ (ไม่มีตัวอักษร)
         let starInterval;
 
         function createStar(event, sky) {
@@ -1532,7 +1512,6 @@
             starInterval = null;
         }
 
-        // ฟังก์ชันสำหรับลูกโป่งหัวใจลอยขึ้น
         function releaseBalloons() {
             const messages = ["รักวีวา", "วีวาน่ารัก", "ตี๋คิดถึงวีวา"];
             const colors = ['#ff4b6e', '#ffeb3b', '#42a5f5', '#66bb6a', '#ab47bc', '#ff7043'];
@@ -1552,7 +1531,6 @@
             }
         }
 
-        // เพิ่มตัวแปร CSS สำหรับสีเชือก
         document.head.insertAdjacentHTML('beforeend', `
             <style>
                 .balloon::after {
@@ -1566,7 +1544,6 @@
             setInterval(updateTimer, 1000);
             setInterval(createHeart, 500);
             createMemoryGame();
-            // ไม่เรียกฟังก์ชันสร้างตัวอักษร V E อีกต่อไป
             const bgMusic = document.getElementById('bgMusic');
             bgMusic.play().catch(error => {
                 console.log("Autoplay prevented:", error);

@@ -45,7 +45,9 @@
             position: absolute;
             font-size: clamp(3.5em, 10vw, 5em);
             color: #FFFFFF;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px #FF9999;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), /* เงาแสงสีขาว */
+                          0 0 30px #FF9999, /* เงาแสงสีชมพู */
+                          2px 2px 5px rgba(0, 0, 0, 0.5); /* เงามืดเพิ่มมิติ */
             opacity: 0;
             text-align: center;
             transition: opacity 1.5s ease-in-out;
@@ -63,17 +65,8 @@
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
-        .active:not(#slide7) {
-            animation: fadeInStatic 2s ease-in-out, glowPulse 3s infinite ease;
-        }
-        /* 4. แสงเงานุ่ม ๆ */
-        @keyframes glowPulse {
-            0% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px #FF9999; }
-            50% { text-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 40px #FF9999; }
-            100% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px #FF9999; }
-        }
 
-        /* ปุ่มนุ่มนวล */
+        /* ปุ่มนุ่มนวล (ไม่ใส่เงามืดเพิ่มเติม) */
         #slide7.active .button {
             animation: fadeInStatic 2s ease-in-out;
         }
@@ -459,7 +452,7 @@
     <div class="slide" id="slide4">เธอคือคนที่ทำให้ฉันอยากตื่นมาเจอทุกเช้า</div>
     <div class="slide" id="slide5">ทุกครั้งที่เธออยู่ใกล้ หัวใจฉันเต้นแรงจนหยุดไม่ได้</div>
     <div class="slide" id="slide6">เธอคือความฝันที่ฉันไม่เคยกล้าฝันมาก่อน</div>
-    <div class="slide" id="slide7"><a href="Index1.html" class="button" id="nextButton">ไปต่อกันไหม?</a></div>
+    <div class="slide" id="slide7"><a href="index1.html" class="button" id="nextButton">ไปต่อกันไหม?</a></div>
 
     <!-- 6. หัวใจลอยช้า ๆ (หลากสี) -->
     <div class="heart color1" style="left: 20%; animation-delay: 0s;"></div>
@@ -492,7 +485,7 @@
     <div class="bubble color1" style="left: 15%; animation-delay: 0s;"></div>
     <div class="bubble color2" style="left: 85%; animation-delay: 3s;"></div>
     <div class="bubble color3" style="left: 40%; animation-delay: 1.5s;"></div>
-    <div class="bubble color1" style="left: 60%; animation-delay: 2.5s;"></div>
+    <div class="bubble color1" style="left: 60%; animation-delay: 2s;"></div>
 
     <!-- 12. อนุภาคลอยวน (หลากสี) -->
     <div class="orbit-particle color1" style="top: 20%; left: 40%; animation-delay: 0s;"></div>
