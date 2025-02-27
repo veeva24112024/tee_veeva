@@ -553,14 +553,14 @@
             if (currentSlide < slides.length) {
                 slides[currentSlide].classList.add('active');
                 if (currentSlide < slides.length - 1) {
-                    setTimeout(showNextSlide, 4000);
+                    setTimeout(showNextSlide, 3000);
                 }
             }
         }
 
         // เริ่มต้นสไลด์แรก
         slides[currentSlide].classList.add('active');
-        setTimeout(showNextSlide, 4000);
+        setTimeout(showNextSlide, 3000);
 
         // ป้องกันการคลิกที่หน้าจอ ยกเว้นปุ่ม
         document.body.addEventListener('click', (e) => {
