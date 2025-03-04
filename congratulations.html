@@ -228,14 +228,27 @@
         }
         
         .subtitle {
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(1.3rem, 4.5vw, 2.2rem);
             color: var(--white);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-            font-family: 'Prompt', sans-serif;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 
+                         0 0 30px rgba(255, 71, 120, 0.6);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            font-family: 'Mali', cursive;
             opacity: 0;
             animation: fadeIn 1s ease 1s forwards;
+            background: linear-gradient(45deg, rgba(255, 71, 120, 0.3), rgba(255, 150, 170, 0.3));
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .subtitle:hover {
+            transform: translateY(-5px);
         }
         
         /* ส่วนกลาง - รูปภาพ */
@@ -243,7 +256,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 2rem 0;
+            margin: 0.5rem 0 2rem 0;
             width: 100%;
             max-width: 800px;
             position: relative;
@@ -764,7 +777,7 @@
         <!-- ส่วนบนสุด - หัวข้อ -->
         <div class="top-section">
             <h1 class="title" id="animatedTitle">ตี๋ ♥ วีวา</h1>
-            <p class="subtitle">เราเป็นทางการแล้วนะ!</p>
+            <p class="subtitle">เราเป็นแฟนกันอย่างทางการแล้วนะ! ♥</p>
         </div>
         
         <!-- ส่วนกลาง - รูปภาพ -->
