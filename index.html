@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ถึงเธอจากฉัน</title>
+    <title>จากใจตี๋ถึงวีวา</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Sriracha&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -13,560 +14,1174 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Sriracha', cursive;
             overflow: hidden;
             position: relative;
         }
-
-        /* 1. รูปภาพหัวใจใหญ่เป็นฉากหลัง */
-        body::before {
-            content: '';
-            position: absolute;
-            width: clamp(200px, 50vw, 400px);
-            height: clamp(200px, 50vw, 400px);
-            background: radial-gradient(circle, rgba(255, 182, 193, 0.3), transparent);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(45deg);
-            z-index: 1;
+        
+        /* ส่วนควบคุมเสียง */
+        .audio-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(255, 71, 120, 0.3);
+        }
+        
+        .audio-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(45deg, #FF4778, #FF95A8);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 10px rgba(255, 71, 120, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .audio-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(255, 71, 120, 0.5);
+        }
+        
+        .volume-slider {
+            width: 100px;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #FF4778;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(255, 71, 120, 0.5);
+        }
+        
+        .volume-slider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #FF4778;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(255, 71, 120, 0.5);
+            border: none;
         }
 
-        /* 2. แสงพื้นหลังแบบนุ่ม */
-        body::after {
-            content: '';
+        /* กรอบหัวใจขนาดใหญ่ตรงกลาง */
+        .heart-frame {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
-            z-index: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+            opacity: 0.15;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF6B8B" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 80% auto;
+            pointer-events: none;
         }
 
+        /* คอนเทนเนอร์หลัก */
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* สไลด์ข้อความ */
         .slide {
             position: absolute;
-            font-size: clamp(3.5em, 10vw, 5em);
-            color: #FFFFFF;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), /* เงาแสงสีขาว */
-                          0 0 30px #FF9999, /* เงาแสงสีชมพู */
-                          2px 2px 5px rgba(0, 0, 0, 0.5); /* เงามืดเพิ่มมิติ */
-            opacity: 0;
-            text-align: center;
-            transition: opacity 1.5s ease-in-out;
-            z-index: 10;
-            padding: 0 10px;
-            box-sizing: border-box;
             width: 90%;
-        }
-        /* 3. ข้อความโผล่แบบนิ่ง */
-        .active {
-            opacity: 1;
-            animation: fadeInStatic 2s ease-in-out;
-        }
-        @keyframes fadeInStatic {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+            max-width: 580px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+            z-index: 10;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #FF4778;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8),
+                         0 0 30px #FF9999,
+                         2px 2px 5px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(255, 71, 120, 0.2);
         }
 
-        /* ปุ่มนุ่มนวล (ไม่ใส่เงามืดเพิ่มเติม) */
-        #slide7.active .button {
-            animation: fadeInStatic 2s ease-in-out;
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .button {
-            font-size: clamp(1em, 4vw, 1.25em);
-            padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
-            background: #FF9999;
+
+        /* รูปภาพในสไลด์ */
+        .slide img {
+            max-width: 100%;
+            max-height: 40vh;
+            border-radius: 20px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 5px solid white;
+            transition: transform 0.5s ease;
+        }
+
+        .slide img:hover {
+            transform: scale(1.05);
+        }
+
+        /* ปุ่มขอเป็นแฟน */
+        .love-button {
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            position: relative;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            padding: 15px 40px;
             border: none;
             border-radius: 50px;
+            background: linear-gradient(45deg, #FF4778, #FF95A8);
             color: white;
-            text-decoration: none;
-            box-shadow: 0 0 20px rgba(255, 153, 153, 0.6);
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
             cursor: pointer;
-            display: inline-block;
-            z-index: 20;
-        }
-        /* 5. ปุ่มลอยขึ้นเล็กน้อยเมื่อ Hover */
-        .button:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 0 30px rgba(255, 153, 153, 0.8);
+            box-shadow: 0 10px 20px rgba(255, 71, 120, 0.4),
+                        0 0 15px rgba(255, 71, 120, 0.5),
+                        0 0 30px rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 50;
+            opacity: 0;
+            transform: translateY(50px);
         }
 
-        /* 6. หัวใจลอยช้า ๆ (สีพาสเทลหลากสี) */
-        .heart {
-            position: absolute;
-            width: clamp(10px, 2vw, 20px);
-            height: clamp(10px, 2vw, 20px);
-            transform: rotate(45deg);
-            animation: floatSoft 6s ease-in-out infinite;
-            opacity: 0.7;
-            z-index: 2;
+        .love-button.active {
+            animation: fadeInUp 1s forwards;
         }
-        .heart.color1 { background: #FF9999; }
-        .heart.color2 { background: #FFB6C1; }
-        .heart.color3 { background: #FFD1DC; }
-        .heart:before, .heart:after {
+
+        .love-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 71, 120, 0.5),
+                        0 0 20px rgba(255, 71, 120, 0.6),
+                        0 0 40px rgba(255, 255, 255, 0.4);
+        }
+
+        .love-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .love-button::before {
             content: '';
             position: absolute;
-            width: clamp(10px, 2vw, 20px);
-            height: clamp(10px, 2vw, 20px);
-            border-radius: 50%;
-            opacity: 0.7;
-        }
-        .heart.color1:before, .heart.color1:after { background: #FF9999; }
-        .heart.color2:before, .heart.color2:after { background: #FFB6C1; }
-        .heart.color3:before, .heart.color3:after { background: #FFD1DC; }
-        .heart:before { top: -50%; left: 0; }
-        .heart:after { left: -50%; top: 0; }
-        @keyframes floatSoft {
-            0% { transform: translateY(100vh) rotate(45deg); opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
         }
 
-        /* 7. อนุภาคนุ่มนวล */
-        .particle {
-            position: absolute;
-            width: clamp(3px, 0.5vw, 5px);
-            height: clamp(3px, 0.5vw, 5px);
-            background: #FFB6C1;
-            border-radius: 50%;
-            animation: floatParticle 5s ease-in-out infinite;
-            opacity: 0.5;
-            z-index: 2;
-        }
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-100vh); opacity: 0; }
+        .love-button:hover::before {
+            left: 100%;
         }
 
-        /* 8. แสงระยิบระยับพื้นหลัง (ดาวกระจายหลากสี) */
-        .sparkle {
+        /* ส่วนการตอบสนอง (Response) */
+        .response-container {
             position: absolute;
-            width: clamp(2px, 0.3vw, 3px);
-            height: clamp(2px, 0.3vw, 3px);
-            border-radius: 50%;
-            animation: sparkleSoft 4s infinite ease;
-            z-index: 2;
-        }
-        .sparkle.color1 { background: #FFFFFF; }
-        .sparkle.color2 { background: #FFCCCC; }
-        .sparkle.color3 { background: #FFE1E9; }
-        @keyframes sparkleSoft {
-            0% { opacity: 0; transform: scale(0); }
-            50% { opacity: 0.6; transform: scale(1.5); }
-            100% { opacity: 0; transform: scale(0); }
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: radial-gradient(circle, rgba(255, 200, 210, 0.9), rgba(255, 150, 170, 0.95));
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(10px);
         }
 
-        /* 9. แสงนุ่ม ๆ รอบข้อความ */
-        .glow-dot {
-            position: absolute;
-            width: clamp(5px, 1vw, 10px);
-            height: clamp(5px, 1vw, 10px);
-            background: rgba(255, 153, 153, 0.5);
-            border-radius: 50%;
-            animation: glowDot 6s infinite ease;
-            z-index: 2;
-        }
-        @keyframes glowDot {
-            0% { opacity: 0; transform: scale(0); }
-            50% { opacity: 0.7; transform: scale(1.2); }
-            100% { opacity: 0; transform: scale(0); }
+        .response-container.active {
+            opacity: 1;
+            pointer-events: all;
         }
 
-        /* 10. หัวใจเล็ก ๆ ลอยข้างข้อความ (สีพาสเทลหลากสี) */
-        .mini-heart {
-            position: absolute;
-            width: clamp(5px, 1vw, 10px);
-            height: clamp(5px, 1vw, 10px);
-            transform: rotate(45deg);
-            animation: miniHeartFloat 4s infinite ease-in-out;
-            z-index: 2;
-        }
-        .mini-heart.color1 { background: #FFB6C1; }
-        .mini-heart.color2 { background: #FFD1DC; }
-        .mini-heart.color3 { background: #FF9999; }
-        .mini-heart:before, .mini-heart:after {
-            content: '';
-            position: absolute;
-            width: clamp(5px, 1vw, 10px);
-            height: clamp(5px, 1vw, 10px);
-            border-radius: 50%;
-        }
-        .mini-heart.color1:before, .mini-heart.color1:after { background: #FFB6C1; }
-        .mini-heart.color2:before, .mini-heart.color2:after { background: #FFD1DC; }
-        .mini-heart.color3:before, .mini-heart.color3:after { background: #FF9999; }
-        .mini-heart:before { top: -50%; left: 0; }
-        .mini-heart:after { left: -50%; top: 0; }
-        @keyframes miniHeartFloat {
-            0% { transform: translateY(20px) rotate(45deg); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-20px) rotate(45deg); opacity: 0; }
+        .response-message {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: white;
+            text-shadow: 2px 2px 10px rgba(255, 71, 120, 0.6);
+            text-align: center;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
         }
 
-        /* 11. ฟองอากาศลอยขึ้น (หลากสี) */
-        .bubble {
-            position: absolute;
-            width: clamp(8px, 1.5vw, 15px);
-            height: clamp(8px, 1.5vw, 15px);
-            border-radius: 50%;
-            animation: bubbleRise 7s infinite ease-in-out;
-            opacity: 0.6;
-            z-index: 2;
-        }
-        .bubble.color1 { background: rgba(255, 182, 193, 0.3); }
-        .bubble.color2 { background: rgba(255, 204, 204, 0.3); }
-        .bubble.color3 { background: rgba(255, 153, 153, 0.3); }
-        @keyframes bubbleRise {
-            0% { transform: translateY(100vh); opacity: 0.6; }
-            100% { transform: translateY(-100vh); opacity: 0; }
+        .response-buttons {
+            display: flex;
+            gap: 20px;
         }
 
-        /* 12. อนุภาคลอยวน (หลากสี) */
-        .orbit-particle {
-            position: absolute;
-            width: clamp(2px, 0.4vw, 4px);
-            height: clamp(2px, 0.4vw, 4px);
-            border-radius: 50%;
-            animation: orbit 6s infinite ease-in-out;
-            z-index: 2;
-        }
-        .orbit-particle.color1 { background: #FFCCCC; }
-        .orbit-particle.color2 { background: #FFB6C1; }
-        .orbit-particle.color3 { background: #FFD1DC; }
-        @keyframes orbit {
-            0% { transform: rotate(0deg) translateX(clamp(20px, 5vw, 50px)); opacity: 0.5; }
-            50% { opacity: 0.8; }
-            100% { transform: rotate(360deg) translateX(clamp(20px, 5vw, 50px)); opacity: 0.5; }
+        .response-button {
+            font-family: 'Prompt', sans-serif;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        /* 13. ดวงดาวเล็ก ๆ ลอยวน (หลากสี) */
-        .star {
-            position: absolute;
-            width: clamp(3px, 0.6vw, 6px);
-            height: clamp(3px, 0.6vw, 6px);
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            animation: starFloat 5s infinite ease-in-out;
-            z-index: 2;
-        }
-        .star.color1 { background: #FFFFFF; }
-        .star.color2 { background: #FFCCCC; }
-        .star.color3 { background: #FFE1E9; }
-        @keyframes starFloat {
-            0% { transform: translateY(20px); opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-20px); opacity: 0.6; }
+        .yes-button {
+            background: linear-gradient(45deg, #FF4778, #FF95A8);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 71, 120, 0.4);
         }
 
-        /* 14. แสงลอยจากข้อความ */
-        .text-light {
-            position: absolute;
-            width: clamp(4px, 0.8vw, 8px);
-            height: clamp(4px, 0.8vw, 8px);
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            animation: textLight 4s infinite ease-in-out;
-            z-index: 2;
-        }
-        @keyframes textLight {
-            0% { transform: translateY(0); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-50px); opacity: 0; }
+        .no-button {
+            background: white;
+            color: #FF4778;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
-        /* 15. ดาวตก (Falling Stars) */
-        .falling-star {
-            position: absolute;
-            width: 2px;
-            height: clamp(10px, 2vw, 20px);
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
-            animation: fall 3s infinite linear;
-            z-index: 3;
-        }
-        .falling-star.color1 { background: linear-gradient(to bottom, #FF9999, transparent); }
-        .falling-star.color2 { background: linear-gradient(to bottom, #FFB6C1, transparent); }
-        .falling-star.color3 { background: linear-gradient(to bottom, #FFD1DC, transparent); }
-        @keyframes fall {
-            0% { transform: translateY(-100vh) translateX(0); opacity: 1; }
-            100% { transform: translateY(100vh) translateX(clamp(-50px, -10vw, -100px)); opacity: 0; }
+        .response-button:hover {
+            transform: translateY(-5px);
         }
 
-        /* 16. เมฆสีชมพูอ่อน */
-        .cloud {
-            position: absolute;
-            width: clamp(50px, 15vw, 150px);
-            height: clamp(20px, 6vw, 60px);
-            background: rgba(255, 182, 193, 0.2);
-            border-radius: 50%;
-            z-index: 1;
-        }
-        .cloud::before, .cloud::after {
-            content: '';
-            position: absolute;
-            background: rgba(255, 182, 193, 0.2);
-            border-radius: 50%;
-        }
-        .cloud::before {
-            width: clamp(30px, 10vw, 100px);
-            height: clamp(15px, 4vw, 40px);
-            top: -50%;
-            left: 20%;
-        }
-        .cloud::after {
-            width: clamp(20px, 8vw, 80px);
-            height: clamp(10px, 3vw, 30px);
-            top: -30%;
-            left: 60%;
+        /* หัวใจเด้งออกมา */
+        .heart-burst {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 200;
+            opacity: 0;
         }
 
-        /* 17. ดอกไม้ร่วง (Falling Petals) */
-        .petal {
-            position: absolute;
-            width: clamp(5px, 1vw, 10px);
-            height: clamp(5px, 1vw, 10px);
-            background: #FF9999;
-            border-radius: 50% 0 50% 50%;
-            animation: petalFall 6s infinite linear;
-            z-index: 3;
-        }
-        .petal.color1 { background: #FF9999; }
-        .petal.color2 { background: #FFB6C1; }
-        .petal.color3 { background: #FFD1DC; }
-        @keyframes petalFall {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        .heart-burst.active {
+            opacity: 1;
         }
 
-        /* 18. แสงระยิบระยับใหญ่ (Large Glitter) */
-        .large-glitter {
-            position: absolute;
-            width: clamp(10px, 2vw, 20px);
-            height: clamp(10px, 2vw, 20px);
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
-            border-radius: 50%;
-            animation: glitterShine 4s infinite ease;
-            z-index: 2;
-        }
-        @keyframes glitterShine {
-            0% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1.5); }
-            100% { opacity: 0; transform: scale(0); }
-        }
-
-        /* 19. ลูกโป่งลอย (Floating Balloons) */
-        .balloon {
-            position: absolute;
-            width: clamp(15px, 3vw, 30px);
-            height: clamp(20px, 4vw, 40px);
-            border-radius: 50% 50% 40% 40%;
-            animation: balloonFloat 7s infinite ease-in-out;
-            z-index: 3;
-        }
-        .balloon.color1 { background: #FF9999; }
-        .balloon.color2 { background: #FFB6C1; }
-        .balloon.color3 { background: #FFD1DC; }
-        @keyframes balloonFloat {
-            0% { transform: translateY(100vh); opacity: 0.8; }
-            50% { transform: translateY(50vh) translateX(clamp(-10px, -2vw, -20px)); opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(clamp(10px, 2vw, 20px)); opacity: 0; }
-        }
-
-        /* 20. ดาวหมุน (Spinning Stars) */
-        .spinning-star {
-            position: absolute;
-            width: clamp(10px, 2vw, 20px);
-            height: clamp(10px, 2vw, 20px);
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            animation: starSpin 4s infinite linear;
-            z-index: 3;
-        }
-        .spinning-star.color1 { background: #FF9999; }
-        .spinning-star.color2 { background: #FFB6C1; }
-        .spinning-star.color3 { background: #FFD1DC; }
-        @keyframes starSpin {
-            0% { transform: rotate(0deg); opacity: 0.8; }
-            50% { opacity: 1; }
-            100% { transform: rotate(360deg); opacity: 0.8; }
-        }
-
-        /* 21. ลูกแก้วระยิบ (Shimmering Orbs) */
-        .orb {
+        /* ลูกเล่นที่ 1: หัวใจลอย */
+        .floating-heart {
             position: absolute;
             width: clamp(15px, 3vw, 30px);
             height: clamp(15px, 3vw, 30px);
-            background: radial-gradient(circle, rgba(255, 153, 153, 0.5), transparent);
-            border-radius: 50%;
-            animation: orbShimmer 3s infinite ease-in-out;
-            z-index: 3;
-        }
-        .orb.color1 { background: radial-gradient(circle, rgba(255, 153, 153, 0.5), transparent); }
-        .orb.color2 { background: radial-gradient(circle, rgba(255, 182, 193, 0.5), transparent); }
-        .orb.color3 { background: radial-gradient(circle, rgba(255, 204, 204, 0.5), transparent); }
-        @keyframes orbShimmer {
-            0% { transform: scale(0.8); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.8); opacity: 0.5; }
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF6B8B" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 2;
+            animation: floatUpHeart 15s linear infinite;
         }
 
-        /* 22. ผีเสื้อลอย (Floating Butterflies) */
+        @keyframes floatUpHeart {
+            0% { transform: translateY(100vh) scale(1) rotate(0deg); opacity: 0.7; }
+            50% { opacity: 0.9; }
+            100% { transform: translateY(-20vh) scale(0.5) rotate(360deg); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 2: ลูกโป่งลอย */
+        .balloon {
+            position: absolute;
+            width: clamp(30px, 5vw, 50px);
+            height: clamp(40px, 6vw, 60px);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            background: linear-gradient(135deg, #FF95A8, #FF4778);
+            box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+                        0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: floatUpBalloon 20s linear infinite;
+            z-index: 3;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 1px;
+            height: 20px;
+            background: #FF4778;
+            transform: translateX(-50%);
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 15%;
+            height: 10%;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+        }
+
+        @keyframes floatUpBalloon {
+            0% { transform: translateY(120vh) translateX(0) rotate(5deg); opacity: 0.8; }
+            50% { transform: translateY(50vh) translateX(clamp(-50px, -10vw, -20px)) rotate(-10deg); opacity: 1; }
+            100% { transform: translateY(-20vh) translateX(clamp(50px, 10vw, 20px)) rotate(5deg); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 3: แสงระยิบระยับ */
+        .sparkle {
+            position: absolute;
+            width: clamp(5px, 1vw, 10px);
+            height: clamp(5px, 1vw, 10px);
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 4s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1); opacity: 1; filter: blur(1px); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 4: ดาวเล็ก ๆ กระพริบ */
+        .star {
+            position: absolute;
+            width: clamp(8px, 1.5vw, 15px);
+            height: clamp(8px, 1.5vw, 15px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48"><path fill="%23FFD1DC" d="M25.5,0 L33.1,15.2 L51,17.7 L38.2,29.8 L41.3,48 L25.5,39.8 L9.7,48 L12.7,29.8 L0,17.7 L17.8,15.2 Z"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            animation: twinkle 5s infinite ease-in-out;
+            z-index: 2;
+        }
+
+        @keyframes twinkle {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 0.3; }
+        }
+
+        /* ลูกเล่นที่ 5: ผีเสื้อบิน */
         .butterfly {
             position: absolute;
-            width: clamp(10px, 2vw, 20px);
-            height: clamp(5px, 1vw, 10px);
-            background: #FF9999;
-            border-radius: 50% 0 50% 50%;
-            animation: butterflyFloat 5s infinite ease-in-out;
+            width: clamp(20px, 4vw, 30px);
+            height: clamp(20px, 4vw, 30px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF95A8" d="M50,35 C60,5 90,15 80,40 C90,65 60,75 50,45 C40,75 10,65 20,40 C10,15 40,5 50,35 Z"/><circle fill="%23FF4778" cx="50" cy="40" r="5"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
             z-index: 3;
-        }
-        .butterfly.color1 { background: #FF9999; }
-        .butterfly.color2 { background: #FFB6C1; }
-        .butterfly.color3 { background: #FFD1DC; }
-        @keyframes butterflyFloat {
-            0% { transform: translateY(20px) translateX(-20px) rotate(0deg); opacity: 0.8; }
-            50% { transform: translateY(-20px) translateX(20px) rotate(10deg); opacity: 1; }
-            100% { transform: translateY(20px) translateX(-20px) rotate(0deg); opacity: 0.8; }
+            animation: flyButterfly 15s linear infinite;
         }
 
-        /* Media Queries สำหรับจอเล็ก */
-        @media (max-width: 600px) {
+        @keyframes flyButterfly {
+            0% { transform: translateX(-20vw) translateY(50vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            25% { transform: translateX(0vw) translateY(30vh) rotate(10deg) scale(1); }
+            50% { transform: translateX(20vw) translateY(40vh) rotate(-10deg) scale(0.9); }
+            75% { transform: translateX(40vw) translateY(20vh) rotate(10deg) scale(1.1); }
+            90% { opacity: 1; }
+            100% { transform: translateX(120vw) translateY(10vh) rotate(0deg) scale(0.8); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 6: ฟองอากาศลอย */
+        .bubble {
+            position: absolute;
+            width: clamp(10px, 3vw, 30px);
+            height: clamp(10px, 3vw, 30px);
+            border-radius: 50%;
+            background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.8), rgba(255, 200, 210, 0.4));
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8),
+                        0 0 10px rgba(255, 71, 120, 0.3);
+            animation: floatBubble 10s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes floatBubble {
+            0% { transform: translateY(100vh) translateX(0) scale(0.5); opacity: 0.7; }
+            50% { transform: translateY(50vh) translateX(clamp(20px, 5vw, 40px)) scale(1); opacity: 0.8; }
+            100% { transform: translateY(0vh) translateX(clamp(-20px, -5vw, -40px)) scale(0.5); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 7: ดอกไม้ร่วง */
+        .petal {
+            position: absolute;
+            width: clamp(10px, 2vw, 20px);
+            height: clamp(15px, 3vw, 30px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FFB6C1" d="M50,0 C30,30 0,50 50,100 C100,50 70,30 50,0 Z"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 2;
+            animation: fallPetal 12s linear infinite;
+        }
+
+        @keyframes fallPetal {
+            0% { transform: translateY(-10vh) translateX(-10vw) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(50vh) translateX(5vw) rotate(180deg); opacity: 0.9; }
+            100% { transform: translateY(110vh) translateX(-5vw) rotate(360deg); opacity: 0.7; }
+        }
+
+        /* ลูกเล่นที่ 8: แสงกระจายรอบตัว */
+        .glow {
+            position: absolute;
+            width: clamp(100px, 20vw, 200px);
+            height: clamp(100px, 20vw, 200px);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
+            border-radius: 50%;
+            animation: glow 6s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes glow {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+            100% { transform: scale(0.8); opacity: 0.3; }
+        }
+
+        /* ลูกเล่นที่ 9: ดาวตก */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: clamp(50px, 10vw, 100px);
+            background: linear-gradient(to bottom, white, transparent);
+            opacity: 0;
+            z-index: 2;
+            animation: shootingStar 5s linear infinite;
+        }
+
+        @keyframes shootingStar {
+            0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 0; }
+            1% { opacity: 1; }
+            10% { transform: translateX(clamp(100px, 20vw, 200px)) translateY(clamp(100px, 20vw, 200px)) rotate(45deg); opacity: 0; }
+            100% { transform: translateX(clamp(100px, 20vw, 200px)) translateY(clamp(100px, 20vw, 200px)) rotate(45deg); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 10: คลื่นพลิ้ว */
+        .wave {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            bottom: -50px;
+            left: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="%23FFB6C1" opacity="0.5" d="M0,0 C150,90 350,0 500,100 C650,200 850,110 1200,0 L1200,120 L0,120 Z"></path></svg>') repeat-x;
+            background-size: clamp(300px, 50vw, 600px) 100px;
+            animation: waveMove 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes waveMove {
+            0% { background-position-x: 0; }
+            100% { background-position-x: clamp(300px, 50vw, 600px); }
+        }
+
+        /* ลูกเล่นที่ 11: ริบบิ้นลอย */
+        .ribbon {
+            position: absolute;
+            width: clamp(50px, 10vw, 100px);
+            height: clamp(5px, 1vw, 10px);
+            background: #FF4778;
+            opacity: 0.6;
+            animation: ribbonFloat 8s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes ribbonFloat {
+            0% { transform: translateX(-20vw) translateY(110vh) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateX(60vw) translateY(50vh) rotate(360deg); opacity: 0.8; }
+            100% { transform: translateX(120vw) translateY(-10vh) rotate(720deg); opacity: 0.6; }
+        }
+
+        /* ลูกเล่นที่ 12: เกล็ดหิมะลอย */
+        .snowflake {
+            position: absolute;
+            width: clamp(10px, 2vw, 20px);
+            height: clamp(10px, 2vw, 20px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FFF" d="M50,0 L50,100 M0,50 L100,50 M15,15 L85,85 M15,85 L85,15"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.7;
+            z-index: 2;
+            animation: snowFall 15s linear infinite;
+        }
+
+        @keyframes snowFall {
+            0% { transform: translateY(-10vh) translateX(-10vw) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(50vh) translateX(5vw) rotate(180deg); opacity: 0.9; }
+            100% { transform: translateY(110vh) translateX(-5vw) rotate(360deg); opacity: 0.7; }
+        }
+
+        /* ลูกเล่นที่ 13: ควันพวยพุ่ง */
+        .smoke {
+            position: absolute;
+            width: clamp(30px, 5vw, 50px);
+            height: clamp(30px, 5vw, 50px);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 1;
+            animation: smokeRise 6s linear infinite;
+        }
+
+        @keyframes smokeRise {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            10% { opacity: 0.7; }
+            50% { transform: translateY(50vh) scale(1.5); opacity: 0.4; }
+            100% { transform: translateY(0vh) scale(3); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 14: วงแหวนระลอก */
+        .ripple {
+            position: absolute;
+            width: clamp(10px, 2vw, 20px);
+            height: clamp(10px, 2vw, 20px);
+            border: 2px solid rgba(255, 71, 120, 0.5);
+            border-radius: 50%;
+            animation: rippleEffect 4s linear infinite;
+            z-index: 2;
+        }
+
+        @keyframes rippleEffect {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 15: ลูกเต๋าหมุน */
+        .dice {
+            position: absolute;
+            width: clamp(20px, 4vw, 40px);
+            height: clamp(20px, 4vw, 40px);
+            background: #FFB6C1;
+            border-radius: 10%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: diceRoll 10s linear infinite;
+            z-index: 3;
+        }
+
+        .dice::before {
+            content: "♥";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(10px, 2vw, 20px);
+            color: #FF4778;
+        }
+
+        @keyframes diceRoll {
+            0% { transform: translateY(100vh) translateX(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg); opacity: 0.8; }
+            50% { transform: translateY(50vh) translateX(20vw) rotateX(180deg) rotateY(360deg) rotateZ(180deg); opacity: 1; }
+            100% { transform: translateY(0vh) translateX(0) rotateX(360deg) rotateY(720deg) rotateZ(360deg); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 16: พลุระเบิด */
+        .firework {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #FF4778;
+            opacity: 0;
+            z-index: 3;
+        }
+
+        .firework.ready {
+            animation: fireworkLaunch 2s forwards;
+        }
+
+        @keyframes fireworkLaunch {
+            0% { transform: translateY(100vh); opacity: 1; }
+            70% { transform: translateY(30vh); opacity: 1; }
+            100% { transform: translateY(30vh); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 17: ฝุ่นกระจาย */
+        .dust {
+            position: absolute;
+            width: clamp(3px, 0.5vw, 5px);
+            height: clamp(3px, 0.5vw, 5px);
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 2;
+        }
+
+        .dust.active {
+            animation: dustSpreading 2s forwards;
+        }
+
+        @keyframes dustSpreading {
+            0% { transform: scale(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: scale(20) translateY(-20px); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 18: เคเกท์วูบวาบ */
+        .cake {
+            position: absolute;
+            width: clamp(40px, 8vw, 80px);
+            height: clamp(30px, 6vw, 60px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80"><rect fill="%23FFB6C1" x="10" y="40" width="80" height="40" rx="5" /><rect fill="%23FF95A8" x="20" y="20" width="60" height="20" rx="5" /><rect fill="%23FF4778" x="40" y="10" width="20" height="10" rx="3" /><circle fill="%23FFDF00" cx="50" cy="5" r="5"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: 3;
+            animation: cakeFloat 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes cakeFloat {
+            0% { transform: translateY(110vh) rotate(-5deg); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateY(50vh) rotate(5deg); }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(-5deg); opacity: 0; }
+        }
+
+        /* ลูกเล่นที่ 19: ดวงจันทร์และดวงดาว */
+        .moon {
+            position: absolute;
+            width: clamp(30px, 6vw, 60px);
+            height: clamp(30px, 6vw, 60px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="%23FFF9C4" cx="50" cy="50" r="40"/><circle fill="%23FFC1CC" cx="30" cy="30" r="10"/><circle fill="%23FFC1CC" cx="70" cy="40" r="8"/><circle fill="%23FFC1CC" cx="40" cy="70" r="12"/></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: 2;
+            opacity: 0.8;
+            animation: moonMove 30s linear infinite alternate;
+        }
+
+        @keyframes moonMove {
+            0% { transform: translateX(-20vw) translateY(80vh) rotate(0deg); }
+            100% { transform: translateX(120vw) translateY(10vh) rotate(360deg); }
+        }
+
+        /* ลูกเล่นที่ 20: สายรุ้ง */
+        .rainbow {
+            position: absolute;
+            width: clamp(200px, 40vw, 400px);
+            height: clamp(100px, 20vw, 200px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path fill="none" stroke="%23FF4778" stroke-width="10" d="M0,100 C70,0 130,0 200,100" /></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.5;
+            z-index: 1;
+            animation: rainbowFade 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes rainbowFade {
+            0% { opacity: 0.3; transform: translateY(50vh) scale(0.8); }
+            100% { opacity: 0.7; transform: translateY(20vh) scale(1.2); }
+        }
+
+        /* ลูกเล่นที่ 21: แผ่นรูปหัวใจหมุนวน */
+        .spinning-heart {
+            position: absolute;
+            width: clamp(20px, 4vw, 40px);
+            height: clamp(20px, 4vw, 40px);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF4778" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
+            background-repeat: no-repeat;
+            background-size: contain;
+            animation: heartSpin 8s linear infinite;
+            z-index: 3;
+        }
+
+        @keyframes heartSpin {
+            0% { transform: rotate(0deg) translateX(clamp(20px, 5vw, 50px)) rotate(0deg); opacity: 0.7; }
+            100% { transform: rotate(360deg) translateX(clamp(20px, 5vw, 50px)) rotate(-360deg); opacity: 0.7; }
+        }
+
+        /* Animation for button */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animation for pulse */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Animation for heart burst */
+        @keyframes heartBurst {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
             .slide {
-                font-size: clamp(2.5em, 9vw, 4em);
                 width: 95%;
+                padding: 15px;
             }
-            .button {
-                font-size: clamp(0.8em, 3.5vw, 1.1em);
-                padding: clamp(8px, 1.5vw, 12px) clamp(15px, 3vw, 25px);
+            
+            .response-message {
+                padding: 0 20px;
+            }
+            
+            .response-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .container {
+                height: 90vh;
+            }
+            
+            .slide img {
+                max-height: 30vh;
             }
         }
     </style>
 </head>
 <body>
-    <!-- เพลงประกอบ -->
-    <audio autoplay loop>
-        <source src="romantic_music.mp3" type="audio/mpeg">
-        เบราว์เซอร์ของคุณไม่รองรับการเล่นเพลง
+    <!-- เพลงประกอบ - จะเล่นอัตโนมัติ -->
+    <audio id="bgMusic" autoplay loop preload="auto">
+        <source src="music/RakTae.mp3" type="audio/mpeg">
+        
     </audio>
+    
+    <!-- ส่วนควบคุมเสียง -->
+    <div class="audio-controls">
+        <button class="audio-toggle" id="audioToggle">♪</button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+    </div>
 
-    <div class="slide" id="slide1">วันที่ฉันเจอเธอครั้งแรก...</div>
-    <div class="slide" id="slide2">โลกของฉันเปลี่ยนไปตลอดกาล</div>
-    <div class="slide" id="slide3">เธอคือความสุขที่ฉันไม่เคยรู้มาก่อน</div>
-    <div class="slide" id="slide4">เธอคือคนที่ทำให้ฉันอยากตื่นมาเจอทุกเช้า</div>
-    <div class="slide" id="slide5">ทุกครั้งที่เธออยู่ใกล้ หัวใจฉันเต้นแรงจนหยุดไม่ได้</div>
-    <div class="slide" id="slide6">เธอคือความฝันที่ฉันไม่เคยกล้าฝันมาก่อน</div>
-    <div class="slide" id="slide7"><a href="index1.html" class="button" id="nextButton">ไปต่อกันไหม?</a></div>
+    <div class="heart-frame"></div>
+    <div class="container">
+        <!-- สไลด์ข้อความ -->
+        <div class="slide" id="slide1">วันที่ตี๋ได้รู้จักกับวีวาครั้งแรก...</div>
+        <div class="slide" id="slide2">โลกของตี๋เปลี่ยนไปตลอดกาล</div>
+        <div class="slide" id="slide3">วีวาคือแสงสว่างในทุกวันของตี๋</div>
+        <div class="slide" id="slide4">
+            วีวาทำให้ตี๋ยิ้มได้เสมอ<br/>
+            แม้ในวันที่เหนื่อยที่สุด
+        </div>
+        <div class="slide" id="slide5">
+            ทุกครั้งที่เห็นวีวา<br/>
+            หัวใจตี๋เต้นแรงจนบอกไม่ถูก
+        </div>
+        <div class="slide" id="slide6">
+            ไม่ว่าจะเจออะไรในชีวิต<br/>
+            ตี๋อยากเจอมันไปพร้อมกับวีวา
+        </div>
+        <div class="slide" id="slide7">
+            วีวาเป็นความฝันที่ตี๋<br/>
+            ไม่เคยกล้าฝันมาก่อน
+        </div>
+        <div class="slide" id="slide8">
+            ตี๋อยากจะบอกว่า<br/>
+            ตี๋ชอบวีวามากนะ
+        </div>
+        <div class="slide" id="slide9">
+            ตี๋อยากให้วีวารู้ว่า<br/>
+            วีวาพิเศษสำหรับตี๋แค่ไหน
+        </div>
+        <div class="slide" id="slide10">
+            และตี๋มีอะไรจะถามวีวา...
+        </div>
 
-    <!-- 6. หัวใจลอยช้า ๆ (หลากสี) -->
-    <div class="heart color1" style="left: 20%; animation-delay: 0s;"></div>
-    <div class="heart color2" style="left: 50%; animation-delay: 2s;"></div>
-    <div class="heart color3" style="left: 80%; animation-delay: 4s;"></div>
+        <!-- ปุ่มขอเป็นแฟน -->
+        <button class="love-button" id="loveButton">วีวา... เป็นแฟนตี๋นะ</button>
+    </div>
 
-    <!-- 7. อนุภาคนุ่มนวล -->
-    <div class="particle" style="left: 30%; animation-delay: 0s;"></div>
-    <div class="particle" style="left: 60%; animation-delay: 1s;"></div>
-    <div class="particle" style="left: 90%; animation-delay: 2s;"></div>
+    <!-- ส่วนการตอบสนอง (Response) -->
+    <div class="response-container" id="responseContainer">
+        <div class="response-message">วีวา... จะเป็นแฟนกับตี๋ไหม?</div>
+        <div class="response-buttons">
+            <button class="response-button yes-button" id="yesButton">ตกลง ♥</button>
+            <button class="response-button no-button" id="noButton">ขอคิดดูก่อน</button>
+        </div>
+    </div>
 
-    <!-- 8. แสงระยิบระยับพื้นหลัง (หลากสี) -->
-    <div class="sparkle color1" style="top: 20%; left: 25%; animation-delay: 0s;"></div>
-    <div class="sparkle color2" style="top: 40%; left: 75%; animation-delay: 1s;"></div>
-    <div class="sparkle color3" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
-    <div class="sparkle color1" style="top: 10%; left: 40%; animation-delay: 3s;"></div>
-    <div class="sparkle color2" style="top: 70%; left: 60%; animation-delay: 0.5s;"></div>
+    <!-- Heart burst effect -->
+    <div class="heart-burst" id="heartBurst"></div>
 
-    <!-- 9. แสงนุ่ม ๆ รอบข้อความ -->
-    <div class="glow-dot" style="top: 30%; left: 20%; animation-delay: 0s;"></div>
-    <div class="glow-dot" style="top: 50%; left: 80%; animation-delay: 1s;"></div>
-    <div class="glow-dot" style="top: 80%; left: 30%; animation-delay: 2s;"></div>
+    <!-- ลูกเล่นแอนิเมชั่น -->
+    <!-- เราจะสร้างทั้งหมด 21 ลูกเล่น -->
 
-    <!-- 10. หัวใจเล็ก ๆ ลอยข้างข้อความ (หลากสี) -->
-    <div class="mini-heart color1" style="top: 45%; left: 30%; animation-delay: 0s;"></div>
-    <div class="mini-heart color2" style="top: 55%; left: 70%; animation-delay: 2s;"></div>
-    <div class="mini-heart color3" style="top: 35%; left: 50%; animation-delay: 1s;"></div>
+    <!-- ลูกเล่นที่ 1: หัวใจลอย -->
+    <div class="floating-heart" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="floating-heart" style="left: 40%; animation-delay: 3s;"></div>
+    <div class="floating-heart" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="floating-heart" style="left: 90%; animation-delay: 9s;"></div>
+    <div class="floating-heart" style="left: 20%; animation-delay: 12s;"></div>
 
-    <!-- 11. ฟองอากาศลอยขึ้น (หลากสี) -->
-    <div class="bubble color1" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="bubble color2" style="left: 85%; animation-delay: 3s;"></div>
-    <div class="bubble color3" style="left: 40%; animation-delay: 1.5s;"></div>
-    <div class="bubble color1" style="left: 60%; animation-delay: 2s;"></div>
+    <!-- ลูกเล่นที่ 2: ลูกโป่งลอย -->
+    <div class="balloon" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="balloon" style="left: 45%; animation-delay: 5s;"></div>
+    <div class="balloon" style="left: 75%; animation-delay: 10s;"></div>
 
-    <!-- 12. อนุภาคลอยวน (หลากสี) -->
-    <div class="orbit-particle color1" style="top: 20%; left: 40%; animation-delay: 0s;"></div>
-    <div class="orbit-particle color2" style="top: 70%; left: 60%; animation-delay: 2s;"></div>
-    <div class="orbit-particle color3" style="top: 50%; left: 20%; animation-delay: 1s;"></div>
+    <!-- ลูกเล่นที่ 3: แสงระยิบระยับ -->
+    <div class="sparkle" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+    <div class="sparkle" style="top: 30%; left: 70%; animation-delay: 1s;"></div>
+    <div class="sparkle" style="top: 50%; left: 30%; animation-delay: 2s;"></div>
+    <div class="sparkle" style="top: 70%; left: 60%; animation-delay: 3s;"></div>
+    <div class="sparkle" style="top: 90%; left: 40%; animation-delay: 2.5s;"></div>
+    <div class="sparkle" style="top: 20%; left: 80%; animation-delay: 1.5s;"></div>
 
-    <!-- 13. ดวงดาวเล็ก ๆ ลอยวน (หลากสี) -->
-    <div class="star color1" style="top: 25%; left: 35%; animation-delay: 0s;"></div>
-    <div class="star color2" style="top: 65%; left: 65%; animation-delay: 2s;"></div>
-    <div class="star color3" style="top: 15%; left: 80%; animation-delay: 1s;"></div>
+    <!-- ลูกเล่นที่ 4: ดาวเล็ก ๆ กระพริบ -->
+    <div class="star" style="top: 15%; left: 25%; animation-delay: 0s;"></div>
+    <div class="star" style="top: 35%; left: 75%; animation-delay: 2s;"></div>
+    <div class="star" style="top: 55%; left: 15%; animation-delay: 4s;"></div>
+    <div class="star" style="top: 75%; left: 65%; animation-delay: 1s;"></div>
 
-    <!-- 14. แสงลอยจากข้อความ -->
-    <div class="text-light" style="top: 50%; left: 45%; animation-delay: 0s;"></div>
-    <div class="text-light" style="top: 50%; left: 55%; animation-delay: 2s;"></div>
-    <div class="text-light" style="top: 60%; left: 50%; animation-delay: 3s;"></div>
+    <!-- ลูกเล่นที่ 5: ผีเสื้อบิน -->
+    <div class="butterfly" style="top: 30%; animation-delay: 0s;"></div>
+    <div class="butterfly" style="top: 60%; animation-delay: 7s;"></div>
 
-    <!-- 15. ดาวตก (Falling Stars) -->
-    <div class="falling-star color1" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="falling-star color2" style="left: 40%; animation-delay: 1s;"></div>
-    <div class="falling-star color3" style="left: 70%; animation-delay: 2s;"></div>
+    <!-- ลูกเล่นที่ 6: ฟองอากาศลอย -->
+    <div class="bubble" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="bubble" style="left: 50%; animation-delay: 3s;"></div>
+    <div class="bubble" style="left: 80%; animation-delay: 6s;"></div>
+    <div class="bubble" style="left: 35%; animation-delay: 9s;"></div>
 
-    <!-- 16. เมฆสีชมพูอ่อน -->
-    <div class="cloud" style="top: 20%; left: 10%;"></div>
-    <div class="cloud" style="top: 80%; left: 70%;"></div>
-    <div class="cloud" style="top: 30%; left: 80%;"></div>
+    <!-- ลูกเล่นที่ 7: ดอกไม้ร่วง -->
+    <div class="petal" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="petal" style="left: 30%; animation-delay: 3s;"></div>
+    <div class="petal" style="left: 50%; animation-delay: 6s;"></div>
+    <div class="petal" style="left: 70%; animation-delay: 9s;"></div>
+    <div class="petal" style="left: 90%; animation-delay: 12s;"></div>
 
-    <!-- 17. ดอกไม้ร่วง (Falling Petals) -->
-    <div class="petal color1" style="left: 20%; animation-delay: 0s;"></div>
-    <div class="petal color2" style="left: 50%; animation-delay: 1.5s;"></div>
-    <div class="petal color3" style="left: 80%; animation-delay: 3s;"></div>
+    <!-- ลูกเล่นที่ 8: แสงกระจายรอบตัว -->
+    <div class="glow" style="top: 30%; left: 30%; animation-delay: 0s;"></div>
+    <div class="glow" style="top: 60%; left: 70%; animation-delay: 3s;"></div>
 
-    <!-- 18. แสงระยิบระยับใหญ่ (Large Glitter) -->
-    <div class="large-glitter" style="top: 25%; left: 30%; animation-delay: 0s;"></div>
-    <div class="large-glitter" style="top: 65%; left: 70%; animation-delay: 2s;"></div>
-    <div class="large-glitter" style="top: 15%; left: 50%; animation-delay: 1s;"></div>
+    <!-- ลูกเล่นที่ 9: ดาวตก -->
+    <div class="shooting-star" style="top: 0; left: 20%; animation-delay: 0s;"></div>
+    <div class="shooting-star" style="top: 20%; left: 70%; animation-delay: 5s;"></div>
+    <div class="shooting-star" style="top: 10%; left: 40%; animation-delay: 10s;"></div>
 
-    <!-- 19. ลูกโป่งลอย (Floating Balloons) -->
-    <div class="balloon color1" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="balloon color2" style="left: 40%; animation-delay: 2s;"></div>
-    <div class="balloon color3" style="left: 70%; animation-delay: 1s;"></div>
+    <!-- ลูกเล่นที่ 10: คลื่นพลิ้ว -->
+    <div class="wave"></div>
 
-    <!-- 20. ดาวหมุน (Spinning Stars) -->
-    <div class="spinning-star color1" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
-    <div class="spinning-star color2" style="top: 70%; left: 50%; animation-delay: 1s;"></div>
-    <div class="spinning-star color3" style="top: 30%; left: 70%; animation-delay: 2s;"></div>
+    <!-- ลูกเล่นที่ 11: ริบบิ้นลอย -->
+    <div class="ribbon" style="top: 40%; animation-delay: 0s;"></div>
+    <div class="ribbon" style="top: 70%; animation-delay: 4s;"></div>
 
-    <!-- 21. ลูกแก้วระยิบ (Shimmering Orbs) -->
-    <div class="orb color1" style="top: 40%; left: 30%; animation-delay: 0s;"></div>
-    <div class="orb color2" style="top: 60%; left: 60%; animation-delay: 1s;"></div>
-    <div class="orb color3" style="top: 10%; left: 80%; animation-delay: 2s;"></div>
+    <!-- ลูกเล่นที่ 12: เกล็ดหิมะลอย -->
+    <div class="snowflake" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="snowflake" style="left: 45%; animation-delay: 5s;"></div>
+    <div class="snowflake" style="left: 75%; animation-delay: 10s;"></div>
 
-    <!-- 22. ผีเสื้อลอย (Floating Butterflies) -->
-    <div class="butterfly color1" style="top: 50%; left: 25%; animation-delay: 0s;"></div>
-    <div class="butterfly color2" style="top: 30%; left: 55%; animation-delay: 1.5s;"></div>
-    <div class="butterfly color3" style="top: 70%; left: 75%; animation-delay: 3s;"></div>
+    <!-- ลูกเล่นที่ 13: ควันพวยพุ่ง -->
+    <div class="smoke" style="left: 30%; animation-delay: 0s;"></div>
+    <div class="smoke" style="left: 60%; animation-delay: 3s;"></div>
+
+    <!-- ลูกเล่นที่ 14: วงแหวนระลอก -->
+    <div class="ripple" style="top: 40%; left: 30%; animation-delay: 0s;"></div>
+    <div class="ripple" style="top: 60%; left: 70%; animation-delay: 2s;"></div>
+
+    <!-- ลูกเล่นที่ 15: ลูกเต๋าหมุน -->
+    <div class="dice" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="dice" style="left: 80%; animation-delay: 5s;"></div>
+
+    <!-- ลูกเล่นที่ 16: พลุระเบิด (จะถูกสร้างด้วย JavaScript) -->
+    <div class="firework" id="firework1"></div>
+    <div class="firework" id="firework2"></div>
+    <div class="firework" id="firework3"></div>
+
+    <!-- ลูกเล่นที่ 17: ฝุ่นกระจาย (จะถูกสร้างด้วย JavaScript) -->
+    <div class="dust" id="dust1"></div>
+    <div class="dust" id="dust2"></div>
+    <div class="dust" id="dust3"></div>
+
+    <!-- ลูกเล่นที่ 18: เค้กลอย -->
+    <div class="cake" style="left: 25%; animation-delay: 0s;"></div>
+    <div class="cake" style="left: 75%; animation-delay: 7s;"></div>
+
+    <!-- ลูกเล่นที่ 19: ดวงจันทร์และดวงดาว -->
+    <div class="moon" style="animation-delay: 0s;"></div>
+
+    <!-- ลูกเล่นที่ 20: สายรุ้ง -->
+    <div class="rainbow" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="rainbow" style="top: 70%; left: 50%; animation-delay: 5s;"></div>
+
+    <!-- ลูกเล่นที่ 21: แผ่นรูปหัวใจหมุนวน -->
+    <div class="spinning-heart" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="spinning-heart" style="top: 70%; left: 80%; animation-delay: 4s;"></div>
 
     <script>
-        const slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const loveButton = document.getElementById('loveButton');
+            const responseContainer = document.getElementById('responseContainer');
+            const yesButton = document.getElementById('yesButton');
+            const noButton = document.getElementById('noButton');
+            const heartBurst = document.getElementById('heartBurst');
+            const fireworks = document.querySelectorAll('.firework');
+            const dusts = document.querySelectorAll('.dust');
+            const bgMusic = document.getElementById('bgMusic');
+            const audioToggle = document.getElementById('audioToggle');
+            const volumeSlider = document.getElementById('volumeSlider');
+            
+            let currentSlide = 0;
+            let autoSlideTimer;
+            let isMuted = false;
 
-        // ฟังก์ชันเปลี่ยนสไลด์อัตโนมัติทุก 4 วินาที
-        function showNextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide++;
-            if (currentSlide < slides.length) {
-                slides[currentSlide].classList.add('active');
-                if (currentSlide < slides.length - 1) {
-                    setTimeout(showNextSlide, 3000);
+            // แสดงสไลด์ที่กำหนด
+            function showSlide(index) {
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                slides[index].classList.add('active');
+            }
+
+            // เปลี่ยนสไลด์อัตโนมัติ
+            function startAutoSlide() {
+                showSlide(currentSlide);
+                
+                autoSlideTimer = setInterval(() => {
+                    currentSlide++;
+                    
+                    if (currentSlide < slides.length) {
+                        showSlide(currentSlide);
+                        
+                        // เมื่อถึงสไลด์สุดท้าย
+                        if (currentSlide === slides.length - 1) {
+                            // แสดงสไลด์สุดท้ายเป็นเวลา 3 วินาที
+                            setTimeout(() => {
+                                // ซ่อนสไลด์สุดท้าย
+                                slides[currentSlide].classList.remove('active');
+                                
+                                // รอให้สไลด์หายไปก่อน แล้วค่อยแสดงปุ่ม
+                                setTimeout(() => {
+                                    loveButton.classList.add('active');
+                                    
+                                    // เรียกใช้ลูกเล่นพลุและฝุ่น
+                                    triggerFireworks();
+                                    triggerDust();
+                                }, 1000);
+                            }, 3000);
+                            
+                            // หยุดการเลื่อนสไลด์อัตโนมัติ
+                            clearInterval(autoSlideTimer);
+                        }
+                    }
+                }, 3000);
+            }
+
+            // เรียกใช้ลูกเล่นพลุ
+            function triggerFireworks() {
+                fireworks.forEach((firework, index) => {
+                    firework.style.left = `${20 + (index * 30)}%`;
+                    setTimeout(() => {
+                        firework.classList.add('ready');
+                    }, index * 500);
+                });
+            }
+
+            // เรียกใช้ลูกเล่นฝุ่นกระจาย
+            function triggerDust() {
+                dusts.forEach((dust, index) => {
+                    dust.style.left = `${30 + (index * 20)}%`;
+                    dust.style.top = `${40 + (index * 10)}%`;
+                    setTimeout(() => {
+                        dust.classList.add('active');
+                    }, index * 700 + 1000);
+                });
+            }
+
+            // สร้างหัวใจเด้งออกมาเมื่อกดปุ่ม Yes
+            function createHeartBurst() {
+                heartBurst.innerHTML = '';
+                heartBurst.classList.add('active');
+                
+                for (let i = 0; i < 50; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart-particle');
+                    
+                    // สุ่มขนาด
+                    const size = Math.random() * 20 + 10;
+                    heart.style.width = `${size}px`;
+                    heart.style.height = `${size}px`;
+                    
+                    // สุ่มตำแหน่ง
+                    heart.style.top = '50%';
+                    heart.style.left = '50%';
+                    
+                    // สุ่มสี
+                    const colors = ['#FF4778', '#FF95A8', '#FFB6C1', '#FFD1DC'];
+                    heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // สุ่มมุม
+                    const angle = Math.random() * 360;
+                    const distance = Math.random() * 1000 + 200;
+                    const duration = Math.random() * 3 + 2;
+                    
+                    heart.style.borderRadius = '50%';
+                    heart.style.position = 'absolute';
+                    heart.style.transform = 'translate(-50%, -50%)';
+                    heart.style.animation = `heartBurst ${duration}s forwards`;
+                    heart.style.animationTimingFunction = 'ease-out';
+                    
+                    // คำนวณตำแหน่งสุดท้าย
+                    const endX = Math.cos(angle * Math.PI / 180) * distance;
+                    const endY = Math.sin(angle * Math.PI / 180) * distance;
+                    
+                    heart.style.setProperty('--end-x', `${endX}px`);
+                    heart.style.setProperty('--end-y', `${endY}px`);
+                    
+                    heartBurst.appendChild(heart);
                 }
+                
+                // เพิ่ม CSS animation สำหรับ heart-particle
+                const style = document.createElement('style');
+                style.textContent = `
+                    .heart-particle {
+                        opacity: 0;
+                    }
+                    @keyframes heartBurst {
+                        0% { 
+                            transform: translate(-50%, -50%) scale(0); 
+                            opacity: 1;
+                        }
+                        50% { 
+                            opacity: 1; 
+                        }
+                        100% { 
+                            transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(1); 
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
             }
-        }
 
-        // เริ่มต้นสไลด์แรก
-        slides[currentSlide].classList.add('active');
-        setTimeout(showNextSlide, 3000);
+            // ปุ่มฉันขอเป็นแฟนคุณนะ
+            loveButton.addEventListener('click', function() {
+                responseContainer.classList.add('active');
+            });
 
-        // ป้องกันการคลิกที่หน้าจอ ยกเว้นปุ่ม
-        document.body.addEventListener('click', (e) => {
-            if (!e.target.closest('#nextButton')) {
-                e.preventDefault();
+            // ปุ่มตกลง
+            yesButton.addEventListener('click', function() {
+                responseContainer.classList.remove('active');
+                document.body.innerHTML = `
+                    <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(45deg, #FF4778, #FF95A8); color: white; font-family: 'Sriracha', cursive; text-align: center; padding: 20px;">
+                        <h1 style="font-size: clamp(2rem, 6vw, 4rem); margin-bottom: 20px; text-shadow: 0 0 20px rgba(0,0,0,0.2);">♥️ ขอบคุณวีวามากนะ ♥️</h1>
+                        <p style="font-size: clamp(1.2rem, 3vw, 2rem); margin-bottom: 30px; line-height: 1.5; max-width: 800px;">ตี๋จะดูแลวีวาให้ดีที่สุด<br>นี่คือวันแรกของเราสองคน<br>ตี๋รักวีวานะ ♥️</p>
+                        <p style="font-size: clamp(1rem, 2vw, 1.5rem); margin-top: 30px;">${new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </div>
+                `;
+                createHeartBurst();
+            });
+
+            // ปุ่มขอคิดดูก่อน (จะหนีไม่พ้น)
+            noButton.addEventListener('mouseenter', function() {
+                // สุ่มตำแหน่งใหม่เมื่อ hover
+                const randomX = Math.random() * (window.innerWidth - 150);
+                const randomY = Math.random() * (window.innerHeight - 50);
+                
+                this.style.position = 'absolute';
+                this.style.left = `${randomX}px`;
+                this.style.top = `${randomY}px`;
+            });
+
+            // ควบคุมเสียงเพลง
+            audioToggle.addEventListener('click', function() {
+                if (isMuted) {
+                    bgMusic.volume = volumeSlider.value;
+                    audioToggle.textContent = '♪';
+                    isMuted = false;
+                } else {
+                    bgMusic.volume = 0;
+                    audioToggle.textContent = '♪̸';
+                    isMuted = true;
+                }
+            });
+            
+            volumeSlider.addEventListener('input', function() {
+                if (!isMuted) {
+                    bgMusic.volume = this.value;
+                }
+            });
+            
+            // ตั้งค่าระดับเสียงเริ่มต้น
+            bgMusic.volume = volumeSlider.value;
+            
+            // พยายามเล่นเพลงทันทีที่โหลดหน้า
+            function tryPlayMusic() {
+                bgMusic.play().catch(function(error) {
+                    console.log("การเล่นอัตโนมัติอาจถูกบล็อก: ", error);
+                    
+                    // เพิ่มไอคอนแจ้งเตือนถ้าเพลงเล่นไม่ได้
+                    let notification = document.createElement('div');
+                    notification.innerHTML = '🔊 คลิกเพื่อเล่นเพลง';
+                    notification.style.position = 'fixed';
+                    notification.style.bottom = '20px';
+                    notification.style.left = '50%';
+                    notification.style.transform = 'translateX(-50%)';
+                    notification.style.backgroundColor = 'rgba(255, 71, 120, 0.8)';
+                    notification.style.color = 'white';
+                    notification.style.padding = '10px 20px';
+                    notification.style.borderRadius = '30px';
+                    notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
+                    notification.style.zIndex = '1000';
+                    notification.style.cursor = 'pointer';
+                    notification.style.fontFamily = "'Prompt', sans-serif";
+                    notification.style.fontSize = '14px';
+                    
+                    notification.onclick = function() {
+                        bgMusic.play();
+                        this.remove();
+                    };
+                    
+                    document.body.appendChild(notification);
+                    
+                    // ให้แจ้งเตือนหายไปอัตโนมัติหลังจาก 8 วินาที
+                    setTimeout(() => {
+                        if (document.body.contains(notification)) {
+                            notification.remove();
+                        }
+                    }, 8000);
+                });
             }
+            
+            // พยายามเล่นเพลงทันทีที่โหลดหน้า
+            tryPlayMusic();
+            
+            // รองรับกรณีหน้าถูกโหลดสมบูรณ์แล้ว
+            if (document.readyState === 'complete') {
+                tryPlayMusic();
+            } else {
+                window.addEventListener('load', tryPlayMusic);
+            }
+            
+            // รองรับการปฏิสัมพันธ์ของผู้ใช้
+            document.body.addEventListener('click', function() {
+                tryPlayMusic();
+            }, { once: true });
+            
+            // รองรับการกดปุ่มใดๆ
+            document.body.addEventListener('keydown', function() {
+                tryPlayMusic();
+            }, { once: true });
+            
+            // เริ่มการทำงาน
+            startAutoSlide();
         });
     </script>
 </body>
