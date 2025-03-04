@@ -3,410 +3,1348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เราคบกันแล้วนะ ♥</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <title>♥ ตี๋ ♥ วีวา ♥</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sriracha&family=Mali:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(45deg, #ffb6c1, #ffdde1, #e6e6fa);
-            min-height: 100vh;
+        :root {
+            --primary: #FF4778;
+            --primary-light: #FF95A8;
+            --primary-lighter: #FFB6C1;
+            --white: #FFFFFF;
+        }
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            color: #ff6b81;
-            position: relative;
-            overflow-y: auto;
         }
-
-        .container {
-            text-align: center;
-            padding: 40px;
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Sriracha', cursive;
+            background: #000;
             position: relative;
-            z-index: 10;
             min-height: 100vh;
         }
-
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(255, 107, 129, 0.7), 0 0 25px rgba(255, 221, 225, 0.5);
-            animation: pulseText 2s infinite;
+        
+        /* กรณีโหลดหน้า */
+        body.no-scroll {
+            overflow: hidden;
         }
-
-        p {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            text-shadow: 0 0 5px rgba(255, 107, 129, 0.3);
-        }
-
-        /* ลูกโป่งลอยขึ้น */
-        .balloon {
-            position: absolute;
-            bottom: -100px;
-            width: 60px;
-            height: 80px;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: floatBalloon 10s ease-in forwards;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.9rem;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            z-index: 5;
-            text-align: center;
-            line-height: 1;
-            padding: 5px;
-        }
-
-        .balloon::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 20px;
-            background: var(--string-color, #ffb6c1);
-        }
-
-        @keyframes floatBalloon {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            50% { transform: translateY(-100vh) rotate(10deg); opacity: 1; }
-            100% { transform: translateY(-200vh) rotate(0deg); opacity: 0; }
-        }
-
-        /* ดอกไม้ไฟ */
-        .firework {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: explode 1s ease-out forwards;
-        }
-
-        @keyframes explode {
-            0% { transform: scale(0); opacity: 1; }
-            50% { transform: scale(2); opacity: 0.8; }
-            100% { transform: scale(0); opacity: 0; }
-        }
-
-        /* หัวใจลอยลงมา */
-        .heart-rain {
+        
+        /* ส่วนโหลดเว็บไซต์ */
+        .loading-screen {
             position: fixed;
-            top: -10%;
-            font-size: 2rem;
-            animation: heartFall 3s linear forwards;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--primary-lighter));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 1.5s ease, visibility 1.5s ease;
         }
-
-        @keyframes heartFall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        
+        .loading-heart {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform: rotate(45deg);
+            animation: loadingPulse 1.5s infinite;
         }
-
-        /* ท้องฟ้าสีรุ้ง */
-        .rainbow-sky {
+        
+        .loading-heart:before, .loading-heart:after {
+            content: "";
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        
+        .loading-heart:before {
+            left: -40px;
+        }
+        
+        .loading-heart:after {
+            top: -40px;
+        }
+        
+        .loading-text {
+            margin-top: 50px;
+            font-size: 24px;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .loading-progress {
+            width: 200px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--white);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        /* ส่วนพื้นหลัง */
+        .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            animation: rainbowSky 10s infinite;
             z-index: 1;
+            background: radial-gradient(ellipse at center, #FF82A9 0%, #FF4778 100%);
+            overflow: hidden;
+        }
+        
+        /* เอฟเฟกต์พาร์ติเคิล */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .particle {
+            position: absolute;
+            display: block;
             pointer-events: none;
+            z-index: 2;
+            border-radius: 50%;
+        }
+        
+        /* หัวใจบนพื้นหลัง */
+        .bg-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            opacity: 0.2;
+        }
+        
+        .bg-heart {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             opacity: 0.3;
+            z-index: 2;
         }
-
-        @keyframes rainbowSky {
-            0% { background: #ffb6c1; }
-            20% { background: #ffdde1; }
-            40% { background: #e6e6fa; }
-            60% { background: #d4f4dd; }
-            80% { background: #fce2fc; }
-            100% { background: #ffb6c1; }
+        
+        /* เอฟเฟกต์แสงหมุน */
+        .light-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vmax;
+            height: 100vmax;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+            pointer-events: none;
+            z-index: 2;
+            animation: rotateLight 120s linear infinite;
         }
-
-        @keyframes pulseText {
+        
+        /* เอฟเฟกต์เส้นแสง */
+        .light-beam {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            width: 200vmax;
+            height: 4px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+            z-index: 2;
+            animation: rotateBeam 20s linear infinite;
+            opacity: 0.3;
+            border-radius: 2px;
+            pointer-events: none;
+        }
+        
+        /* คอนเทนเนอร์หลัก */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem 4rem 1rem;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 2s ease, transform 2s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .container.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* ส่วนบนสุด - หัวข้อ */
+        .top-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            color: var(--white);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+                         0 0 30px var(--primary-light);
+            animation: titlePulse 3s infinite ease-in-out;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .title span {
+            display: inline-block;
+            animation: letterDance 3s infinite;
+            animation-delay: calc(var(--index) * 0.1s);
+            transform-origin: bottom;
+        }
+        
+        .subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: var(--white);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            font-family: 'Prompt', sans-serif;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+        }
+        
+        /* ส่วนกลาง - รูปภาพ */
+        .gallery-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .gallery-container {
+            position: relative;
+            width: 70%;
+            max-width: 500px;
+            aspect-ratio: 16 / 9;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+                        0 0 20px rgba(255, 255, 255, 0.5);
+            transform: perspective(1000px) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-container:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.02);
+        }
+        
+        .photo-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            transform: scale(1.1);
+        }
+        
+        .photo-frame.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .photo-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 5;
+        }
+        
+        .photo-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        .photo-dot.active {
+            background: var(--white);
+            transform: scale(1.3);
+        }
+        
+        .photo-dot:hover {
+            background: var(--white);
+        }
+        
+        .gallery-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 15px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-sizing: border-box;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                                      rgba(0,0,0,0) 70%, 
+                                      rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* ส่วนล่าง - ข้อความ */
+        .bottom-section {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .message {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            line-height: 1.8;
+            color: var(--white);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.5rem;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 1.5s forwards;
+        }
+        
+        .date {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--white);
+            opacity: 0.8;
+            margin-top: 1.5rem;
+            font-family: 'Mali', cursive;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            opacity: 0;
+            animation: fadeIn 1s ease 2s forwards;
+        }
+        
+        /* ส่วนดนตรี */
+        .music-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 100;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease 3s forwards;
+        }
+        
+        .music-controls:hover {
+            transform: translateY(-5px);
+        }
+        
+        .music-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .song-title {
+            font-family: 'Prompt', sans-serif;
+            font-size: 14px;
+            color: var(--white);
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .audio-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .audio-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .volume-slider {
+            width: 100px;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--white);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--white);
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            border: none;
+        }
+        
+        /* พลุ */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            pointer-events: none;
+            transform-origin: center bottom;
+        }
+        
+        /* ส่วนแสดงเวลาที่คบกัน */
+        .anniversary-timer, .anniversary-countdown {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 5;
+            opacity: 0;
+            animation: fadeIn 1s ease 2.5s forwards;
+            width: 90%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .anniversary-countdown {
+            margin-top: 1.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            animation: fadeIn 1s ease 2.8s forwards;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .countdown-type {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-toggle {
+            font-family: 'Prompt', sans-serif;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        
+        .countdown-toggle.active {
+            background: var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .countdown-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .countdown-date {
+            font-family: 'Prompt', sans-serif;
+            font-size: 16px;
+            color: var(--white);
+            margin-top: 15px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        
+        .timer-title {
+            font-family: 'Prompt', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--white);
+            margin-bottom: 15px;
+            text-align: center;
+            width: 100%;
+            display: block;
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .timer-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+        
+        .timer-units {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .timer-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .timer-value {
+            font-family: 'Prompt', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--white);
+            padding: 10px;
+            min-width: 60px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timer-label {
+            font-family: 'Prompt', sans-serif;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            color: var(--white);
+            margin-top: 5px;
+            font-weight: 300;
+        }
+        
+        /* ปุ่มกลับไปหน้าแรก */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 24px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            opacity: 0;
+            animation: fadeIn 1s ease 3.5s forwards;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        /* แอนิเมชัน */
+        @keyframes loadingPulse {
+            0% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.2); }
+            100% { transform: rotate(45deg) scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes rotateLight {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes rotateBeam {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes titlePulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-
-        /* ลูกเล่นรูปภาพใหม่ */
-        .photo-gallery {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 30px auto;
-            max-width: 600px;
-            height: 200px;
+        
+        @keyframes letterDance {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
-
-        .photo-item {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(255, 107, 129, 0.5);
-            animation: floatPhoto 4s ease-in-out infinite;
-            z-index: 10;
+        
+        /* รองรับการแสดงผลบนมือถือ */
+        @media (max-width: 768px) {
+            .gallery-container {
+                width: 85%;
+            }
+            
+            .music-controls {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 15px;
+            }
+            
+            .song-title {
+                max-width: 80px;
+            }
+            
+            .volume-slider {
+                width: 60px;
+            }
+            
+            .timer-units {
+                gap: 10px;
+            }
+            
+            .timer-value {
+                min-width: 45px;
+                padding: 8px;
+            }
         }
-
-        .photo-item:nth-child(1) { animation-delay: 0s; }
-        .photo-item:nth-child(2) { animation-delay: 1s; }
-        .photo-item:nth-child(3) { animation-delay: 2s; }
-
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border: 5px solid rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-        }
-
-        @keyframes floatPhoto {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
-        }
-
-        /* หัวใจเล็ก ๆ ล้อมรอบรูป */
-        .photo-heart {
-            position: absolute;
-            font-size: 20px;
-            color: #ff9999;
-            animation: heartFloat 3s infinite ease-in-out;
-            z-index: 9;
-        }
-
-        @keyframes heartFloat {
-            0% { transform: translateY(0) scale(1); opacity: 0.8; }
-            50% { transform: translateY(-10px) scale(1.2); opacity: 1; }
-            100% { transform: translateY(0) scale(1); opacity: 0.8; }
-        }
-
-        .love-messages {
-            margin-top: 30px;
-            font-size: 1.4rem;
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 107, 129, 0.3);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .countdown-unit {
-            background: rgba(255, 255, 255, 0.9);
-            color: #ff6b81;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            min-width: 100px;
-            box-shadow: 0 3px 15px rgba(255, 107, 129, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .countdown-unit:hover {
-            transform: scale(1.1);
-        }
-
-        .countdown-unit div:first-child {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .countdown-unit div:last-child {
-            font-size: 1rem;
+        
+        @media (max-width: 480px) {
+            .gallery-container {
+                width: 90%;
+            }
+            
+            .container {
+                padding: 1rem 0.5rem 3rem 0.5rem;
+            }
+            
+            .message {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="rainbow-sky"></div>
-    <div class="container" data-aos="zoom-in">
-        <h1>เราคบกันแล้วนะ วีวา & ตี๋ ♥</h1>
-        
-        
-        <div class="photo-gallery">
-            <div class="photo-item">
-                <img src="images/memory1.png" alt="รูปคู่ 1">
-                <div class="photo-heart" style="top: -10px; left: -10px;">♥</div>
-                <div class="photo-heart" style="bottom: -10px; right: -10px;">♥</div>
-            </div>
-            <div class="photo-item">
-                <img src="images/memory2.png" alt="รูปคู่ 2">
-                <div class="photo-heart" style="top: -10px; left: -10px;">♥</div>
-                <div class="photo-heart" style="bottom: -10px; right: -10px;">♥</div>
-            </div>
-            <div class="photo-item">
-                <img src="images/memory3.png" alt="รูปคู่ 3">
-                <div class="photo-heart" style="top: -10px; left: -10px;">♥</div>
-                <div class="photo-heart" style="bottom: -10px; right: -10px;">♥</div>
-            </div>
-        </div>
-
-        <div class="love-messages" data-aos="fade-up" style="animation-delay: 1s;">
-            <h2>วันครบรอบของเรา</h2>
-            <p>นับถอยหลังถึงวันที่วีวากับตี๋คบกันครบ 1 ปี</p>
-            <div class="countdown">
-                <div class="countdown-unit">
-                    <div id="countdown-days">0</div>
-                    <div>วัน</div>
-                </div>
-                <div class="countdown-unit">
-                    <div id="countdown-hours">0</div>
-                    <div>ชั่วโมง</div>
-                </div>
-                <div class="countdown-unit">
-                    <div id="countdown-minutes">0</div>
-                    <div>นาที</div>
-                </div>
-                <div class="countdown-unit">
-                    <div id="countdown-seconds">0</div>
-                    <div>วินาที</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="love-messages" style="animation-delay: 2s;">
-            <p>ตี๋ขอสัญญาว่าจะอยู่เคียงวีวาและมอบความรักให้ตลอดไปเลยนะ 💕</p>
-        </div>
-        <div class="love-messages" style="animation-delay: 4s;">
-            <p>เราจะจับมือกันสร้างโลกใบเล็ก ๆ ที่เต็มไปด้วยความสุขด้วยกันนะ วีวา & ตี๋ 🌟</p>
+    <!-- หน้าโหลด -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-heart"></div>
+        <div class="loading-text">กำลังโหลดความรักของเรา...</div>
+        <div class="loading-progress">
+            <div class="loading-progress-bar" id="progressBar"></div>
         </div>
     </div>
 
-    <audio id="bgMusic" autoplay loop>
-        <source src="music/RakTae.mp3" type="audio/mpeg">
+    <!-- พื้นหลัง -->
+    <div class="background">
+        <!-- เอฟเฟกต์แสงหมุน -->
+        <div class="light-effect"></div>
+        
+        <!-- เอฟเฟกต์เส้นแสง -->
+        <div class="light-beam"></div>
+        <div class="light-beam" style="transform: translate(-50%, -50%) rotate(45deg);"></div>
+        <div class="light-beam" style="transform: translate(-50%, -50%) rotate(90deg);"></div>
+        <div class="light-beam" style="transform: translate(-50%, -50%) rotate(135deg);"></div>
+        
+        <!-- คอนเทนเนอร์พาร์ติเคิล -->
+        <div class="particles-container" id="particlesContainer"></div>
+        
+        <!-- หัวใจบนพื้นหลัง -->
+        <div class="bg-hearts" id="bgHearts"></div>
+    </div>
+    
+    <!-- คอนเทนเนอร์หลัก -->
+    <div class="container" id="mainContainer">
+        <!-- ส่วนบนสุด - หัวข้อ -->
+        <div class="top-section">
+            <h1 class="title" id="animatedTitle">ตี๋ ♥ วีวา</h1>
+            <p class="subtitle">เราเป็นทางการแล้วนะ!</p>
+        </div>
+        
+        <!-- ส่วนกลาง - รูปภาพ -->
+        <div class="gallery-section">
+            <div class="gallery-container">
+                <!-- รูปภาพ (สามารถเพิ่มรูปได้) -->
+                <div class="photo-frame active" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 800 450\'><rect fill=\'%23FFB6C1\' width=\'100%\' height=\'100%\'/><text x=\'50%\' y=\'50%\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>รูปของตี๋และวีวา</text></svg>');"></div>
+                <div class="photo-frame" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 800 450\'><rect fill=\'%23FF95A8\' width=\'100%\' height=\'100%\'/><text x=\'50%\' y=\'50%\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>ช่วงเวลาแห่งความสุขของเรา</text></svg>');"></div>
+                <div class="photo-frame" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 800 450\'><rect fill=\'%23FF4778\' width=\'100%\' height=\'100%\'/><text x=\'50%\' y=\'50%\' font-size=\'40\' fill=\'white\' text-anchor=\'middle\' dominant-baseline=\'middle\'>ภาพความทรงจำของเรา</text></svg>');"></div>
+                
+                <!-- กรอบรูปภาพ -->
+                <div class="gallery-frame"></div>
+                
+                <!-- โอเวอร์เลย์ -->
+                <div class="gallery-overlay"></div>
+                
+                <!-- ปุ่มควบคุมรูปภาพ -->
+                <div class="photo-controls">
+                    <div class="photo-dot active" data-index="0"></div>
+                    <div class="photo-dot" data-index="1"></div>
+                    <div class="photo-dot" data-index="2"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ส่วนล่าง - ข้อความ -->
+        <div class="bottom-section">
+            <div class="message">
+                วันนี้เป็นวันที่พิเศษสำหรับเราทั้งคู่<br>
+                ตี๋จะดูแลวีวาให้ดีที่สุด<br>
+                และจะรักวีวาไปทุกวัน<br>
+                ♥ ขอบคุณที่เป็นแฟนของตี๋นะ ♥
+            </div>
+            
+            <!-- ส่วนแสดงเวลาที่คบกัน -->
+            <div class="anniversary-timer">
+                <div class="timer-title">เรารู้จักกันมาแล้ว</div>
+                <div class="timer-units">
+                    <div class="timer-unit">
+                        <div class="timer-value" id="months">0</div>
+                        <div class="timer-label">เดือน</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="days">0</div>
+                        <div class="timer-label">วัน</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="hours">0</div>
+                        <div class="timer-label">ชั่วโมง</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="minutes">0</div>
+                        <div class="timer-label">นาที</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="seconds">0</div>
+                        <div class="timer-label">วินาที</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ส่วนนับถอยหลังวันครบรอบ -->
+            <div class="anniversary-countdown">
+                <div class="timer-title">เวลาที่เหลือจนถึงวันครบรอบ</div>
+                <div class="countdown-type">
+                    <button class="countdown-toggle active" data-type="month">1 เดือน</button>
+                    <button class="countdown-toggle" data-type="year">1 ปี</button>
+                    <button class="countdown-toggle" data-type="year5">5 ปี</button>
+                    <button class="countdown-toggle" data-type="year10">10 ปี</button>
+                    <button class="countdown-toggle" data-type="year20">20 ปี</button>
+                    <button class="countdown-toggle" data-type="year50">50 ปี</button>
+                </div>
+                <div class="timer-units">
+                    <div class="timer-unit">
+                        <div class="timer-value" id="countdown-days">0</div>
+                        <div class="timer-label">วัน</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="countdown-hours">0</div>
+                        <div class="timer-label">ชั่วโมง</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="countdown-minutes">0</div>
+                        <div class="timer-label">นาที</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="countdown-seconds">0</div>
+                        <div class="timer-label">วินาที</div>
+                    </div>
+                </div>
+                <div class="countdown-date" id="countdown-date">4 เมษายน 2025</div>
+            </div>
+            
+            <div class="date" id="currentDate"></div>
+        </div>
+    </div>
+    
+    <!-- ส่วนพลุ -->
+    <div class="fireworks-container" id="fireworksContainer"></div>
+    
+    <!-- ปุ่มกลับไปหน้าแรก -->
+    <a href="index.html" class="back-btn">←</a>
+    
+    <!-- ส่วนดนตรี -->
+    <div class="music-controls">
+        <div class="music-info">
+            <button class="audio-toggle" id="audioToggle">♪</button>
+            <div class="song-title">เพลงสำหรับเราสองคน</div>
+        </div>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+    </div>
+    
+    <!-- เพลงประกอบ -->
+    <audio id="bgMusic" autoplay loop preload="auto">
+        <source src="https://cdn.uppbeat.io/audio-output/1502/preview-5c2c2adb-cae7-4eec-b86e-ccec9b5a4daf.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-a-very-happy-christmas-897.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-sweet-and-sad-orchestra-628.mp3" type="audio/mpeg">
     </audio>
-
+    
     <script>
-        AOS.init({ duration: 1000, once: true });
-
-        // ดอกไม้ไฟ
-        function createFirework() {
-            const firework = document.createElement('div');
-            firework.className = 'firework';
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            firework.style.left = x + 'px';
-            firework.style.top = y + 'px';
-            firework.style.background = `hsl(${Math.random() * 360}, 80%, 70%)`;
-            document.body.appendChild(firework);
-
-            const particles = 20;
-            for (let i = 0; i < particles; i++) {
-                const particle = firework.cloneNode();
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 100;
-                particle.style.transition = 'all 0.8s ease-out';
-                document.body.appendChild(particle);
-                setTimeout(() => {
-                    particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-                    particle.style.opacity = '0';
-                }, 10);
-                setTimeout(() => particle.remove(), 800);
-            }
-            setTimeout(() => firework.remove(), 800);
-        }
-
-        // หัวใจลอยลงมา
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart-rain';
-            heart.innerHTML = '♥';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.color = `hsl(${Math.random() * 60 + 330}, 80%, 65%)`;
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 3000);
-        }
-
-        // ลูกโป่งลอยขึ้น (ข้อความอยู่กึ่งกลาง)
-        function createBalloon() {
-            const messages = ["วีวา ♥ ตี๋", "รักตลอดไป", "ความสุขของเรา"];
-            const colors = ['#ffb6c1', '#ffdde1', '#e6e6fa', '#d4f4dd', '#fce2fc', '#ff9999'];
-            const balloon = document.createElement('div');
-            balloon.className = 'balloon';
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            balloon.style.background = `radial-gradient(circle at 50% 30%, #ffffff, ${randomColor})`;
-            balloon.style.setProperty('--string-color', randomColor);
-            balloon.textContent = messages[Math.floor(Math.random() * messages.length)];
-            balloon.style.left = Math.random() * 100 + 'vw';
-            document.body.appendChild(balloon);
-            setTimeout(() => balloon.remove(), 10000);
-        }
-
-        setInterval(createFirework, 800);
-        setInterval(createHeart, 150);
-        setInterval(createBalloon, 100);
-
-        if (!localStorage.getItem('saidYes')) {
-            window.location.href = 'index.html';
-        }
-
-        function updateCountdown() {
-            const startDate = new Date('2025-03-02T00:00:00'); // วันที่วีวากดตกลง (2 มีนาคม 2025)
-            const anniversaryDate = new Date(startDate);
-            anniversaryDate.setFullYear(startDate.getFullYear() + 1); // ครบรอบ 1 ปี (2 มีนาคม 2026)
-            const now = new Date();
-            const diff = anniversaryDate - now;
-
-            let days, hours, minutes, seconds;
-            if (diff > 0) {
-                days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            } else {
-                days = 0;
-                hours = 0;
-                minutes = 0;
-                seconds = 0;
-            }
-
-            const daysElement = document.getElementById('countdown-days');
-            const hoursElement = document.getElementById('countdown-hours');
-            const minutesElement = document.getElementById('countdown-minutes');
-            const secondsElement = document.getElementById('countdown-seconds');
-
-            if (daysElement && hoursElement && minutesElement && secondsElement) {
-                daysElement.textContent = days;
-                hoursElement.textContent = hours;
-                minutesElement.textContent = minutes;
-                secondsElement.textContent = seconds;
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-
+        document.addEventListener('DOMContentLoaded', function() {
+            // ตัวแปรสำหรับองค์ประกอบต่างๆ
+            const loadingScreen = document.getElementById('loadingScreen');
+            const progressBar = document.getElementById('progressBar');
+            const mainContainer = document.getElementById('mainContainer');
+            const particlesContainer = document.getElementById('particlesContainer');
+            const bgHearts = document.getElementById('bgHearts');
+            const fireworksContainer = document.getElementById('fireworksContainer');
+            const photoDots = document.querySelectorAll('.photo-dot');
+            const photoFrames = document.querySelectorAll('.photo-frame');
             const bgMusic = document.getElementById('bgMusic');
-            bgMusic.play().catch(error => {
-                console.log("Autoplay prevented:", error);
-                document.addEventListener('click', () => bgMusic.play(), { once: true });
+            const audioToggle = document.getElementById('audioToggle');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const animatedTitle = document.getElementById('animatedTitle');
+            
+            let isMuted = false;
+            let currentPhotoIndex = 0;
+            let photoInterval;
+            
+            // ---------- LOADING SCREEN ----------
+            
+            // จำลองการโหลด
+            let progress = 0;
+            let loadingInterval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(loadingInterval);
+                    
+                    // ซ่อนหน้าโหลดหลังจากโหลดเสร็จ
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = '0';
+                        loadingScreen.style.visibility = 'hidden';
+                        document.body.classList.remove('no-scroll');
+                        
+                        // แสดงคอนเทนเนอร์หลัก
+                        mainContainer.classList.add('active');
+                        
+                        // เรียกใช้ฟังก์ชันเอฟเฟกต์ต่างๆ
+                        setTimeout(createFireworks, 500);
+                        createParticles();
+                        createBackgroundHearts();
+                        initPhotoSlider();
+                        animateTitle();
+                    }, 500);
+                }
+                progressBar.style.width = `${progress}%`;
+            }, 200);
+            
+            // ---------- ANIMATED TITLE ----------
+            
+            // แอนิเมชันตัวอักษรในหัวข้อ
+            function animateTitle() {
+                const titleText = animatedTitle.textContent;
+                animatedTitle.textContent = '';
+                
+                for (let i = 0; i < titleText.length; i++) {
+                    const span = document.createElement('span');
+                    span.textContent = titleText[i];
+                    span.style.setProperty('--index', i);
+                    animatedTitle.appendChild(span);
+                }
+            }
+            
+            // ---------- PARTICLE EFFECTS ----------
+            
+            // สร้างพาร์ติเคิลลอย
+            function createParticles() {
+                const particleCount = 100;
+                const colors = ['#FFB6C1', '#FFC0CB', '#FFD1DC', '#FFFFFF'];
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // สุ่มขนาด, ตำแหน่ง, และสี
+                    const size = Math.random() * 4 + 2;
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const opacity = Math.random() * 0.5 + 0.3;
+                    
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${posX}%`;
+                    particle.style.top = `${posY}%`;
+                    particle.style.background = color;
+                    particle.style.opacity = opacity;
+                    
+                    // สร้างแอนิเมชัน
+                    const duration = Math.random() * 20 + 10;
+                    const delay = Math.random() * 5;
+                    
+                    particle.animate([
+                        { transform: 'translateY(0) translateX(0)', opacity: opacity },
+                        { transform: `translateY(-${Math.random() * 30 + 20}px) translateX(${Math.random() * 40 - 20}px)`, opacity: 0 }
+                    ], {
+                        duration: duration * 1000,
+                        delay: delay * 1000,
+                        iterations: Infinity,
+                        direction: 'alternate',
+                        easing: 'ease-in-out'
+                    });
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            // สร้างหัวใจบนพื้นหลัง
+            function createBackgroundHearts() {
+                const heartCount = 20;
+                
+                for (let i = 0; i < heartCount; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('bg-heart');
+                    
+                    // สร้าง SVG หัวใจ
+                    heart.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FFF" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>')`;
+                    
+                    // สุ่มขนาดและตำแหน่ง
+                    const size = Math.random() * 100 + 50;
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    
+                    heart.style.width = `${size}px`;
+                    heart.style.height = `${size}px`;
+                    heart.style.left = `${posX}%`;
+                    heart.style.top = `${posY}%`;
+                    
+                    // สร้างแอนิเมชัน
+                    const duration = Math.random() * 10 + 10;
+                    
+                    heart.animate([
+                        { transform: 'scale(1)', opacity: 0.2 },
+                        { transform: 'scale(1.2)', opacity: 0.3 },
+                        { transform: 'scale(1)', opacity: 0.2 }
+                    ], {
+                        duration: duration * 1000,
+                        iterations: Infinity,
+                        easing: 'ease-in-out'
+                    });
+                    
+                    bgHearts.appendChild(heart);
+                }
+            }
+            
+            // ---------- PHOTO SLIDER ----------
+            
+            // ตั้งค่าสไลด์รูปภาพ
+            function initPhotoSlider() {
+                // สร้างอินเทอร์วัลเปลี่ยนรูปอัตโนมัติ
+                photoInterval = setInterval(nextPhoto, 5000);
+                
+                // จัดการคลิกที่ปุ่มสไลด์
+                photoDots.forEach(dot => {
+                    dot.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        showPhoto(index);
+                        
+                        // รีเซ็ตอินเทอร์วัล
+                        clearInterval(photoInterval);
+                        photoInterval = setInterval(nextPhoto, 5000);
+                    });
+                });
+            }
+            
+            // แสดงรูปภาพตามดัชนี
+            function showPhoto(index) {
+                photoFrames.forEach(frame => frame.classList.remove('active'));
+                photoDots.forEach(dot => dot.classList.remove('active'));
+                
+                photoFrames[index].classList.add('active');
+                photoDots[index].classList.add('active');
+                
+                currentPhotoIndex = index;
+            }
+            
+            // เปลี่ยนไปรูปถัดไป
+            function nextPhoto() {
+                currentPhotoIndex = (currentPhotoIndex + 1) % photoFrames.length;
+                showPhoto(currentPhotoIndex);
+            }
+            
+            // ---------- FIREWORKS EFFECT ----------
+            
+            // สร้างพลุ
+            function createFireworks() {
+                setInterval(() => {
+                    if (Math.random() > 0.7) {
+                        launchFirework();
+                    }
+                }, 1000);
+                
+                // เรียกใช้ฟังก์ชันเมื่อเริ่มต้น
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        launchFirework();
+                    }, i * 300);
+                }
+            }
+            
+            // ปล่อยพลุ
+            function launchFirework() {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                
+                // สุ่มตำแหน่ง
+                const posX = 10 + Math.random() * 80;
+                firework.style.left = `${posX}%`;
+                
+                // สุ่มสี
+                const hue = 340 + Math.random() * 40;
+                const color = `hsl(${hue}, 100%, 60%)`;
+                firework.style.backgroundColor = color;
+                
+                fireworksContainer.appendChild(firework);
+                
+                // แอนิเมชันยิงพลุขึ้น
+                const rocketAnimationDuration = 1 + Math.random() * 1;
+                
+                firework.animate([
+                    { bottom: '-10px', height: '10px' },
+                    { bottom: `${20 + Math.random() * 60}%`, height: '4px' }
+                ], {
+                    duration: rocketAnimationDuration * 1000,
+                    easing: 'ease-out',
+                    fill: 'forwards'
+                }).onfinish = function() {
+                    explodeFirework(firework, color, hue);
+                };
+            }
+            
+            // พลุระเบิด
+            function explodeFirework(firework, color, hue) {
+                const particles = 30 + Math.random() * 20;
+                const explosion = firework.getBoundingClientRect();
+                const explosionX = explosion.left + explosion.width / 2;
+                const explosionY = explosion.top;
+                
+                // ลบพลุหลังจากระเบิด
+                firework.remove();
+                
+                // สร้างอนุภาคระเบิด
+                for (let i = 0; i < particles; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('firework');
+                    particle.style.width = '3px';
+                    particle.style.height = '3px';
+                    particle.style.backgroundColor = color;
+                    particle.style.position = 'fixed';
+                    particle.style.top = `${explosionY}px`;
+                    particle.style.left = `${explosionX}px`;
+                    particle.style.pointerEvents = 'none';
+                    fireworksContainer.appendChild(particle);
+                    
+                    // สุ่มทิศทางและระยะเวลา
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 2 + Math.random() * 5;
+                    const lifetime = 1 + Math.random();
+                    
+                    // แอนิเมชันอนุภาคระเบิด
+                    particle.animate([
+                        { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                        { 
+                            transform: `translate(calc(-50% + ${Math.cos(angle) * 100 * velocity}px), calc(-50% + ${Math.sin(angle) * 100 * velocity}px)) scale(0.5)`,
+                            opacity: 0
+                        }
+                    ], {
+                        duration: lifetime * 1000,
+                        easing: 'cubic-bezier(0, 0.5, 0.5, 1)',
+                        fill: 'forwards'
+                    }).onfinish = function() {
+                        particle.remove();
+                    };
+                }
+            }
+            
+            // ---------- MUSIC CONTROLS ----------
+            
+            // ควบคุมเสียงเพลง
+            audioToggle.addEventListener('click', function() {
+                if (isMuted) {
+                    bgMusic.volume = volumeSlider.value;
+                    audioToggle.textContent = '♪';
+                    isMuted = false;
+                } else {
+                    bgMusic.volume = 0;
+                    audioToggle.textContent = '♪̸';
+                    isMuted = true;
+                }
             });
+            
+            volumeSlider.addEventListener('input', function() {
+                if (!isMuted) {
+                    bgMusic.volume = this.value;
+                }
+            });
+            
+            // ตั้งค่าระดับเสียงเริ่มต้น
+            bgMusic.volume = volumeSlider.value;
+            
+            // พยายามเล่นเพลงอัตโนมัติ
+            function tryPlayMusic() {
+                bgMusic.play().catch(function(error) {
+                    console.log("การเล่นอัตโนมัติอาจถูกบล็อก: ", error);
+                });
+            }
+            
+            tryPlayMusic();
+            document.body.addEventListener('click', tryPlayMusic, { once: true });
+            
+            // ---------- DATE AND TIMER ----------
+            
+            // อัปเดตวันที่ปัจจุบัน
+            const currentDate = new Date();
+            document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('th-TH', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // คำนวณเวลาที่รู้จักกัน
+            function updateTimeTogether() {
+                // วันที่เริ่มรู้จักกัน (24 พฤศจิกายน 2024 22:34 น.)
+                const startDate = new Date(2024, 10, 24, 22, 34, 0); // เดือนใน JavaScript เริ่มจาก 0 (มกราคม = 0)
+                const currentDate = new Date();
+                
+                // คำนวณความแตกต่างในมิลลิวินาที
+                const diff = currentDate - startDate;
+                
+                // คำนวณเวลาที่ผ่านไป
+                const msInSecond = 1000;
+                const msInMinute = msInSecond * 60;
+                const msInHour = msInMinute * 60;
+                const msInDay = msInHour * 24;
+                const msInMonth = msInDay * 30.436875; // ค่าเฉลี่ยวันต่อเดือน
+                
+                // คำนวณแต่ละหน่วยเวลา
+                const months = Math.floor(diff / msInMonth);
+                const days = Math.floor((diff % msInMonth) / msInDay);
+                const hours = Math.floor((diff % msInDay) / msInHour);
+                const minutes = Math.floor((diff % msInHour) / msInMinute);
+                const seconds = Math.floor((diff % msInMinute) / msInSecond);
+                
+                // แสดงผล
+                document.getElementById('months').textContent = months;
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }
+            
+            // คำนวณเวลาที่เหลือจนถึงวันครบรอบ
+            function updateCountdown() {
+                // วันที่เริ่มเป็นแฟนกัน (4 มีนาคม 2025)
+                const anniversaryStart = new Date(2025, 2, 4); // เดือนมีนาคม (index 2)
+                const currentDate = new Date();
+                
+                // กำหนดวันครบรอบต่างๆ
+                const oneMonthAnniversary = new Date(2025, 3, 4); // 4 เมษายน 2025
+                const oneYearAnniversary = new Date(2026, 2, 4); // 4 มีนาคม 2026
+                const fiveYearAnniversary = new Date(2030, 2, 4); // 4 มีนาคม 2030
+                const tenYearAnniversary = new Date(2035, 2, 4); // 4 มีนาคม 2035
+                const twentyYearAnniversary = new Date(2045, 2, 4); // 4 มีนาคม 2045
+                const fiftyYearAnniversary = new Date(2075, 2, 4); // 4 มีนาคม 2075
+                
+                // ตรวจสอบปุ่มที่ active อยู่
+                const activeType = document.querySelector('.countdown-toggle.active').getAttribute('data-type');
+                
+                // กำหนดวันครบรอบที่จะนับถอยหลัง
+                let targetDate;
+                let dateText;
+                
+                switch(activeType) {
+                    case 'month':
+                        targetDate = oneMonthAnniversary;
+                        dateText = '4 เมษายน 2025';
+                        break;
+                    case 'year':
+                        targetDate = oneYearAnniversary;
+                        dateText = '4 มีนาคม 2026';
+                        break;
+                    case 'year5':
+                        targetDate = fiveYearAnniversary;
+                        dateText = '4 มีนาคม 2030';
+                        break;
+                    case 'year10':
+                        targetDate = tenYearAnniversary;
+                        dateText = '4 มีนาคม 2035';
+                        break;
+                    case 'year20':
+                        targetDate = twentyYearAnniversary;
+                        dateText = '4 มีนาคม 2045';
+                        break;
+                    case 'year50':
+                        targetDate = fiftyYearAnniversary;
+                        dateText = '4 มีนาคม 2075';
+                        break;
+                    default:
+                        targetDate = oneMonthAnniversary;
+                        dateText = '4 เมษายน 2025';
+                }
+                
+                document.getElementById('countdown-date').textContent = dateText;
+                
+                // คำนวณความแตกต่างในมิลลิวินาที
+                const diff = targetDate - currentDate;
+                
+                // ถ้าวันครบรอบผ่านไปแล้ว
+                if (diff < 0) {
+                    document.getElementById('countdown-days').textContent = '0';
+                    document.getElementById('countdown-hours').textContent = '0';
+                    document.getElementById('countdown-minutes').textContent = '0';
+                    document.getElementById('countdown-seconds').textContent = '0';
+                    return;
+                }
+                
+                // คำนวณเวลาที่เหลือ
+                const msInSecond = 1000;
+                const msInMinute = msInSecond * 60;
+                const msInHour = msInMinute * 60;
+                const msInDay = msInHour * 24;
+                
+                const days = Math.floor(diff / msInDay);
+                const hours = Math.floor((diff % msInDay) / msInHour);
+                const minutes = Math.floor((diff % msInHour) / msInMinute);
+                const seconds = Math.floor((diff % msInMinute) / msInSecond);
+                
+                // แสดงผล
+                document.getElementById('countdown-days').textContent = days;
+                document.getElementById('countdown-hours').textContent = hours;
+                document.getElementById('countdown-minutes').textContent = minutes;
+                document.getElementById('countdown-seconds').textContent = seconds;
+            }
+            
+            // จัดการปุ่มเปลี่ยนประเภทการนับถอยหลัง
+            document.querySelectorAll('.countdown-toggle').forEach(button => {
+                button.addEventListener('click', function() {
+                    // ลบ active จากทุกปุ่ม
+                    document.querySelectorAll('.countdown-toggle').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // เพิ่ม active ให้ปุ่มที่คลิก
+                    this.classList.add('active');
+                    
+                    // อัพเดทการนับถอยหลัง
+                    updateCountdown();
+                });
+            });
+            
+            // อัพเดททุกๆ 1 วินาที
+            setInterval(() => {
+                updateTimeTogether();
+                updateCountdown();
+            }, 1000);
+            
+            // อัพเดทครั้งแรก
+            updateTimeTogether();
+            updateCountdown();
         });
     </script>
 </body>
