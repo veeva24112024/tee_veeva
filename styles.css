@@ -1016,3 +1016,56 @@ body.no-scroll {
         padding: 15px;
     }
 }
+
+/* เพิ่มหรือแก้ไขโค้ดนี้ในไฟล์ styles.css */
+
+/* แก้ไขส่วน photo-frame */
+.photo-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain !important; /* บังคับให้แสดงภาพทั้งหมด */
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    opacity: 0;
+    transition: opacity 0.5s ease; /* ลดเวลา transition */
+    transform: none !important; /* ยกเลิก transform */
+    filter: none !important; /* ลบ filter ทั้งหมด */
+    -webkit-filter: none !important;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.photo-frame.active {
+    opacity: 1;
+    transform: none !important; /* ยกเลิก transform */
+    animation: none !important; /* ยกเลิก animation */
+}
+
+/* ลบ overlay ที่ทำให้รูปมืด */
+.gallery-overlay {
+    opacity: 0 !important; /* ปิดการแสดง overlay */
+    display: none; /* ปิดการแสดงผลเลย */
+}
+
+/* แก้ไขกรอบรูป */
+.gallery-frame {
+    border: 10px solid rgba(255, 255, 255, 0.3); /* เปลี่ยนเป็นกรอบที่ชัดขึ้น */
+    backdrop-filter: none !important; /* ลบ blur */
+    box-shadow: none !important; /* ลบเงา */
+}
+
+/* ปรับ container ให้แสดงรูปได้ดีขึ้น */
+.gallery-container {
+    transform: none !important; /* ลบการบิดเอียง */
+    animation: none !important; /* ยกเลิกแอนิเมชัน */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* เงาแบบเรียบง่าย */
+}
+
+/* ยกเลิก filter ทั้งหมดที่อาจมีผลกับรูปภาพ */
+.gallery-section * {
+    filter: none !important;
+    backdrop-filter: none !important;
+}
