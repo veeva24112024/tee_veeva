@@ -159,62 +159,6 @@
         .slide img:hover {
             transform: scale(1.05);
         }
-        
-        /* ส่วนแสดงเวลาที่รู้จักกัน */
-        .time-together {
-            font-family: 'Prompt', sans-serif;
-            background-color: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(255, 71, 120, 0.2);
-            color: #FF4778;
-            font-size: clamp(0.9rem, 2.5vw, 1.3rem);
-            text-align: center;
-            width: 90%;
-            max-width: 500px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-            z-index: 20;
-        }
-        
-        .time-together.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .time-together .time-label {
-            font-weight: 300;
-            margin-bottom: 5px;
-        }
-        
-        .time-together .time-counter {
-            font-weight: 600;
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-        }
-        
-        .time-together .time-units {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .time-together .time-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 60px;
-        }
-        
-        .time-together .time-value {
-            background-color: rgba(255, 71, 120, 0.2);
-            border-radius: 8px;
-            padding: 5px 10px;
-            min-width: 40px;
-        }
 
         /* ปุ่มขอเป็นแฟน */
         .love-button {
@@ -832,78 +776,49 @@
     <div class="heart-frame"></div>
     <div class="container">
         <!-- สไลด์ข้อความ -->
-        <div class="slide" id="slide1">วันที่ตี๋ได้รู้จักกับวีวาครั้งแรก...</div>
+        <div class="slide" id="slide1">ตั้งแต่รู้จักกับวีวา</div>
         <div class="slide" id="slide2">
-            โลกของตี๋เปลี่ยนไปตลอดกาล
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'><rect fill='%23FFB6C1' width='100%' height='100%'/><text x='50%' y='50%' font-size='20' fill='white' text-anchor='middle' dominant-baseline='middle'>รูปคู่ของตี๋และวีวา</text></svg>" alt="รูปคู่ของตี๋และวีวา" />
+            โลกของตี๋เปลี่ยนไปตลอกกาล
+            <img src="images/memory1.png" alt="รูปคู่ของตี๋และวีวา" />
         </div>
-        <div class="slide" id="slide3">วีวาคือแสงสว่างในทุกวันของตี๋</div>
+        <div class="slide" id="slide3">วีวาเป็นพลังบวกให้กับตี๋</div>
         <div class="slide" id="slide4">
-            วีวาทำให้ตี๋ยิ้มได้เสมอ<br/>
-            แม้ในวันที่เหนื่อยที่สุด
+            ความน่ารักสดใสของวีวาทำให้ตี๋ยิ้มได้เสมอ<br/>
         </div>
         <div class="slide" id="slide5">
-            ทุกครั้งที่เห็นวีวา<br/>
-            หัวใจตี๋เต้นแรงจนบอกไม่ถูก
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'><rect fill='%23FFB6C1' width='100%' height='100%'/><text x='50%' y='50%' font-size='20' fill='white' text-anchor='middle' dominant-baseline='middle'>รูปคู่ของตี๋และวีวา</text></svg>" alt="รูปคู่ของตี๋และวีวา" />
+            ทุกครั้งที่อยู่ด้วยกัน<br/>
+            ตี๋มีความสุขมาก
+            <img src="images/memory1.png" alt="รูปคู่ของตี๋และวีวา" />
         </div>
         <div class="slide" id="slide6">
             ไม่ว่าจะเจออะไรในชีวิต<br/>
-            ตี๋อยากเจอมันไปพร้อมกับวีวา
+            ตี๋อยากเจอมันไปพร้อมกับวีวานะ
         </div>
         <div class="slide" id="slide7">
-            วีวาเป็นความฝันที่ตี๋<br/>
-            ไม่เคยกล้าฝันมาก่อน
+            ในทุกช่วงเวลาของชีวิต<br/>
+            ตี๋รู้ว่าทุกเส้นทางจะมีความหมายถ้ามีวีวาร่วมเดินไปด้วยกัน
         </div>
         <div class="slide" id="slide8">
-            ตี๋อยากจะบอกว่า<br/>
-            ตี๋ชอบวีวามากนะ
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'><rect fill='%23FFB6C1' width='100%' height='100%'/><text x='50%' y='50%' font-size='20' fill='white' text-anchor='middle' dominant-baseline='middle'>รูปคู่ของตี๋และวีวา</text></svg>" alt="รูปคู่ของตี๋และวีวา" />
+            ในหัวใจของตี๋มีวีวาเพียงคนเดียวและจะเป็นแบบนี้ตลอดไป<br/>
+            <img src="images/memory1.png" alt="รูปคู่ของตี๋และวีวา" />
         </div>
         <div class="slide" id="slide9">
-            ตี๋อยากให้วีวารู้ว่า<br/>
-            วีวาพิเศษสำหรับตี๋แค่ไหน
+            ทุกครั้งที่วีวารู้สึกโดดเดียวไม่รู้จะหันไปทางไหน<br/>
+            ให้จำไว้ว่าวีวายังมีตี๋เสมอนะ
         </div>
         <div class="slide" id="slide10">
-            และตี๋มีอะไรจะถามวีวา...
-        </div>
-        
-        <!-- แสดงเวลาที่รู้จักกัน -->
-        <div class="time-together" id="timeTogether">
-            <div class="time-label">เรารู้จักกันมาแล้ว</div>
-            <div class="time-units">
-                <div class="time-unit">
-                    <div class="time-value" id="months">0</div>
-                    <div>เดือน</div>
-                </div>
-                <div class="time-unit">
-                    <div class="time-value" id="days">0</div>
-                    <div>วัน</div>
-                </div>
-                <div class="time-unit">
-                    <div class="time-value" id="hours">0</div>
-                    <div>ชม.</div>
-                </div>
-                <div class="time-unit">
-                    <div class="time-value" id="minutes">0</div>
-                    <div>นาที</div>
-                </div>
-                <div class="time-unit">
-                    <div class="time-value" id="seconds">0</div>
-                    <div>วินาที</div>
-                </div>
-            </div>
+            ตี๋จะทำทุกอย่างเพื่อให้วีวามีความสุข 
         </div>
 
         <!-- ปุ่มขอเป็นแฟน -->
-        <button class="love-button" id="loveButton">วีวา... เป็นแฟนตี๋นะ</button>
+        <button class="love-button" id="loveButton">อยากไปกันต่อไหม ?</button>
     </div>
 
     <!-- ส่วนการตอบสนอง (Response) -->
     <div class="response-container" id="responseContainer">
-        <div class="response-message">วีวา... จะเป็นแฟนกับตี๋ไหม?</div>
+        
         <div class="response-buttons">
-            <button class="response-button yes-button" id="yesButton">ตกลง ♥</button>
+            <button class="response-button yes-button" id="yesButton">ไปต่อ ♥</button>
             <button class="response-button no-button" id="noButton">ขอคิดดูก่อน</button>
         </div>
     </div>
@@ -1058,19 +973,13 @@
                                 // ซ่อนสไลด์สุดท้าย
                                 slides[currentSlide].classList.remove('active');
                                 
-                                // รอให้สไลด์หายไปก่อน แล้วค่อยแสดงเวลาที่รู้จักกันและปุ่ม
+                                // รอให้สไลด์หายไปก่อน แล้วค่อยแสดงปุ่ม
                                 setTimeout(() => {
-                                    // แสดงเวลาที่รู้จักกัน
-                                    document.getElementById('timeTogether').classList.add('active');
+                                    loveButton.classList.add('active');
                                     
-                                    // หลังจากนั้น 1 วินาที แสดงปุ่ม
-                                    setTimeout(() => {
-                                        loveButton.classList.add('active');
-                                        
-                                        // เรียกใช้ลูกเล่นพลุและฝุ่น
-                                        triggerFireworks();
-                                        triggerDust();
-                                    }, 1000);
+                                    // เรียกใช้ลูกเล่นพลุและฝุ่น
+                                    triggerFireworks();
+                                    triggerDust();
                                 }, 1000);
                             }, 3000);
                             
@@ -1078,7 +987,7 @@
                             clearInterval(autoSlideTimer);
                         }
                     }
-                }, 3000);
+                }, 4000);
             }
 
             // เรียกใช้ลูกเล่นพลุ
@@ -1175,8 +1084,8 @@
 
             // ปุ่มตกลง
             yesButton.addEventListener('click', function() {
-                // ลิงก์ไปที่หน้า congratulations.html
-                window.location.href = 'congratulations.html';
+                // ลิงก์ไปที่หน้า index1.html
+                window.location.href = 'index1.html';
             });
 
             // ปุ่มขอคิดดูก่อน (จะหนีไม่พ้น)
@@ -1246,7 +1155,7 @@
                         if (document.body.contains(notification)) {
                             notification.remove();
                         }
-                    }, 8000);
+                    }, 15000);
                 });
             }
             
@@ -1269,43 +1178,6 @@
             document.body.addEventListener('keydown', function() {
                 tryPlayMusic();
             }, { once: true });
-            
-            // คำนวณเวลาที่รู้จักกัน
-            function updateTimeTogether() {
-                // วันที่เริ่มรู้จักกัน (24 พฤศจิกายน 2024 22:34 น.)
-                const startDate = new Date(2024, 10, 24, 22, 34, 0); // เดือนใน JavaScript เริ่มจาก 0 (มกราคม = 0)
-                const currentDate = new Date();
-                
-                // คำนวณความแตกต่างในมิลลิวินาที
-                const diff = currentDate - startDate;
-                
-                // คำนวณเวลาที่ผ่านไป
-                const msInSecond = 1000;
-                const msInMinute = msInSecond * 60;
-                const msInHour = msInMinute * 60;
-                const msInDay = msInHour * 24;
-                const msInMonth = msInDay * 30.436875; // ค่าเฉลี่ยวันต่อเดือน
-                
-                // คำนวณแต่ละหน่วยเวลา
-                const months = Math.floor(diff / msInMonth);
-                const days = Math.floor((diff % msInMonth) / msInDay);
-                const hours = Math.floor((diff % msInDay) / msInHour);
-                const minutes = Math.floor((diff % msInHour) / msInMinute);
-                const seconds = Math.floor((diff % msInMinute) / msInSecond);
-                
-                // แสดงผล
-                document.getElementById('months').textContent = months;
-                document.getElementById('days').textContent = days;
-                document.getElementById('hours').textContent = hours;
-                document.getElementById('minutes').textContent = minutes;
-                document.getElementById('seconds').textContent = seconds;
-            }
-            
-            // อัพเดทเวลาทุกๆ 1 วินาที
-            setInterval(updateTimeTogether, 1000);
-            
-            // อัพเดทเวลาครั้งแรก
-            updateTimeTogether();
             
             // เริ่มการทำงาน
             startAutoSlide();

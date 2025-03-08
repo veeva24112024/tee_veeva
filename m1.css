@@ -1,0 +1,809 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(45deg, #FFC1CC, #F8E1E9);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Sriracha', cursive;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ส่วนควบคุมเสียง */
+.audio-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    padding: 10px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(255, 71, 120, 0.3);
+}
+
+.audio-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(45deg, #FF4778, #FF95A8);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(255, 71, 120, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.audio-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(255, 71, 120, 0.5);
+}
+
+.volume-slider {
+    width: 100px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #FF4778;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(255, 71, 120, 0.5);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #FF4778;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(255, 71, 120, 0.5);
+    border: none;
+}
+
+/* กรอบหัวใจขนาดใหญ่ตรงกลาง */
+.heart-frame {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    opacity: 0.15;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF6B8B" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80% auto;
+    pointer-events: none;
+}
+
+/* คอนเทนเนอร์หลัก */
+.container {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* สไลด์ข้อความ */
+.slide {
+    position: absolute;
+    width: 90%;
+    max-width: 580px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+    z-index: 10;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: #FF4778;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8),
+                    0 0 30px #FF9999,
+                    2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 30px rgba(255, 71, 120, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* รูปภาพในสไลด์ */
+.slide img {
+    max-width: 100%;
+    max-height: 40vh;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 5px solid white;
+    transition: transform 0.5s ease;
+    object-fit: cover;
+}
+
+.slide img:hover {
+    transform: scale(1.05);
+}
+
+/* ส่วนแสดงเวลาที่รู้จักกัน */
+.time-together {
+    font-family: 'Prompt', sans-serif;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(255, 71, 120, 0.2);
+    color: #FF4778;
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    z-index: 20;
+}
+
+.time-together.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.time-together .time-label {
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.time-together .time-counter {
+    font-weight: 600;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+}
+
+.time-together .time-units {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.time-together .time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+}
+
+.time-together .time-value {
+    background-color: rgba(255, 71, 120, 0.2);
+    border-radius: 8px;
+    padding: 5px 10px;
+    min-width: 40px;
+}
+
+/* ปุ่มขอเป็นแฟน */
+.love-button {
+    font-family: 'Prompt', sans-serif;
+    font-weight: 600;
+    position: relative;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #FF4778, #FF95A8);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 71, 120, 0.4),
+                0 0 15px rgba(255, 71, 120, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.love-button.active {
+    animation: fadeInUp 1s forwards;
+}
+
+.love-button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(255, 71, 120, 0.5),
+                0 0 20px rgba(255, 71, 120, 0.6),
+                0 0 40px rgba(255, 255, 255, 0.4);
+}
+
+.love-button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.love-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.love-button:hover::before {
+    left: 100%;
+}
+
+/* ส่วนการตอบสนอง (Response) */
+.response-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: radial-gradient(circle, rgba(255, 200, 210, 0.9), rgba(255, 150, 170, 0.95));
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    backdrop-filter: blur(10px);
+}
+
+.response-container.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.response-message {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: white;
+    text-shadow: 2px 2px 10px rgba(255, 71, 120, 0.6);
+    text-align: center;
+    margin-bottom: 30px;
+    animation: pulse 2s infinite;
+}
+
+.response-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.response-button {
+    font-family: 'Prompt', sans-serif;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.yes-button {
+    background: linear-gradient(45deg, #FF4778, #FF95A8);
+    color: white;
+    box-shadow: 0 10px 20px rgba(255, 71, 120, 0.4);
+}
+
+.no-button {
+    background: white;
+    color: #FF4778;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.response-button:hover {
+    transform: translateY(-5px);
+}
+
+/* หัวใจเด้งออกมา */
+.heart-burst {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 200;
+    opacity: 0;
+}
+
+.heart-burst.active {
+    opacity: 1;
+}
+
+/* ลูกเล่นที่ 1: หัวใจลอย */
+.floating-heart {
+    position: absolute;
+    width: clamp(15px, 3vw, 30px);
+    height: clamp(15px, 3vw, 30px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF6B8B" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.7;
+    z-index: 2;
+    animation: floatUpHeart 15s linear infinite;
+}
+
+@keyframes floatUpHeart {
+    0% { transform: translateY(100vh) scale(1) rotate(0deg); opacity: 0.7; }
+    50% { opacity: 0.9; }
+    100% { transform: translateY(-20vh) scale(0.5) rotate(360deg); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 2: ลูกโป่งลอย */
+.balloon {
+    position: absolute;
+    width: clamp(30px, 5vw, 50px);
+    height: clamp(40px, 6vw, 60px);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: linear-gradient(135deg, #FF95A8, #FF4778);
+    box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.3),
+                0 10px 20px rgba(0, 0, 0, 0.2);
+    animation: floatUpBalloon 20s linear infinite;
+    z-index: 3;
+}
+
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 1px;
+    height: 20px;
+    background: #FF4778;
+    transform: translateX(-50%);
+}
+
+.balloon::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 15%;
+    height: 10%;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+}
+
+@keyframes floatUpBalloon {
+    0% { transform: translateY(120vh) translateX(0) rotate(5deg); opacity: 0.8; }
+    50% { transform: translateY(50vh) translateX(clamp(-50px, -10vw, -20px)) rotate(-10deg); opacity: 1; }
+    100% { transform: translateY(-20vh) translateX(clamp(50px, 10vw, 20px)) rotate(5deg); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 3: แสงระยิบระยับ */
+.sparkle {
+    position: absolute;
+    width: clamp(5px, 1vw, 10px);
+    height: clamp(5px, 1vw, 10px);
+    background: white;
+    border-radius: 50%;
+    animation: sparkle 4s infinite ease-in-out;
+    z-index: 1;
+}
+
+@keyframes sparkle {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 1; filter: blur(1px); }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 4: ดาวเล็ก ๆ กระพริบ */
+.star {
+    position: absolute;
+    width: clamp(8px, 1.5vw, 15px);
+    height: clamp(8px, 1.5vw, 15px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 48"><path fill="%23FFD1DC" d="M25.5,0 L33.1,15.2 L51,17.7 L38.2,29.8 L41.3,48 L25.5,39.8 L9.7,48 L12.7,29.8 L0,17.7 L17.8,15.2 Z"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: twinkle 5s infinite ease-in-out;
+    z-index: 2;
+}
+
+@keyframes twinkle {
+    0% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+    50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+    100% { transform: scale(1) rotate(360deg); opacity: 0.3; }
+}
+
+/* ลูกเล่นที่ 5: ผีเสื้อบิน */
+.butterfly {
+    position: absolute;
+    width: clamp(20px, 4vw, 30px);
+    height: clamp(20px, 4vw, 30px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF95A8" d="M50,35 C60,5 90,15 80,40 C90,65 60,75 50,45 C40,75 10,65 20,40 C10,15 40,5 50,35 Z"/><circle fill="%23FF4778" cx="50" cy="40" r="5"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 3;
+    animation: flyButterfly 15s linear infinite;
+}
+
+@keyframes flyButterfly {
+    0% { transform: translateX(-20vw) translateY(50vh) rotate(0deg) scale(0.8); opacity: 0; }
+    10% { opacity: 1; }
+    25% { transform: translateX(0vw) translateY(30vh) rotate(10deg) scale(1); }
+    50% { transform: translateX(20vw) translateY(40vh) rotate(-10deg) scale(0.9); }
+    75% { transform: translateX(40vw) translateY(20vh) rotate(10deg) scale(1.1); }
+    90% { opacity: 1; }
+    100% { transform: translateX(120vw) translateY(10vh) rotate(0deg) scale(0.8); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 6: ฟองอากาศลอย */
+.bubble {
+    position: absolute;
+    width: clamp(10px, 3vw, 30px);
+    height: clamp(10px, 3vw, 30px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.8), rgba(255, 200, 210, 0.4));
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 10px rgba(255, 71, 120, 0.3);
+    animation: floatBubble 10s linear infinite;
+    z-index: 2;
+}
+
+@keyframes floatBubble {
+    0% { transform: translateY(100vh) translateX(0) scale(0.5); opacity: 0.7; }
+    50% { transform: translateY(50vh) translateX(clamp(20px, 5vw, 40px)) scale(1); opacity: 0.8; }
+    100% { transform: translateY(0vh) translateX(clamp(-20px, -5vw, -40px)) scale(0.5); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 7: ดอกไม้ร่วง */
+.petal {
+    position: absolute;
+    width: clamp(10px, 2vw, 20px);
+    height: clamp(15px, 3vw, 30px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FFB6C1" d="M50,0 C30,30 0,50 50,100 C100,50 70,30 50,0 Z"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.7;
+    z-index: 2;
+    animation: fallPetal 12s linear infinite;
+}
+
+@keyframes fallPetal {
+    0% { transform: translateY(-10vh) translateX(-10vw) rotate(0deg); opacity: 0.7; }
+    50% { transform: translateY(50vh) translateX(5vw) rotate(180deg); opacity: 0.9; }
+    100% { transform: translateY(110vh) translateX(-5vw) rotate(360deg); opacity: 0.7; }
+}
+
+/* ลูกเล่นที่ 8: แสงกระจายรอบตัว */
+.glow {
+    position: absolute;
+    width: clamp(100px, 20vw, 200px);
+    height: clamp(100px, 20vw, 200px);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent 70%);
+    border-radius: 50%;
+    animation: glow 6s infinite ease-in-out;
+    z-index: 1;
+}
+
+@keyframes glow {
+    0% { transform: scale(0.8); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.6; }
+    100% { transform: scale(0.8); opacity: 0.3; }
+}
+
+/* ลูกเล่นที่ 9: ดาวตก */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: clamp(50px, 10vw, 100px);
+    background: linear-gradient(to bottom, white, transparent);
+    opacity: 0;
+    z-index: 2;
+    animation: shootingStar 5s linear infinite;
+}
+
+@keyframes shootingStar {
+    0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 0; }
+    1% { opacity: 1; }
+    10% { transform: translateX(clamp(100px, 20vw, 200px)) translateY(clamp(100px, 20vw, 200px)) rotate(45deg); opacity: 0; }
+    100% { transform: translateX(clamp(100px, 20vw, 200px)) translateY(clamp(100px, 20vw, 200px)) rotate(45deg); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 10: คลื่นพลิ้ว */
+.wave {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    bottom: -50px;
+    left: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="%23FFB6C1" opacity="0.5" d="M0,0 C150,90 350,0 500,100 C650,200 850,110 1200,0 L1200,120 L0,120 Z"></path></svg>') repeat-x;
+    background-size: clamp(300px, 50vw, 600px) 100px;
+    animation: waveMove 10s linear infinite;
+    z-index: 1;
+}
+
+@keyframes waveMove {
+    0% { background-position-x: 0; }
+    100% { background-position-x: clamp(300px, 50vw, 600px); }
+}
+
+/* ลูกเล่นที่ 11: ริบบิ้นลอย */
+.ribbon {
+    position: absolute;
+    width: clamp(50px, 10vw, 100px);
+    height: clamp(5px, 1vw, 10px);
+    background: #FF4778;
+    opacity: 0.6;
+    animation: ribbonFloat 8s linear infinite;
+    z-index: 2;
+}
+
+@keyframes ribbonFloat {
+    0% { transform: translateX(-20vw) translateY(110vh) rotate(0deg); opacity: 0.6; }
+    50% { transform: translateX(60vw) translateY(50vh) rotate(360deg); opacity: 0.8; }
+    100% { transform: translateX(120vw) translateY(-10vh) rotate(720deg); opacity: 0.6; }
+}
+
+/* ลูกเล่นที่ 12: เกล็ดหิมะลอย */
+.snowflake {
+    position: absolute;
+    width: clamp(10px, 2vw, 20px);
+    height: clamp(10px, 2vw, 20px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FFF" d="M50,0 L50,100 M0,50 L100,50 M15,15 L85,85 M15,85 L85,15"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.7;
+    z-index: 2;
+    animation: snowFall 15s linear infinite;
+}
+
+@keyframes snowFall {
+    0% { transform: translateY(-10vh) translateX(-10vw) rotate(0deg); opacity: 0.7; }
+    50% { transform: translateY(50vh) translateX(5vw) rotate(180deg); opacity: 0.9; }
+    100% { transform: translateY(110vh) translateX(-5vw) rotate(360deg); opacity: 0.7; }
+}
+
+/* ลูกเล่นที่ 13: ควันพวยพุ่ง */
+.smoke {
+    position: absolute;
+    width: clamp(30px, 5vw, 50px);
+    height: clamp(30px, 5vw, 50px);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1;
+    animation: smokeRise 6s linear infinite;
+}
+
+@keyframes smokeRise {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    10% { opacity: 0.7; }
+    50% { transform: translateY(50vh) scale(1.5); opacity: 0.4; }
+    100% { transform: translateY(0vh) scale(3); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 14: วงแหวนระลอก */
+.ripple {
+    position: absolute;
+    width: clamp(10px, 2vw, 20px);
+    height: clamp(10px, 2vw, 20px);
+    border: 2px solid rgba(255, 71, 120, 0.5);
+    border-radius: 50%;
+    animation: rippleEffect 4s linear infinite;
+    z-index: 2;
+}
+
+@keyframes rippleEffect {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(5); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 15: ลูกเต๋าหมุน */
+.dice {
+    position: absolute;
+    width: clamp(20px, 4vw, 40px);
+    height: clamp(20px, 4vw, 40px);
+    background: #FFB6C1;
+    border-radius: 10%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: diceRoll 10s linear infinite;
+    z-index: 3;
+}
+
+.dice::before {
+    content: "♥";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(10px, 2vw, 20px);
+    color: #FF4778;
+}
+
+@keyframes diceRoll {
+    0% { transform: translateY(100vh) translateX(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg); opacity: 0.8; }
+    50% { transform: translateY(50vh) translateX(20vw) rotateX(180deg) rotateY(360deg) rotateZ(180deg); opacity: 1; }
+    100% { transform: translateY(0vh) translateX(0) rotateX(360deg) rotateY(720deg) rotateZ(360deg); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 16: พลุระเบิด */
+.firework {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #FF4778;
+    opacity: 0;
+    z-index: 3;
+}
+
+.firework.ready {
+    animation: fireworkLaunch 2s forwards;
+}
+
+@keyframes fireworkLaunch {
+    0% { transform: translateY(100vh); opacity: 1; }
+    70% { transform: translateY(30vh); opacity: 1; }
+    100% { transform: translateY(30vh); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 17: ฝุ่นกระจาย */
+.dust {
+    position: absolute;
+    width: clamp(3px, 0.5vw, 5px);
+    height: clamp(3px, 0.5vw, 5px);
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 2;
+}
+
+.dust.active {
+    animation: dustSpreading 2s forwards;
+}
+
+@keyframes dustSpreading {
+    0% { transform: scale(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    100% { transform: scale(20) translateY(-20px); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 18: เคเกท์วูบวาบ */
+.cake {
+    position: absolute;
+    width: clamp(40px, 8vw, 80px);
+    height: clamp(30px, 6vw, 60px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80"><rect fill="%23FFB6C1" x="10" y="40" width="80" height="40" rx="5" /><rect fill="%23FF95A8" x="20" y="20" width="60" height="20" rx="5" /><rect fill="%23FF4778" x="40" y="10" width="20" height="10" rx="3" /><circle fill="%23FFDF00" cx="50" cy="5" r="5"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 3;
+    animation: cakeFloat 15s ease-in-out infinite alternate;
+}
+
+@keyframes cakeFloat {
+    0% { transform: translateY(110vh) rotate(-5deg); opacity: 0; }
+    10% { opacity: 1; }
+    50% { transform: translateY(50vh) rotate(5deg); }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(-5deg); opacity: 0; }
+}
+
+/* ลูกเล่นที่ 19: ดวงจันทร์และดวงดาว */
+.moon {
+    position: absolute;
+    width: clamp(30px, 6vw, 60px);
+    height: clamp(30px, 6vw, 60px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="%23FFF9C4" cx="50" cy="50" r="40"/><circle fill="%23FFC1CC" cx="30" cy="30" r="10"/><circle fill="%23FFC1CC" cx="70" cy="40" r="8"/><circle fill="%23FFC1CC" cx="40" cy="70" r="12"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 2;
+    opacity: 0.8;
+    animation: moonMove 30s linear infinite alternate;
+}
+
+@keyframes moonMove {
+    0% { transform: translateX(-20vw) translateY(80vh) rotate(0deg); }
+    100% { transform: translateX(120vw) translateY(10vh) rotate(360deg); }
+}
+
+/* ลูกเล่นที่ 20: สายรุ้ง */
+.rainbow {
+    position: absolute;
+    width: clamp(200px, 40vw, 400px);
+    height: clamp(100px, 20vw, 200px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path fill="none" stroke="%23FF4778" stroke-width="10" d="M0,100 C70,0 130,0 200,100" /></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.5;
+    z-index: 1;
+    animation: rainbowFade 10s ease-in-out infinite alternate;
+}
+
+@keyframes rainbowFade {
+    0% { opacity: 0.3; transform: translateY(50vh) scale(0.8); }
+    100% { opacity: 0.7; transform: translateY(20vh) scale(1.2); }
+}
+
+/* ลูกเล่นที่ 21: แผ่นรูปหัวใจหมุนวน */
+.spinning-heart {
+    position: absolute;
+    width: clamp(20px, 4vw, 40px);
+    height: clamp(20px, 4vw, 40px);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FF4778" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    animation: heartSpin 8s linear infinite;
+    z-index: 3;
+}
+
+@keyframes heartSpin {
+    0% { transform: rotate(0deg) translateX(clamp(20px, 5vw, 50px)) rotate(0deg); opacity: 0.7; }
+    100% { transform: rotate(360deg) translateX(clamp(20px, 5vw, 50px)) rotate(-360deg); opacity: 0.7; }
+}
+
+/* Animation for button */
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation for pulse */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Animation for heart burst */
+@keyframes heartBurst {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.5); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .slide {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .response-message {
+        padding: 0 20px;
+    }
+    
+    .response-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-height: 600px) {
+    .container {
+        height: 90vh;
+    }
+    
+    .slide img {
+        max-height: 30vh;
+    }
+}

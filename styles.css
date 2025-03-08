@@ -1,0 +1,1018 @@
+:root {
+    --primary: #FF4778;
+    --primary-light: #FF95A8;
+    --primary-lighter: #FFB6C1;
+    --white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: 'Sriracha', cursive;
+    background: #000;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* กรณีโหลดหน้า */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* ส่วนโหลดเว็บไซต์ */
+.loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary), var(--primary-lighter));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    transition: opacity 1.5s ease, visibility 1.5s ease;
+}
+
+.loading-heart {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    transform: rotate(45deg);
+    animation: loadingPulse 1.5s infinite;
+}
+
+.loading-heart:before, .loading-heart:after {
+    content: "";
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    border-radius: 50%;
+    background: var(--primary);
+}
+
+.loading-heart:before {
+    left: -40px;
+}
+
+.loading-heart:after {
+    top: -40px;
+}
+
+.loading-text {
+    margin-top: 50px;
+    font-size: 24px;
+    color: var(--white);
+    text-align: center;
+}
+
+.loading-progress {
+    width: 200px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--white);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* ส่วนพื้นหลัง */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, #FF82A9 0%, #FF4778 100%);
+    overflow: hidden;
+}
+
+/* เอฟเฟกต์พาร์ติเคิล */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+/* หัวใจบนพื้นหลัง */
+.bg-hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0.2;
+}
+
+.bg-heart {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.3;
+    z-index: 2;
+}
+
+/* เอฟเฟกต์แสงหมุน */
+.light-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vmax;
+    height: 100vmax;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
+    z-index: 2;
+    animation: rotateLight 120s linear infinite;
+}
+
+/* เอฟเฟกต์เส้นแสง */
+.light-beam {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    width: 200vmax;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+    z-index: 2;
+    animation: rotateBeam 20s linear infinite;
+    opacity: 0.3;
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+/* คอนเทนเนอร์หลัก */
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem 4rem 1rem;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 2s ease, transform 2s ease;
+    margin-bottom: 2rem;
+}
+
+.container.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ส่วนบนสุด - หัวข้อ */
+.top-section {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 5;
+}
+
+.title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+                 0 0 30px var(--primary-light);
+    animation: titlePulse 3s infinite ease-in-out;
+    position: relative;
+    display: inline-block;
+    font-family: 'Sriracha', cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.title span {
+    display: inline-block;
+    animation: letterDance 3s infinite;
+    animation-delay: calc(var(--index) * 0.1s);
+    transform-origin: bottom;
+}
+
+.subtitle {
+    font-size: clamp(1.5rem, 5vw, 2.8rem);
+    color: var(--white);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 
+                 0 0 30px rgba(255, 71, 120, 0.6),
+                 0 10px 40px rgba(255, 71, 120, 0.8);
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    font-family: 'Mali', cursive;
+    opacity: 0;
+    animation: fadeIn 1s ease 1s forwards, floatingText 4s ease-in-out infinite;
+    background: linear-gradient(45deg, rgba(255, 71, 120, 0.3), rgba(255, 150, 170, 0.3));
+    padding: 18px 35px;
+    border-radius: 50px;
+    display: inline-block;
+    letter-spacing: 1px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    transform: translateY(0);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.subtitle:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+.subtitle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.subtitle:hover::before {
+    left: 100%;
+}
+
+.subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: borderGlow 2s linear infinite;
+}
+
+@keyframes borderGlow {
+    0% { opacity: 0.3; transform: translateX(-100%); }
+    100% { opacity: 1; transform: translateX(100%); }
+}
+
+@keyframes floatingText {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* ส่วนกลาง - รูปภาพ */
+.gallery-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0 2rem 0;
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    z-index: 5;
+}
+
+.gallery-container {
+    position: relative;
+    width: 45%; /* ลดจาก 60% เป็น 45% */
+    max-width: 300px; /* ลดจาก 400px เป็น 300px */
+    aspect-ratio: 3 / 4; /* คงค่าอัตราส่วนแนวตั้งไว้ */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(255, 255, 255, 0.5);
+    transform: perspective(1000px) rotateX(5deg);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: floatGallery 5s infinite ease-in-out;
+    transform-style: preserve-3d;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes floatGallery {
+    0% { transform: perspective(1000px) rotateX(5deg) translateY(0); }
+    50% { transform: perspective(1000px) rotateX(8deg) translateY(-15px); }
+    100% { transform: perspective(1000px) rotateX(5deg) translateY(0); }
+}
+
+.gallery-container:hover {
+    transform: perspective(1000px) rotateX(0deg) rotateY(5deg) scale(1.05);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+
+
+.photo-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain; /* เปลี่ยนจาก cover เป็น contain */
+    background-repeat: no-repeat; /* เพิ่มบรรทัดนี้ */
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+    transform: scale(1.0); /* เปลี่ยนจาก 1.1 เป็น 1.0 */
+    filter: none; /* ลบ filter ที่ทำให้รูปเบลอ */
+}
+
+.photo-frame.active {
+    opacity: 1;
+    transform: scale(1);
+    animation: none; /* ลบแอนิเมชันที่อาจทำให้รูปเบลอ */
+}
+
+@keyframes pulseImage {
+    0% { filter: brightness(1.1) contrast(1.1); }
+    100% { filter: brightness(1.3) contrast(1.2) saturate(1.2); }
+}
+
+.photo-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 30px;
+    padding: 8px 15px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.photo-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-dot::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}
+
+.photo-dot:hover::after {
+    transform: scale(1.5);
+}
+
+.photo-dot.active {
+    background: var(--white);
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.photo-dot:hover {
+    background: var(--white);
+    transform: scale(1.2);
+}
+
+.gallery-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 15px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 2;
+    backdrop-filter: blur(1px);
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+                              rgba(0,0,0,0) 50%, 
+                              rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+/* ส่วนล่าง - ข้อความ */
+.bottom-section {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 5;
+}
+
+.message {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    line-height: 1.8;
+    color: var(--white);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1.5rem;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2),
+                0 0 30px rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease 1.5s forwards;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.message:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3),
+                0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+.message::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        rgba(255, 255, 255, 0) 100%);
+    transform: rotate(45deg);
+    transition: all 1s ease;
+    animation: messageSweep 8s infinite linear;
+}
+
+@keyframes messageSweep {
+    0% { transform: rotate(45deg) translateX(-100%) translateY(-100%); }
+    100% { transform: rotate(45deg) translateX(100%) translateY(100%); }
+}
+
+.message p {
+    position: relative;
+    z-index: 2;
+    animation: colorPulse 5s infinite alternate;
+}
+
+@keyframes colorPulse {
+    0% { text-shadow: 0 0 10px rgba(255, 71, 120, 0.3); }
+    100% { text-shadow: 0 0 20px rgba(255, 71, 120, 0.7); }
+}
+
+.date {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--white);
+    opacity: 0.8;
+    margin-top: 1.5rem;
+    font-family: 'Mali', cursive;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 12px 25px;
+    border-radius: 50px;
+    display: inline-block;
+    opacity: 0;
+    animation: fadeIn 1s ease 2s forwards, pulseDate 5s infinite alternate;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.date:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes pulseDate {
+    0% { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 0 0 rgba(255, 71, 120, 0.2); }
+    100% { box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 71, 120, 0.5); }
+}
+
+.date::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.date:hover::before {
+    left: 100%;
+}
+
+/* ส่วนดนตรี */
+.music-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 1s ease 3s forwards;
+}
+
+.music-controls:hover {
+    transform: translateY(-5px);
+}
+
+.music-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.song-title {
+    font-family: 'Prompt', sans-serif;
+    font-size: 14px;
+    color: var(--white);
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.audio-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(45deg, var(--primary), var(--primary-light));
+    color: var(--white);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.audio-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider {
+    width: 100px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--white);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--white);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    border: none;
+}
+
+/* พลุ */
+.fireworks-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.firework {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    pointer-events: none;
+    transform-origin: center bottom;
+}
+
+/* ส่วนแสดงเวลาที่คบกัน */
+.anniversary-timer, .anniversary-countdown {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 5;
+    opacity: 0;
+    animation: fadeIn 1s ease 2.5s forwards;
+    width: 90%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.anniversary-countdown {
+    margin-top: 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    animation: fadeIn 1s ease 2.8s forwards;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.countdown-type {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0 15px 0;
+    flex-wrap: wrap;
+}
+
+.countdown-toggle {
+    font-family: 'Prompt', sans-serif;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.countdown-toggle.active {
+    background: var(--primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.countdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.countdown-date {
+    font-family: 'Prompt', sans-serif;
+    font-size: 16px;
+    color: var(--white);
+    margin-top: 15px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 15px;
+    border-radius: 30px;
+    display: inline-block;
+}
+
+.timer-title {
+    font-family: 'Prompt', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--white);
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+    display: block;
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+.timer-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+
+.timer-units {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.timer-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer-value {
+    font-family: 'Prompt', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--white);
+    padding: 10px;
+    min-width: 60px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.timer-label {
+    font-family: 'Prompt', sans-serif;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    color: var(--white);
+    margin-top: 5px;
+    font-weight: 300;
+}
+
+/* ปุ่มกลับไปหน้าแรก */
+.back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 24px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    opacity: 0;
+    animation: fadeIn 1s ease 3.5s forwards;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* เพิ่มซินทิไซเซอร์สำหรับเอฟเฟกต์เสียง */
+.synth-effect {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeIn 1s ease 3.5s forwards;
+}
+
+.synth-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.synth-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 71, 120, 0.5);
+    background: var(--primary);
+}
+
+/* เส้นไฟเคลื่อนไหว */
+.electric-line {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--primary), transparent);
+    z-index: 1000;
+    opacity: 0.7;
+    filter: blur(1px);
+    animation: electricMove 10s infinite linear;
+}
+
+@keyframes electricMove {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* เอฟเฟกต์เมาส์ติดตาม */
+.mouse-follower {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 71, 120, 0.5), transparent 70%);
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    filter: blur(2px);
+    opacity: 0.7;
+    mix-blend-mode: screen;
+}
+
+/* การ์ดสีที่เหมาะกับความรัก */
+.love-palette {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 1s ease 4s forwards;
+}
+
+.color-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.color-option:hover {
+    transform: scale(1.2);
+}
+
+.color-pink { background: linear-gradient(45deg, #FF4778, #FF95A8); }
+.color-purple { background: linear-gradient(45deg, #8A2BE2, #DA70D6); }
+.color-red { background: linear-gradient(45deg, #FF0000, #FF6B6B); }
+.color-blue { background: linear-gradient(45deg, #1E90FF, #87CEEB); }
+.color-green { background: linear-gradient(45deg, #23a35a, #90EE90); }
+
+/* เอฟเฟกต์แอนิเมชัน */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    5% { transform: scale(1.1); }
+    10% { transform: scale(1); }
+    15% { transform: scale(1.05); }
+    20% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes rotateLight {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes rotateBeam {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes titlePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes letterDance {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* รองรับการแสดงผลบนมือถือ */
+@media (max-width: 768px) {
+    .gallery-container {
+        width: 65%;
+    }
+    
+    .music-controls {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 15px;
+    }
+    
+    .song-title {
+        max-width: 80px;
+    }
+    
+    .volume-slider {
+        width: 60px;
+    }
+    
+    .timer-units {
+        gap: 10px;
+    }
+    
+    .timer-value {
+        min-width: 45px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-container {
+        width: 75%;
+    }
+    
+    .container {
+        padding: 1rem 0.5rem 3rem 0.5rem;
+    }
+    
+    .message {
+        padding: 15px;
+    }
+}
