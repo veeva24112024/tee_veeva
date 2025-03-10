@@ -21,12 +21,12 @@ body {
     min-height: 100vh;
 }
 
-/* กรณีโหลดหน้า */
+
 body.no-scroll {
     overflow: hidden;
 }
 
-/* ส่วนโหลดเว็บไซต์ */
+
 .loading-screen {
     position: fixed;
     width: 100%;
@@ -90,7 +90,7 @@ body.no-scroll {
     transition: width 0.3s ease;
 }
 
-/* ส่วนพื้นหลัง */
+
 .background {
     position: fixed;
     top: 0;
@@ -102,7 +102,6 @@ body.no-scroll {
     overflow: hidden;
 }
 
-/* เอฟเฟกต์พาร์ติเคิล */
 .particles-container {
     position: absolute;
     top: 0;
@@ -121,7 +120,7 @@ body.no-scroll {
     border-radius: 50%;
 }
 
-/* หัวใจบนพื้นหลัง */
+
 .bg-hearts {
     position: absolute;
     top: 0;
@@ -141,7 +140,7 @@ body.no-scroll {
     z-index: 2;
 }
 
-/* เอฟเฟกต์แสงหมุน */
+
 .light-effect {
     position: absolute;
     top: 50%;
@@ -155,7 +154,6 @@ body.no-scroll {
     animation: rotateLight 120s linear infinite;
 }
 
-/* เอฟเฟกต์เส้นแสง */
 .light-beam {
     position: absolute;
     top: 50%;
@@ -171,7 +169,7 @@ body.no-scroll {
     pointer-events: none;
 }
 
-/* คอนเทนเนอร์หลัก */
+
 .container {
     position: relative;
     z-index: 10;
@@ -193,7 +191,7 @@ body.no-scroll {
     transform: scale(1);
 }
 
-/* ส่วนบนสุด - หัวข้อ */
+
 .top-section {
     text-align: center;
     margin-bottom: 2rem;
@@ -290,7 +288,7 @@ body.no-scroll {
     100% { transform: translateY(0); }
 }
 
-/* ส่วนกลาง - รูปภาพ */
+
 .gallery-section {
     display: flex;
     justify-content: center;
@@ -304,9 +302,9 @@ body.no-scroll {
 
 .gallery-container {
     position: relative;
-    width: 45%; /* ลดจาก 60% เป็น 45% */
-    max-width: 300px; /* ลดจาก 400px เป็น 300px */
-    aspect-ratio: 3 / 4; /* คงค่าอัตราส่วนแนวตั้งไว้ */
+    width: 45%; 
+    max-width: 300px; 
+    aspect-ratio: 3 / 4;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
@@ -339,19 +337,19 @@ body.no-scroll {
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: contain; /* เปลี่ยนจาก cover เป็น contain */
-    background-repeat: no-repeat; /* เพิ่มบรรทัดนี้ */
+    background-size: contain; 
+    background-repeat: no-repeat; 
     background-position: center;
     opacity: 0;
     transition: opacity 1.5s ease, transform 1.5s ease;
-    transform: scale(1.0); /* เปลี่ยนจาก 1.1 เป็น 1.0 */
-    filter: none; /* ลบ filter ที่ทำให้รูปเบลอ */
+    transform: scale(1.0);
+    filter: none; 
 }
 
 .photo-frame.active {
     opacity: 1;
     transform: scale(1);
-    animation: none; /* ลบแอนิเมชันที่อาจทำให้รูปเบลอ */
+    animation: none;
 }
 
 @keyframes pulseImage {
@@ -443,7 +441,7 @@ body.no-scroll {
     opacity: 0.7;
 }
 
-/* ส่วนล่าง - ข้อความ */
+
 .bottom-section {
     text-align: center;
     max-width: 800px;
@@ -557,7 +555,7 @@ body.no-scroll {
     left: 100%;
 }
 
-/* ส่วนดนตรี */
+
 .music-controls {
     position: fixed;
     bottom: 20px;
@@ -648,7 +646,7 @@ body.no-scroll {
     border: none;
 }
 
-/* พลุ */
+
 .fireworks-container {
     position: fixed;
     top: 0;
@@ -667,7 +665,7 @@ body.no-scroll {
     transform-origin: center bottom;
 }
 
-/* ส่วนแสดงเวลาที่คบกัน */
+
 .anniversary-timer, .anniversary-countdown {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -797,7 +795,7 @@ body.no-scroll {
     font-weight: 300;
 }
 
-/* ปุ่มกลับไปหน้าแรก */
+
 .back-btn {
     position: fixed;
     top: 20px;
@@ -825,7 +823,7 @@ body.no-scroll {
     transform: scale(1.1);
 }
 
-/* เพิ่มซินทิไซเซอร์สำหรับเอฟเฟกต์เสียง */
+
 .synth-effect {
     position: fixed;
     bottom: 80px;
@@ -860,7 +858,7 @@ body.no-scroll {
     background: var(--primary);
 }
 
-/* เส้นไฟเคลื่อนไหว */
+
 .electric-line {
     position: fixed;
     bottom: 0;
@@ -879,7 +877,7 @@ body.no-scroll {
     100% { transform: translateX(100%); }
 }
 
-/* เอฟเฟกต์เมาส์ติดตาม */
+
 .mouse-follower {
     position: fixed;
     width: 30px;
@@ -894,7 +892,7 @@ body.no-scroll {
     mix-blend-mode: screen;
 }
 
-/* การ์ดสีที่เหมาะกับความรัก */
+
 .love-palette {
     position: fixed;
     bottom: 20px;
@@ -927,7 +925,7 @@ body.no-scroll {
 .color-blue { background: linear-gradient(45deg, #1E90FF, #87CEEB); }
 .color-green { background: linear-gradient(45deg, #23a35a, #90EE90); }
 
-/* เอฟเฟกต์แอนิเมชัน */
+
 @keyframes heartbeat {
     0% { transform: scale(1); }
     5% { transform: scale(1.1); }
@@ -973,7 +971,7 @@ body.no-scroll {
     50% { transform: translateY(-10px); }
 }
 
-/* รองรับการแสดงผลบนมือถือ */
+
 @media (max-width: 768px) {
     .gallery-container {
         width: 65%;
@@ -1017,22 +1015,20 @@ body.no-scroll {
     }
 }
 
-/* เพิ่มหรือแก้ไขโค้ดนี้ในไฟล์ styles.css */
 
-/* แก้ไขส่วน photo-frame */
 .photo-frame {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: contain !important; /* บังคับให้แสดงภาพทั้งหมด */
+    background-size: contain !important; 
     background-repeat: no-repeat !important;
     background-position: center !important;
     opacity: 0;
-    transition: opacity 0.5s ease; /* ลดเวลา transition */
-    transform: none !important; /* ยกเลิก transform */
-    filter: none !important; /* ลบ filter ทั้งหมด */
+    transition: opacity 0.5s ease; 
+    transform: none !important; 
+    filter: none !important; 
     -webkit-filter: none !important;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
@@ -1040,31 +1036,31 @@ body.no-scroll {
 
 .photo-frame.active {
     opacity: 1;
-    transform: none !important; /* ยกเลิก transform */
-    animation: none !important; /* ยกเลิก animation */
+    transform: none !important; 
+    animation: none !important; 
 }
 
-/* ลบ overlay ที่ทำให้รูปมืด */
+
 .gallery-overlay {
-    opacity: 0 !important; /* ปิดการแสดง overlay */
-    display: none; /* ปิดการแสดงผลเลย */
+    opacity: 0 !important; 
+    display: none; 
 }
 
-/* แก้ไขกรอบรูป */
+
 .gallery-frame {
-    border: 10px solid rgba(255, 255, 255, 0.3); /* เปลี่ยนเป็นกรอบที่ชัดขึ้น */
-    backdrop-filter: none !important; /* ลบ blur */
-    box-shadow: none !important; /* ลบเงา */
+    border: 10px solid rgba(255, 255, 255, 0.3); 
+    backdrop-filter: none !important; 
+    box-shadow: none !important; 
 }
 
-/* ปรับ container ให้แสดงรูปได้ดีขึ้น */
+
 .gallery-container {
-    transform: none !important; /* ลบการบิดเอียง */
-    animation: none !important; /* ยกเลิกแอนิเมชัน */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* เงาแบบเรียบง่าย */
+    transform: none !important; 
+    animation: none !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
 }
 
-/* ยกเลิก filter ทั้งหมดที่อาจมีผลกับรูปภาพ */
+
 .gallery-section * {
     filter: none !important;
     backdrop-filter: none !important;

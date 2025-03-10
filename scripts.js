@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // ตัวแปรสำหรับองค์ประกอบต่างๆ
+    
     const mainContainer = document.getElementById('mainContainer');
     const particlesContainer = document.getElementById('particlesContainer');
     const bgHearts = document.getElementById('bgHearts');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mouseFollower = document.getElementById('mouseFollower');
     const subtitle = document.querySelector('.subtitle');
     
-    // เสียงเอฟเฟกต์
+   
     const heartSound = document.getElementById('heartSound');
     const starSound = document.getElementById('starSound');
     const chimeSound = document.getElementById('chimeSound');
@@ -27,9 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentPhotoIndex = 0;
     let photoInterval;
     
-    // ---------- พื้นหลังเคลื่อนไหว ----------
     
-    // สร้างวงกลมสำหรับพื้นหลังเคลื่อนไหว
     function createBackgroundCircles() {
         animatedBg.innerHTML = '';
         const circleCount = 10;
@@ -37,8 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < circleCount; i++) {
             const circle = document.createElement('div');
             circle.classList.add('bg-circle');
-            
-            // สุ่มขนาดและตำแหน่ง
+        
             const size = Math.random() * 300 + 200;
             const posX = Math.random() * 100;
             const posY = Math.random() * 100;
@@ -48,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             circle.style.left = `${posX}%`;
             circle.style.top = `${posY}%`;
             
-            // สร้างแอนิเมชัน
+           
             const duration = Math.random() * 20 + 20;
             const delay = Math.random() * 5;
             
@@ -70,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // สร้างแกนความรัก 3D
+    
     function create3DLoveAxis() {
         loveAxis.innerHTML = '';
         const particleCount = 50;
@@ -80,27 +77,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const particle = document.createElement('div');
             particle.classList.add('love-particle');
             
-            // สุ่มตำแหน่งในพื้นที่ 3D
+            
             const x = (Math.random() - 0.5) * axisSize;
             const y = (Math.random() - 0.5) * axisSize;
             const z = (Math.random() - 0.5) * axisSize;
             
-            // สุ่มขนาด
+          
             const size = Math.random() * 20 + 10;
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
             
-            // สุ่มความโปร่งใส
+            
             const opacity = Math.random() * 0.5 + 0.3;
             particle.style.opacity = opacity;
             
-            // สร้างแอนิเมชัน
+            
             const animDuration = Math.random() * 20 + 20;
             const delay = Math.random() * 5;
             
             particle.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
             
-            // สร้างแอนิเมชันหมุนรอบแกน
+            
             const keyframes = [
                 { transform: `translate3d(${x}px, ${y}px, ${z}px) rotate(0deg)` },
                 { transform: `translate3d(${x * 1.2}px, ${y * 0.8}px, ${z * 1.1}px) rotate(180deg)` },
@@ -118,9 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ---------- PARTICLE EFFECTS ----------
     
-    // สร้างพาร์ติเคิลลอย
     function createParticles() {
         const particleCount = 100;
         const colors = ['#FFB6C1', '#FFC0CB', '#FFD1DC', '#FFFFFF'];
@@ -129,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const particle = document.createElement('div');
             particle.classList.add('particle');
             
-            // สุ่มขนาด, ตำแหน่ง, และสี
+           
             const size = Math.random() * 4 + 2;
             const posX = Math.random() * 100;
             const posY = Math.random() * 100;
@@ -143,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
             particle.style.background = color;
             particle.style.opacity = opacity;
             
-            // สร้างแอนิเมชัน
+          
             const duration = Math.random() * 20 + 10;
             const delay = Math.random() * 5;
             
@@ -162,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // สร้างหัวใจบนพื้นหลัง
+ 
     function createBackgroundHearts() {
         const heartCount = 20;
         
@@ -170,10 +165,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const heart = document.createElement('div');
             heart.classList.add('bg-heart');
             
-            // สร้าง SVG หัวใจ
+            
             heart.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23FFF" d="M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z" /></svg>')`;
             
-            // สุ่มขนาดและตำแหน่ง
+           
             const size = Math.random() * 100 + 50;
             const posX = Math.random() * 100;
             const posY = Math.random() * 100;
@@ -183,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             heart.style.left = `${posX}%`;
             heart.style.top = `${posY}%`;
             
-            // สร้างแอนิเมชัน
+            
             const duration = Math.random() * 10 + 10;
             
             heart.animate([
@@ -200,33 +195,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ---------- PHOTO SLIDER ----------
     
-    // ตั้งค่าสไลด์รูปภาพ
     function initPhotoSlider() {
-        // สร้างอินเทอร์วัลเปลี่ยนรูปอัตโนมัติ
+        
         photoInterval = setInterval(nextPhoto, 5000);
         
-        // จัดการคลิกที่ปุ่มสไลด์
+       
         photoDots.forEach(dot => {
             dot.addEventListener('click', function() {
                 const index = parseInt(this.getAttribute('data-index'));
                 showPhoto(index);
                 
-                // เล่นเสียงเมื่อเปลี่ยนรูป
+                
                 if (!isMuted) {
                     starSound.currentTime = 0;
                     starSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
                 }
                 
-                // รีเซ็ตอินเทอร์วัล
+                
                 clearInterval(photoInterval);
                 photoInterval = setInterval(nextPhoto, 5000);
             });
         });
     }
     
-    // แสดงรูปภาพตามดัชนี
+   
     function showPhoto(index) {
         photoFrames.forEach(frame => frame.classList.remove('active'));
         photoDots.forEach(dot => dot.classList.remove('active'));
@@ -237,15 +230,13 @@ document.addEventListener('DOMContentLoaded', function() {
         currentPhotoIndex = index;
     }
     
-    // เปลี่ยนไปรูปถัดไป
+    
     function nextPhoto() {
         currentPhotoIndex = (currentPhotoIndex + 1) % photoFrames.length;
         showPhoto(currentPhotoIndex);
     }
     
-    // ---------- FIREWORKS EFFECT ----------
-    
-    // สร้างพลุ
+   
     function createFireworks() {
         setInterval(() => {
             if (Math.random() > 0.7) {
@@ -253,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 1000);
         
-        // เรียกใช้ฟังก์ชันเมื่อเริ่มต้น
+        
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 launchFirework();
@@ -261,23 +252,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ปล่อยพลุ
+   
     function launchFirework() {
         const firework = document.createElement('div');
         firework.classList.add('firework');
         
-        // สุ่มตำแหน่ง
+        
         const posX = 10 + Math.random() * 80;
         firework.style.left = `${posX}%`;
         
-        // สุ่มสี
+        
         const hue = 340 + Math.random() * 40;
         const color = `hsl(${hue}, 100%, 60%)`;
         firework.style.backgroundColor = color;
         
         fireworksContainer.appendChild(firework);
         
-        // แอนิเมชันยิงพลุขึ้น
+        
         const rocketAnimationDuration = 1 + Math.random() * 1;
         
         firework.animate([
@@ -292,24 +283,24 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
-    // พลุระเบิด
+    
     function explodeFirework(firework, color, hue) {
         const particles = 30 + Math.random() * 20;
         const explosion = firework.getBoundingClientRect();
         const explosionX = explosion.left + explosion.width / 2;
         const explosionY = explosion.top;
         
-        // เล่นเสียงเมื่อพลุระเบิด
+        
         if (!isMuted && Math.random() > 0.7) {
             chimeSound.currentTime = 0;
             chimeSound.volume = 0.2;
             chimeSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
         }
         
-        // ลบพลุหลังจากระเบิด
+       
         firework.remove();
         
-        // สร้างอนุภาคระเบิด
+       
         for (let i = 0; i < particles; i++) {
             const particle = document.createElement('div');
             particle.classList.add('firework');
@@ -322,12 +313,12 @@ document.addEventListener('DOMContentLoaded', function() {
             particle.style.pointerEvents = 'none';
             fireworksContainer.appendChild(particle);
             
-            // สุ่มทิศทางและระยะเวลา
+            
             const angle = Math.random() * Math.PI * 2;
             const velocity = 2 + Math.random() * 5;
             const lifetime = 1 + Math.random();
             
-            // แอนิเมชันอนุภาคระเบิด
+            
             particle.animate([
                 { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
                 { 
@@ -344,9 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ---------- MUSIC CONTROLS ----------
     
-    // ควบคุมเสียงเพลง
     audioToggle.addEventListener('click', function() {
         if (isMuted) {
             bgMusic.volume = volumeSlider.value;
@@ -365,10 +354,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // ตั้งค่าระดับเสียงเริ่มต้น
+    
     bgMusic.volume = volumeSlider.value;
     
-    // พยายามเล่นเพลงอัตโนมัติ
+   
     function tryPlayMusic() {
         bgMusic.play().catch(function(error) {
             console.log("การเล่นอัตโนมัติอาจถูกบล็อก: ", error);
@@ -378,51 +367,49 @@ document.addEventListener('DOMContentLoaded', function() {
     tryPlayMusic();
     document.body.addEventListener('click', tryPlayMusic, { once: true });
     
-    // ---------- เสียงซินทิไซเซอร์ ----------
     
-    // ปุ่มเล่นเสียงหัวใจ
     synthHeart.addEventListener('click', function() {
         heartSound.currentTime = 0;
         heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
         
-        // เพิ่มเอฟเฟกต์วิชวล
+       
         createHeartBurst();
     });
     
-    // ปุ่มเล่นเสียงดาว
+   
     synthStar.addEventListener('click', function() {
         starSound.currentTime = 0;
         starSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
         
-        // เพิ่มเอฟเฟกต์วิชวล
+        
         createStarBurst();
     });
     
-    // ปุ่มเล่นเสียงระฆัง
+   
     synthChime.addEventListener('click', function() {
         chimeSound.currentTime = 0;
         chimeSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
         
-        // เพิ่มเอฟเฟกต์วิชวล
+        
         createChimeBurst();
     });
 
-    // เพิ่มเอฟเฟกต์คลิกที่ subtitle
+    
     subtitle.addEventListener('click', function() {
-        // เล่นเสียงเมื่อคลิก
+       
         if (!isMuted) {
             heartSound.currentTime = 0;
             heartSound.volume = 0.5;
             heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
         }
         
-        // สร้างหัวใจระเบิดแบบอลังการทั่วหน้าจอ
+        
         createGrandHeartExplosion();
     });
     
-    // ฟังก์ชันสร้างหัวใจระเบิดแบบอลังการทั่วหน้าจอ
+   
     function createGrandHeartExplosion() {
-        // สร้าง container สำหรับเอฟเฟกต์
+        
         const container = document.createElement('div');
         container.style.position = 'fixed';
         container.style.top = '0';
@@ -433,10 +420,10 @@ document.addEventListener('DOMContentLoaded', function() {
         container.style.zIndex = '1000';
         document.body.appendChild(container);
         
-        // สร้างหัวใจกระจายแบบพลุระเบิด (จำนวนมาก)
+       
         const heartCount = 100;
         
-        // สร้างหัวใจกระจายออกจากจุดกลาง
+       
         for (let i = 0; i < heartCount; i++) {
             const heart = document.createElement('div');
             heart.innerHTML = '♥';
@@ -472,13 +459,13 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         }
         
-        // สร้างเอฟเฟกต์กระจายเป็นรูปหัวใจขนาดใหญ่
+        
         setTimeout(() => {
             createHeartShapedExplosion();
         }, 300);
     }
     
-    // ฟังก์ชันสร้างเอฟเฟกต์กระจายเป็นรูปหัวใจขนาดใหญ่
+    
     function createHeartShapedExplosion() {
         const container = document.createElement('div');
         container.style.position = 'fixed';
@@ -490,25 +477,24 @@ document.addEventListener('DOMContentLoaded', function() {
         container.style.zIndex = '1001';
         document.body.appendChild(container);
         
-        // จำนวนอนุภาคที่ใช้สร้างรูปหัวใจ
+       
         const particleCount = 200;
         
-        // สร้างอนุภาคหัวใจตามรูปทรงหัวใจ
+        
         for (let i = 0; i < particleCount; i++) {
-            // คำนวณตำแหน่งบนเส้นหัวใจ (ใช้สมการหัวใจทางคณิตศาสตร์)
-            // t คือพารามิเตอร์ระหว่าง 0 ถึง 2π
+            
             const t = (i / particleCount) * Math.PI * 2;
             
-            // สมการรูปหัวใจ
+           
             const x = 16 * Math.pow(Math.sin(t), 3);
             const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
             
-            // ปรับขนาดและตำแหน่ง
+            
             const scaleFactor = window.innerHeight / 50;
             const xPos = window.innerWidth / 2 + x * scaleFactor * 0.8;
             const yPos = window.innerHeight / 2 - y * scaleFactor * 0.8;
             
-            // สร้างอนุภาคหัวใจ
+            
             const particle = document.createElement('div');
             particle.innerHTML = '♥';
             particle.style.position = 'absolute';
@@ -519,12 +505,12 @@ document.addEventListener('DOMContentLoaded', function() {
             particle.style.opacity = '0';
             container.appendChild(particle);
             
-            // อนิเมชันแบบ 2 ขั้นตอน: แรกไปที่ตำแหน่งของรูปหัวใจ จากนั้นค่อยๆ จางหายไป
+            
             const duration1 = 1500 + Math.random() * 1000;
             const duration2 = 1000 + Math.random() * 1500;
             const delay = Math.random() * 500;
             
-            // อนิเมชั่นขั้นที่ 1: ไปที่ตำแหน่งของรูปหัวใจ
+            
             particle.animate([
                 { transform: 'translate(-50%, -50%) scale(0)', opacity: 0 },
                 { transform: `translate(${xPos - window.innerWidth/2}px, ${yPos - window.innerHeight/2}px) scale(1)`, opacity: 1 }
@@ -534,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 fill: 'forwards',
                 easing: 'cubic-bezier(.25, .1, .25, 1)'
             }).onfinish = function() {
-                // อนิเมชั่นขั้นที่ 2: ค่อยๆ จางหายไป
+                
                 particle.animate([
                     { opacity: 1 },
                     { opacity: 0 }
@@ -552,7 +538,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // แทนที่ฟังก์ชัน createHeartBurst
+    
     function createHeartBurst() {
         const burstContainer = document.createElement('div');
         burstContainer.style.position = 'fixed';
@@ -564,13 +550,13 @@ document.addEventListener('DOMContentLoaded', function() {
         burstContainer.style.zIndex = '10000';
         document.body.appendChild(burstContainer);
         
-        // สร้างการระเบิดหัวใจ
+        
         const heartCount = 50;
         const colors = ['#FF4778', '#FF95A8', '#FFB6C1', '#FF0000'];
         const centerX = synthHeart.getBoundingClientRect().left + synthHeart.getBoundingClientRect().width / 2;
         const centerY = synthHeart.getBoundingClientRect().top + synthHeart.getBoundingClientRect().height / 2;
         
-        // สร้างหัวใจเล็กๆ ในรูปแบบวงกลม
+        
         for (let i = 0; i < heartCount; i++) {
             const heart = document.createElement('div');
             heart.innerHTML = '♥';
@@ -604,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         }
         
-        // สร้างการระเบิดตรงกลาง
+        
         createCentralBurst(burstContainer, centerX, centerY);
     }
     
@@ -619,15 +605,15 @@ document.addEventListener('DOMContentLoaded', function() {
         burstContainer.style.zIndex = '10000';
         document.body.appendChild(burstContainer);
         
-        // สร้างดาวในรูปแบบเกลียว
+       
         const starCount = 60;
         const colors = ['#FFD700', '#FFF8DC', '#FFFACD', '#FFFFFF', '#F0E68C'];
         const centerX = synthStar.getBoundingClientRect().left + synthStar.getBoundingClientRect().width / 2;
         const centerY = synthStar.getBoundingClientRect().top + synthStar.getBoundingClientRect().height / 2;
         
-        // สร้างดาว
+        
         for (let i = 0; i < starCount; i++) {
-            // สร้างดาวโดยใช้ CSS
+            
             const star = document.createElement('div');
             const starSize = Math.random() * 15 + 10;
             star.style.position = 'absolute';
@@ -640,7 +626,7 @@ document.addEventListener('DOMContentLoaded', function() {
             star.style.zIndex = '10000';
             burstContainer.appendChild(star);
             
-            // รูปแบบเกลียว
+            
             const spiralAngle = (i / starCount) * Math.PI * 8;
             const spiralRadius = i * 3;
             const distance = 30 + spiralRadius;
@@ -662,11 +648,11 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         }
         
-        // สร้างการระเบิดรูปดาว
+        
         createStarTrail(burstContainer, centerX, centerY);
     }
     
-    // สร้างฟังก์ชัน Star Trail
+    
     function createStarTrail(container, x, y) {
         const trailCount = 8;
         const particlesPerTrail = 15;
@@ -687,7 +673,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 particle.style.boxShadow = '0 0 5px 2px rgba(255, 255, 255, 0.5)';
                 container.appendChild(particle);
                 
-                // เปลี่ยนแปลงมุมเล็กน้อย
+                
                 const particleAngle = angle + (Math.random() * 0.3 - 0.15);
                 const delay = i * 50;
                 const distance = 20 + i * 10;
@@ -706,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // เพิ่มแฟลชตรงกลาง
+        
         const flash = document.createElement('div');
         flash.style.position = 'absolute';
         flash.style.left = x + 'px';
@@ -730,7 +716,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
-    // ปรับปรุงเอฟเฟกต์ chime burst
+    
     function createChimeBurst() {
         const burstContainer = document.createElement('div');
         burstContainer.style.position = 'fixed';
@@ -745,7 +731,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const centerX = synthChime.getBoundingClientRect().left + synthChime.getBoundingClientRect().width / 2;
         const centerY = synthChime.getBoundingClientRect().top + synthChime.getBoundingClientRect().height / 2;
         
-        // สร้างวงแหวนขยาย
+        
         for (let i = 0; i < 8; i++) {
             const ring = document.createElement('div');
             ring.style.position = 'absolute';
@@ -777,7 +763,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, delay);
         }
         
-        // สร้างโน้ตดนตรี
+        
         const noteCount = 12;
         const notes = ['♪', '♫', '♬', '♩'];
         const colors = ['#FFD700', '#FFA500', '#FFFFFF', '#FFC0CB'];
@@ -813,7 +799,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ฟังก์ชันสร้างเอฟเฟกต์ระเบิดตรงกลางแบบช้า
+    
     function createSlowCentralBurst(container, x, y) {
         const particles = 40;
         const colors = ['#FFFFFF', '#FFCCD5', '#FFE6EA', '#FFF0F3'];
@@ -831,7 +817,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(particle);
             
             const angle = Math.random() * Math.PI * 2;
-            const velocity = 0.5 + Math.random() * 3; // ลดความเร็ว
+            const velocity = 0.5 + Math.random() * 3; 
             const distance = 30 + Math.random() * 80;
             
             particle.animate([
@@ -841,7 +827,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 { transform: `translate(calc(-50% + ${Math.cos(angle) * distance * velocity * 0.7}px), calc(-50% + ${Math.sin(angle) * distance * velocity * 0.7}px)) scale(0.5)`, opacity: 0.4, offset: 0.7 },
                 { transform: `translate(calc(-50% + ${Math.cos(angle) * distance * velocity}px), calc(-50% + ${Math.sin(angle) * distance * velocity}px)) scale(0)`, opacity: 0 }
             ], {
-                duration: 3000 + Math.random() * 1000, // เพิ่มระยะเวลาเป็น 3-4 วินาที
+                duration: 3000 + Math.random() * 1000, 
                 easing: 'ease-in-out',
                 fill: 'forwards'
             }).onfinish = function() {
@@ -850,7 +836,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // สร้างเอฟเฟกต์ระเบิดตรงกลาง
+    
     function createCentralBurst(container, x, y) {
         const particles = 50;
         const colors = ['#FFFFFF', '#FFCCD5', '#FFE6EA', '#FFF0F3'];
@@ -883,9 +869,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ---------- DATE AND TIMER ----------
     
-    // อัปเดตวันที่ปัจจุบัน
     const currentDate = new Date();
     document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('th-TH', { 
         year: 'numeric', 
@@ -893,13 +877,13 @@ document.addEventListener('DOMContentLoaded', function() {
         day: 'numeric' 
     });
     
-    // คำนวณเวลาที่รู้จักกัน
+   
     function updateTimeTogether() {
         // วันที่เริ่มรู้จักกัน (24 พฤศจิกายน 2024 22:34 น.)
-        const startDate = new Date(2024, 10, 24, 22, 34, 0); // เดือนใน JavaScript เริ่มจาก 0 (มกราคม = 0)
+        const startDate = new Date(2024, 10, 24, 22, 34, 0);
         const currentDate = new Date();
         
-        // คำนวณความแตกต่างในมิลลิวินาที
+       
         const diff = currentDate - startDate;
         
         // คำนวณเวลาที่ผ่านไป
@@ -907,9 +891,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const msInMinute = msInSecond * 60;
         const msInHour = msInMinute * 60;
         const msInDay = msInHour * 24;
-        const msInMonth = msInDay * 30.436875; // ค่าเฉลี่ยวันต่อเดือน
+        const msInMonth = msInDay * 30.436875; 
         
-        // คำนวณแต่ละหน่วยเวลา
+        
         const months = Math.floor(diff / msInMonth);
         const days = Math.floor((diff % msInMonth) / msInDay);
         const hours = Math.floor((diff % msInDay) / msInHour);
@@ -924,25 +908,24 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('seconds').textContent = seconds;
     }
     
-    // คำนวณเวลาที่เหลือจนถึงวันครบรอบ
-    // คำนวณเวลาที่เหลือจนถึงวันครบรอบ
+  
     function updateCountdown() {
-    // วันที่เริ่มเป็นแฟนกัน (9 มีนาคม 2025)
-        const anniversaryStart = new Date(2025, 2, 9); // เปลี่ยนจาก 4 เป็น 9
+    
+        const anniversaryStart = new Date(2025, 2, 9);
         const currentDate = new Date();
     
-    // กำหนดวันครบรอบต่างๆ
-        const oneMonthAnniversary = new Date(2025, 3, 9); // 9 เมษายน 2025
-        const oneYearAnniversary = new Date(2026, 2, 9); // 9 มีนาคม 2026
-        const fiveYearAnniversary = new Date(2030, 2, 9); // 9 มีนาคม 2030
-        const tenYearAnniversary = new Date(2035, 2, 9); // 9 มีนาคม 2035
-        const twentyYearAnniversary = new Date(2045, 2, 9); // 9 มีนาคม 2045
-        const fiftyYearAnniversary = new Date(2075, 2, 9); // 9 มีนาคม 2075
+  
+        const oneMonthAnniversary = new Date(2025, 3, 9);
+        const oneYearAnniversary = new Date(2026, 2, 9); 
+        const fiveYearAnniversary = new Date(2030, 2, 9); 
+        const tenYearAnniversary = new Date(2035, 2, 9); 
+        const twentyYearAnniversary = new Date(2045, 2, 9); 
+        const fiftyYearAnniversary = new Date(2075, 2, 9); 
         
-        // ตรวจสอบปุ่มที่ active อยู่
+        
         const activeType = document.querySelector('.countdown-toggle.active').getAttribute('data-type');
         
-        // กำหนดวันครบรอบที่จะนับถอยหลัง
+        
         let targetDate;
         let dateText;
         
@@ -977,10 +960,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         document.getElementById('countdown-date').textContent = dateText;
         
-        // คำนวณความแตกต่างในมิลลิวินาที
+        
         const diff = targetDate - currentDate;
         
-        // ถ้าวันครบรอบผ่านไปแล้ว
+       
         if (diff < 0) {
             document.getElementById('countdown-days').textContent = '0';
             document.getElementById('countdown-hours').textContent = '0';
@@ -989,7 +972,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // คำนวณเวลาที่เหลือ
+      
         const msInSecond = 1000;
         const msInMinute = msInSecond * 60;
         const msInHour = msInMinute * 60;
@@ -1000,37 +983,37 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = Math.floor((diff % msInHour) / msInMinute);
         const seconds = Math.floor((diff % msInMinute) / msInSecond);
         
-        // แสดงผล
+        
         document.getElementById('countdown-days').textContent = days;
         document.getElementById('countdown-hours').textContent = hours;
         document.getElementById('countdown-minutes').textContent = minutes;
         document.getElementById('countdown-seconds').textContent = seconds;
     }
     
-    // จัดการปุ่มเปลี่ยนประเภทการนับถอยหลัง
+    
     document.querySelectorAll('.countdown-toggle').forEach(button => {
         button.addEventListener('click', function() {
-            // ลบ active จากทุกปุ่ม
+            
             document.querySelectorAll('.countdown-toggle').forEach(btn => {
                 btn.classList.remove('active');
             });
             
-            // เพิ่ม active ให้ปุ่มที่คลิก
+            
             this.classList.add('active');
             
-            // เล่นเสียงเมื่อกดปุ่ม
+           
             if (!isMuted) {
                 heartSound.currentTime = 0;
                 heartSound.volume = 0.4;
                 heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
             }
             
-            // อัพเดทการนับถอยหลัง
+            
             updateCountdown();
         });
     });
     
-    // ติดตามเมาส์
+    
     document.addEventListener('mousemove', function(e) {
         if (mouseFollower) {
             mouseFollower.style.left = e.clientX + 'px';
@@ -1038,13 +1021,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // เปลี่ยนโทนสี
+    
     colorOptions.forEach(option => {
         option.addEventListener('click', function() {
             const color = this.getAttribute('data-color');
             changeColorTheme(color);
             
-            // เล่นเสียงเมื่อเปลี่ยนสี
+           
             if (!isMuted) {
                 chimeSound.currentTime = 0;
                 chimeSound.volume = 0.3;
@@ -1053,7 +1036,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ฟังก์ชันเปลี่ยนโทนสี
+    
     function changeColorTheme(color) {
         let primaryColor, primaryLight;
         
@@ -1075,8 +1058,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 primaryLight = '#87CEEB';
                 break;
             case 'green':
-                primaryColor = '#2E8B57'; // สีเขียวเข้ม (Sea Green)
-                primaryLight = '#90EE90'; // สีเขียวอ่อน (Light Green)
+                primaryColor = '#2E8B57'; 
+                primaryLight = '#90EE90'; 
                 break;    
             default:
                 primaryColor = '#FF4778';
@@ -1086,32 +1069,30 @@ document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.style.setProperty('--primary', primaryColor);
         document.documentElement.style.setProperty('--primary-light', primaryLight);
         
-        // เปลี่ยนสีพื้นหลัง
+        
         document.querySelector('.background').style.background = `radial-gradient(ellipse at center, ${primaryLight} 0%, ${primaryColor} 100%)`;
     }
     
-    // ---------- INITIALIZATION ----------
-    
-    // แสดงคอนเทนเนอร์หลัก
+   
     mainContainer.classList.add('active');
     
-    // สร้างพื้นหลังที่เคลื่อนไหวได้
+    
     createBackgroundCircles();
     create3DLoveAxis();
     
-    // เรียกใช้ฟังก์ชันเอฟเฟกต์ต่างๆ
+    
     createFireworks();
     createParticles();
     createBackgroundHearts();
     initPhotoSlider();
     
-    // อัพเดททุกๆ 1 วินาที
+    
     setInterval(() => {
         updateTimeTogether();
         updateCountdown();
     }, 1000);
     
-    // อัพเดทครั้งแรก
+    
     updateTimeTogether();
     updateCountdown();
 });
