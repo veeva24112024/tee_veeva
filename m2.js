@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     clearInterval(autoSlideTimer);
                 }
             }
-        }, 4500);
+        }, 5000);
     }
 
     
