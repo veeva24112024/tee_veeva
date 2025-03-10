@@ -870,12 +870,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     
-    const currentDate = new Date();
-    document.getElementById('currentDate').textContent = currentDate.toLocaleDateString('th-TH', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    });
+   
     
    
     function updateTimeTogether() {
@@ -911,7 +906,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
     function updateCountdown() {
     
-        const anniversaryStart = new Date(2025, 2, 9);
+        const anniversaryStart = new Date(2025, 2, 9, 23, 59, 0);
         const currentDate = new Date();
     
   
