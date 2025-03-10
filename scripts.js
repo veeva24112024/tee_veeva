@@ -916,6 +916,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const tenYearAnniversary = new Date(2035, 2, 9); 
         const twentyYearAnniversary = new Date(2045, 2, 9); 
         const fiftyYearAnniversary = new Date(2075, 2, 9); 
+        const twoYearAnniversary = new Date(2027, 2, 9);
+        const threeYearAnniversary = new Date(2028, 2, 9);
+        const sevenYearAnniversary = new Date(2032, 2, 9);
+        const fifteenYearAnniversary = new Date(2040, 2, 9);
         
         
         const activeType = document.querySelector('.countdown-toggle.active').getAttribute('data-type');
@@ -952,6 +956,23 @@ document.addEventListener('DOMContentLoaded', function() {
             default:
                 targetDate = oneMonthAnniversary;
                 dateText = '9 เมษายน 2025';
+
+            case 'year2':
+                targetDate = twoYearAnniversary;
+                dateText = '9 มีนาคม 2027';
+                break;
+            case 'year3':
+                targetDate = threeYearAnniversary;
+                dateText = '9 มีนาคม 2028';
+                break;   
+            case 'year7':
+                targetDate = sevenYearAnniversary;
+                dateText = '9 มีนาคม 2032';
+                break;          
+            case 'year15':
+                targetDate = fifteenYearAnniversary;
+                dateText = '9 มีนาคม 2040';
+                break;     
         }
         document.getElementById('countdown-date').textContent = dateText;
         
