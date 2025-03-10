@@ -1089,4 +1089,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateTimeTogether();
     updateCountdown();
+
+// เพิ่ม event listener สำหรับ click บนกล่อง anniversary-date
+const anniversaryDate = document.getElementById('anniversaryDate');
+if (anniversaryDate) {
+    anniversaryDate.addEventListener('click', function() {
+        // เล่นเสียงหัวใจเมื่อคลิก (เหมือนกับที่ทำใน subtitle)
+        if (!isMuted) {
+            heartSound.currentTime = 0;
+            heartSound.volume = 0.5;
+            heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
+        }
+        
+        // สร้างเอฟเฟกต์หัวใจพุ่งออกมา
+        createGrandHeartExplosion();
+    });
+}
+
+
 });
