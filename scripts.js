@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const photoDots = document.querySelectorAll('.photo-dot');
     const photoFrames = document.querySelectorAll('.photo-frame');
     const bgMusic = document.getElementById('bgMusic');
-    const audioToggle = document.getElementById('audioToggle');
-    const volumeSlider = document.getElementById('volumeSlider');
+    
+    
     const animatedBg = document.getElementById('animatedBg');
     const loveAxis = document.getElementById('loveAxis');
     const colorOptions = document.querySelectorAll('.color-option');
@@ -336,28 +336,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     
-    audioToggle.addEventListener('click', function() {
-        if (isMuted) {
-            bgMusic.volume = volumeSlider.value;
-            audioToggle.textContent = '♪';
-            isMuted = false;
-        } else {
-            bgMusic.volume = 0;
-            audioToggle.textContent = '♪̸';
-            isMuted = true;
-        }
-    });
-    
-    volumeSlider.addEventListener('input', function() {
-        if (!isMuted) {
-            bgMusic.volume = this.value;
-        }
-    });
-    
-    
-    bgMusic.volume = volumeSlider.value;
-    
-   
     function tryPlayMusic() {
         bgMusic.play().catch(function(error) {
             console.log("การเล่นอัตโนมัติอาจถูกบล็อก: ", error);
