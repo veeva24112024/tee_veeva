@@ -19,9 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const heartSound = document.getElementById('heartSound');
     const starSound = document.getElementById('starSound');
     const chimeSound = document.getElementById('chimeSound');
-    const synthHeart = document.getElementById('synthHeart');
-    const synthStar = document.getElementById('synthStar');
-    const synthChime = document.getElementById('synthChime');
+    
     
     let isMuted = false;
     let currentPhotoIndex = 0;
@@ -346,31 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.addEventListener('click', tryPlayMusic, { once: true });
     
     
-    synthHeart.addEventListener('click', function() {
-        heartSound.currentTime = 0;
-        heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
-        
-       
-        createHeartBurst();
-    });
     
-   
-    synthStar.addEventListener('click', function() {
-        starSound.currentTime = 0;
-        starSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
-        
-        
-        createStarBurst();
-    });
-    
-   
-    synthChime.addEventListener('click', function() {
-        chimeSound.currentTime = 0;
-        chimeSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
-        
-        
-        createChimeBurst();
-    });
 
     
     subtitle.addEventListener('click', function() {
