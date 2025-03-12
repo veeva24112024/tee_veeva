@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    background: linear-gradient(45deg, #FF4778, #FF95A8);
     color: #333;
     line-height: 1.6;
     min-height: 100vh;
@@ -117,7 +117,7 @@ body::before {
     transform: translateX(-50%);
     width: 2px;
     height: 100%;
-    background: linear-gradient(to bottom, #ff4b6e, #ff9a9e);
+    background: linear-gradient(to bottom, #ff4b6e, #FF4778);
     animation: timelineFlow 3s infinite;
 }
 
@@ -1001,4 +1001,3 @@ body::before {
     opacity: 0.9;
 }
 
-.floating-heart
