@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Mali:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<br>
+<body>
     
     <div class="background">
         
@@ -50,7 +50,7 @@
     <div class="container" id="mainContainer">
         
         <div class="top-section">
-            <p class="subtitle">เราเป็นแฟนกันอย่างเป็นทางการแล้วนะ ♥</p>
+            <p class="subtitle">เราเป็นแฟนกันอย่างเป็นทางการแล้วนะ! ♥</p>
         </div>
        
         <div class="gallery-section">
@@ -73,11 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="anniversary-date" id="anniversaryDate">
-            <div class="timer-title">วันที่เราคบกัน</div>
-             <div class="special-date">9 มีนาคม 2025</div>
-                  <div class="heart-decoration">♥</div>
-        </div>
+        
         
         <div class="bottom-section">
             <div class="message">
@@ -86,7 +82,6 @@
                 สร้างโลกใบเล็กๆ ที่เต็มไปด้วยความสุขด้วยกันนะ<br>
         
             </div>
-     
             
             
             <div class="anniversary-timer">
@@ -150,6 +145,9 @@
                 </div>
                 <div class="countdown-date" id="countdown-date">9 เมษายน 2025</div>
             </div>
+            
+            
+
         </div>
     </div>
     
@@ -159,10 +157,20 @@
    
     
    
-  
+    <div class="music-controls">
+        <div class="music-info">
+            <button class="audio-toggle" id="audioToggle">♪</button>
+            <div class="song-title"></div>
+        </div>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0.7">
+    </div>
     
     
-   
+    <div class="synth-effect">
+        <button class="synth-button" id="synthHeart">♥</button>
+        <button class="synth-button" id="synthStar">✦</button>
+        <button class="synth-button" id="synthChime">♫</button>
+    </div>
     
     
     <div class="love-palette">

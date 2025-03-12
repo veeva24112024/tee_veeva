@@ -555,6 +555,98 @@ body.no-scroll {
     left: 100%;
 }
 
+
+.music-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 1s ease 3s forwards;
+}
+
+.music-controls:hover {
+    transform: translateY(-5px);
+}
+
+.music-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.song-title {
+    font-family: 'Prompt', sans-serif;
+    font-size: 14px;
+    color: var(--white);
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.audio-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(45deg, var(--primary), var(--primary-light));
+    color: var(--white);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.audio-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider {
+    width: 100px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--white);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--white);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    border: none;
+}
+
+
 .fireworks-container {
     position: fixed;
     top: 0;
@@ -732,7 +824,39 @@ body.no-scroll {
 }
 
 
+.synth-effect {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeIn 1s ease 3.5s forwards;
+}
 
+.synth-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.synth-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 71, 120, 0.5);
+    background: var(--primary);
+}
 
 
 .electric-line {
@@ -945,79 +1069,6 @@ body.no-scroll {
 #currentDate {
     display: none;
 }
-/* เพิ่มส่วนนี้ในไฟล์ styles.css */
-.anniversary-date {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 20px;
-    margin-top: 1.5rem;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 25px rgba(255, 71, 120, 0.3);
-    position: relative;
-    z-index: 5;
-    opacity: 0;
-    animation: fadeIn 1s ease 2.7s forwards;
-    width: 90%;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    overflow: hidden;
-    transition: all 0.5s ease;
-}
-
-.anniversary-date:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 71, 120, 0.5);
-}
-
-.anniversary-date::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(60deg, 
-        rgba(255, 255, 255, 0) 20%, 
-        rgba(255, 255, 255, 0.1) 40%, 
-        rgba(255, 255, 255, 0) 60%);
-    transform: rotate(45deg);
-    animation: shimmer 7s infinite linear;
-    z-index: -1;
-}
-
-.special-date {
-    font-family: 'Prompt', sans-serif;
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    font-weight: 700;
-    color: var(--white);
-    text-shadow: 0 0 15px rgba(255, 71, 120, 0.7);
-    text-align: center;
-    margin: 15px 0;
-    position: relative;
-    display: inline-block;
-    z-index: 1;
-    animation: pulsateDate 3s infinite alternate;
-}
-
-.heart-decoration {
-    font-size: 24px;
-    color: var(--primary);
-    margin-top: 5px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    animation: heartbeat 2s infinite;
-}
-
-@keyframes shimmer {
-    0% { transform: rotate(45deg) translateX(-100%); }
-    100% { transform: rotate(45deg) translateX(100%); }
-}
-
-@keyframes pulsateDate {
-    0% { transform: scale(1); text-shadow: 0 0 10px rgba(255, 71, 120, 0.5); }
-    100% { transform: scale(1.05); text-shadow: 0 0 20px rgba(255, 71, 120, 0.8), 0 0 30px rgba(255, 255, 255, 0.5); }
+.music-controls {
+    display: none; 
 }

@@ -804,3 +804,7 @@ body {
         max-height: 30vh;
     }
 }
+
+.audio-controls {
+    display: none;
+}
