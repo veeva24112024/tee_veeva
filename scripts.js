@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const photoDots = document.querySelectorAll('.photo-dot');
     const photoFrames = document.querySelectorAll('.photo-frame');
     const bgMusic = document.getElementById('bgMusic');
-    const audioToggle = document.getElementById('audioToggle');
-    const volumeSlider = document.getElementById('volumeSlider');
+    
+    
     const animatedBg = document.getElementById('animatedBg');
     const loveAxis = document.getElementById('loveAxis');
     const colorOptions = document.querySelectorAll('.color-option');
@@ -19,9 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const heartSound = document.getElementById('heartSound');
     const starSound = document.getElementById('starSound');
     const chimeSound = document.getElementById('chimeSound');
-    const synthHeart = document.getElementById('synthHeart');
-    const synthStar = document.getElementById('synthStar');
-    const synthChime = document.getElementById('synthChime');
+    
     
     let isMuted = false;
     let currentPhotoIndex = 0;
@@ -336,28 +334,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     
-    audioToggle.addEventListener('click', function() {
-        if (isMuted) {
-            bgMusic.volume = volumeSlider.value;
-            audioToggle.textContent = '♪';
-            isMuted = false;
-        } else {
-            bgMusic.volume = 0;
-            audioToggle.textContent = '♪̸';
-            isMuted = true;
-        }
-    });
-    
-    volumeSlider.addEventListener('input', function() {
-        if (!isMuted) {
-            bgMusic.volume = this.value;
-        }
-    });
-    
-    
-    bgMusic.volume = volumeSlider.value;
-    
-   
     function tryPlayMusic() {
         bgMusic.play().catch(function(error) {
             console.log("การเล่นอัตโนมัติอาจถูกบล็อก: ", error);
@@ -368,31 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.addEventListener('click', tryPlayMusic, { once: true });
     
     
-    synthHeart.addEventListener('click', function() {
-        heartSound.currentTime = 0;
-        heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
-        
-       
-        createHeartBurst();
-    });
     
-   
-    synthStar.addEventListener('click', function() {
-        starSound.currentTime = 0;
-        starSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
-        
-        
-        createStarBurst();
-    });
-    
-   
-    synthChime.addEventListener('click', function() {
-        chimeSound.currentTime = 0;
-        chimeSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
-        
-        
-        createChimeBurst();
-    });
 
     
     subtitle.addEventListener('click', function() {
@@ -1111,4 +1063,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateTimeTogether();
     updateCountdown();
+
+// เพิ่ม event listener สำหรับ click บนกล่อง anniversary-date
+const anniversaryDate = document.getElementById('anniversaryDate');
+if (anniversaryDate) {
+    anniversaryDate.addEventListener('click', function() {
+        // เล่นเสียงหัวใจเมื่อคลิก (เหมือนกับที่ทำใน subtitle)
+        if (!isMuted) {
+            heartSound.currentTime = 0;
+            heartSound.volume = 0.5;
+            heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
+        }
+        
+        // สร้างเอฟเฟกต์หัวใจพุ่งออกมา
+        createGrandHeartExplosion();
+    });
+}
+
+
 });
