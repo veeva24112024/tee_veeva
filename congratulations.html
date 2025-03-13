@@ -56,8 +56,8 @@
         <div class="gallery-section">
             <div class="gallery-container">
                 
-                <div class="photo-frame active" style="background-image: url('images/cup2.jpg');"></div>
-                <div class="photo-frame" style="background-image: url('images/cup3.jpg');"></div>
+                <div class="photo-frame active" style="background-image: url('images/cup3.jpg');"></div>
+                <div class="photo-frame" style="background-image: url('images/cup2.jpg');"></div>
                 <div class="photo-frame" style="background-image: url('images/30.jpg');"></div>
              
                 <div class="gallery-frame"></div>
@@ -151,7 +151,61 @@
                 <div class="countdown-date" id="countdown-date">9 เมษายน 2025</div>
             </div>
         </div>
+
+<div class="special-dates-calendar">
+    <div class="timer-title">ปฏิทินวันพิเศษของเรา</div>
+
+    <div class="next-special-date">
+        <h3>วันพิเศษถัดไป : <span id="next-special-date-name"></span></h3>
+        <div class="countdown-container">
+            <div class="countdown-item">
+                <span id="date-countdown-days">00</span>
+                <span class="countdown-label">วัน</span>
+            </div>
+            <div class="countdown-item">
+                <span id="date-countdown-hours">00</span>
+                <span class="countdown-label">ชั่วโมง</span>
+            </div>
+            <div class="countdown-item">
+                <span id="date-countdown-minutes">00</span>
+                <span class="countdown-label">นาที</span>
+            </div>
+            <div class="countdown-item">
+                <span id="date-countdown-seconds">00</span>
+                <span class="countdown-label">วินาที</span>
+            </div>
+        </div>
     </div>
+    
+    
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prev-month" class="calendar-nav">&lt;</button>
+            <h3 id="current-month-year">เดือน ปี</h3>
+            <button id="next-month" class="calendar-nav">&gt;</button>
+        </div>
+        <div class="calendar-weekdays">
+            <div>อา</div>
+            <div>จ</div>
+            <div>อ</div>
+            <div>พ</div>
+            <div>พฤ</div>
+            <div>ศ</div>
+            <div>ส</div>
+        </div>
+        <div class="calendar-days" id="calendar-days">
+          
+        </div>
+    </div>
+    
+   
+    <div class="special-dates-list">
+        <h3>วันสำคัญของเรา</h3>
+        <ul id="special-dates-list">
+           
+        </ul>
+    </div>
+</div>
     
    
     <div class="fireworks-container" id="fireworksContainer"></div>
@@ -185,6 +239,10 @@
         <source src="music/RakTae.mp3" type="audio/mpeg">
         
     </audio>
+
+</div>
+            
+
     
    
     <audio id="heartSound" preload="auto">

@@ -826,14 +826,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
    
     function updateTimeTogether() {
-        // วันที่เริ่มรู้จักกัน (24 พฤศจิกายน 2024 22:34 น.)
+       
         const startDate = new Date(2024, 10, 24, 22, 34, 0);
         const currentDate = new Date();
         
        
         const diff = currentDate - startDate;
         
-        // คำนวณเวลาที่ผ่านไป
+        
         const msInSecond = 1000;
         const msInMinute = msInSecond * 60;
         const msInHour = msInMinute * 60;
@@ -847,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = Math.floor((diff % msInHour) / msInMinute);
         const seconds = Math.floor((diff % msInMinute) / msInSecond);
         
-        // แสดงผล
+        
         document.getElementById('months').textContent = months;
         document.getElementById('days').textContent = days;
         document.getElementById('hours').textContent = hours;
@@ -1064,21 +1064,837 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTimeTogether();
     updateCountdown();
 
-// เพิ่ม event listener สำหรับ click บนกล่อง anniversary-date
+
 const anniversaryDate = document.getElementById('anniversaryDate');
 if (anniversaryDate) {
     anniversaryDate.addEventListener('click', function() {
-        // เล่นเสียงหัวใจเมื่อคลิก (เหมือนกับที่ทำใน subtitle)
+        
         if (!isMuted) {
             heartSound.currentTime = 0;
             heartSound.volume = 0.5;
             heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
         }
         
-        // สร้างเอฟเฟกต์หัวใจพุ่งออกมา
+        
         createGrandHeartExplosion();
     });
 }
 
 
+const specialDates = [
+    { date: '2024-11-24', name: 'วันที่รู้จักกัน', isAnnual: true },
+    { date: '2025-03-09', name: 'วันที่คบกัน', isAnnual: true },
+    { date: '2024-07-01', name: 'วันเกิดวีวา', isAnnual: true },
+    { date: '2024-07-31', name: 'วันเกิดตี๋', isAnnual: true },
+  ];
+
+  
+  const thaiMonths = [
+    'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+    'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+  ];
+
+  
+  let currentDate = new Date();
+  let currentMonth = currentDate.getMonth();
+  let currentYear = currentDate.getFullYear();
+
+  
+  function initSpecialDatesSystem() {
+    const prevMonthBtn = document.getElementById('prev-month');
+    const nextMonthBtn = document.getElementById('next-month');
+    const currentMonthYearElement = document.getElementById('current-month-year');
+    const calendarDaysElement = document.getElementById('calendar-days');
+    const specialDatesListElement = document.getElementById('special-dates-list');
+    
+    
+    const nextSpecialDateNameElement = document.getElementById('next-special-date-name');
+    const countdownDaysElement = document.getElementById('countdown-days-special');
+    const countdownHoursElement = document.getElementById('countdown-hours-special');
+    const countdownMinutesElement = document.getElementById('countdown-minutes-special');
+    const countdownSecondsElement = document.getElementById('countdown-seconds-special');
+    
+    
+    if (prevMonthBtn && nextMonthBtn) {
+      prevMonthBtn.addEventListener('click', function() {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        renderCalendar();
+      });
+      
+      nextMonthBtn.addEventListener('click', function() {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        renderCalendar();
+      });
+    }
+    
+    
+    function isSpecialDay(day, month, year) {
+      const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const exactMatch = specialDates.find(d => d.date === dateString);
+      
+      if (exactMatch) {
+        return exactMatch;
+      }
+      
+      
+      const annualMatches = specialDates.filter(d => d.isAnnual);
+      for (const special of annualMatches) {
+        const specialDate = new Date(special.date);
+        if (day === specialDate.getDate() && month === specialDate.getMonth()) {
+          
+          let name = special.name;
+          if (special.date === '2024-11-24' || special.date === '2025-03-09') {
+            const startYear = special.date.substring(0, 4);
+            const yearDiff = year - parseInt(startYear);
+            if (yearDiff > 0) {
+              name = `${name} (ครบ ${yearDiff} ปี)`;
+            }
+          }
+          return { ...special, name };
+        }
+      }
+      
+      return null;
+    }
+
+    
+    function renderCalendar() {
+      if (!calendarDaysElement || !currentMonthYearElement) return;
+      
+      const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      
+      currentMonthYearElement.textContent = `${thaiMonths[currentMonth]} ${currentYear}`;
+      calendarDaysElement.innerHTML = '';
+      
+      
+      for (let i = 0; i < firstDayOfMonth; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.classList.add('calendar-day', 'empty');
+        calendarDaysElement.appendChild(emptyDay);
+      }
+      
+     
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('calendar-day');
+        dayElement.textContent = day;
+        
+        
+        if (
+          currentYear === currentDate.getFullYear() && 
+          currentMonth === currentDate.getMonth() && 
+          day === currentDate.getDate()
+        ) {
+          dayElement.classList.add('current');
+        }
+        
+        
+        const specialDate = isSpecialDay(day, currentMonth, currentYear);
+        if (specialDate) {
+          dayElement.classList.add('special-date');
+          
+         
+          const tooltip = document.createElement('div');
+          tooltip.classList.add('date-tooltip');
+          tooltip.textContent = specialDate.name;
+          dayElement.appendChild(tooltip);
+          
+          
+          dayElement.addEventListener('click', function() {
+            
+            showSpecialDatePopup(specialDate, `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
+          });
+        }
+        
+        calendarDaysElement.appendChild(dayElement);
+      }
+    }
+    
+    
+    function showSpecialDatePopup(specialDate, dateString) {
+      
+      const existingPopup = document.querySelector('.special-date-popup');
+      if (existingPopup) {
+        existingPopup.remove();
+      }
+      
+     
+      const popup = document.createElement('div');
+      popup.classList.add('special-date-popup');
+      
+      const dateObj = new Date(dateString);
+      const formattedDate = `${dateObj.getDate()} ${thaiMonths[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+      
+      
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      dateObj.setHours(0, 0, 0, 0);
+      
+      const diffTime = dateObj - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      let timeMessage = '';
+      if (diffDays > 0) {
+        timeMessage = `อีก ${diffDays} วัน`;
+      } else if (diffDays < 0) {
+        timeMessage = `ผ่านมาแล้ว ${Math.abs(diffDays)} วัน`;
+      } else {
+        timeMessage = 'วันนี้!';
+      }
+      
+      popup.innerHTML = `
+        <div class="popup-header">
+          <h3>${specialDate.name}</h3>
+          <button class="popup-close">&times;</button>
+        </div>
+        <div class="popup-content">
+          <p class="popup-date">${formattedDate}</p>
+          <p class="popup-time">${timeMessage}</p>
+          <div class="popup-heart"></div>
+        </div>
+      `;
+      
+      
+      popup.querySelector('.popup-close').addEventListener('click', function() {
+        popup.remove();
+      });
+      
+    
+      document.body.appendChild(popup);
+      
+      
+      if (!isMuted && heartSound) {
+        heartSound.currentTime = 0;
+        heartSound.volume = 0.4;
+        heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
+      }
+      
+      
+      document.addEventListener('click', function closePopupOnOutsideClick(e) {
+        if (!popup.contains(e.target) && e.target !== popup) {
+          popup.remove();
+          document.removeEventListener('click', closePopupOnOutsideClick);
+        }
+      });
+    }
+    
+    
+    function renderSpecialDatesList() {
+      if (!specialDatesListElement) return;
+      
+      specialDatesListElement.innerHTML = '';
+      
+      const currentYear = new Date().getFullYear();
+      let allSpecialDates = [];
+      
+      
+      specialDates.forEach(specialDate => {
+        const dateObj = new Date(specialDate.date);
+        
+        if (specialDate.isAnnual) {
+          const baseName = specialDate.name;
+          const originalYear = parseInt(specialDate.date.split('-')[0]);
+          
+         
+          if (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09') {
+           
+            const yearDiff = currentYear - originalYear;
+            let name = baseName;
+            if (yearDiff > 0) {
+              name = `${baseName} (ครบ ${yearDiff} ปี)`;
+            }
+            
+            allSpecialDates.push({
+              date: `${currentYear}-${specialDate.date.substring(5)}`,
+              name: name,
+              isAnnual: true
+            });
+          } else {
+            
+            allSpecialDates.push({
+              date: `${currentYear}-${specialDate.date.substring(5)}`,
+              name: baseName,
+              isAnnual: true
+            });
+          }
+        } else {
+         
+          allSpecialDates.push(specialDate);
+        }
+      });
+      
+      
+      const sortedDates = [...allSpecialDates].sort((a, b) => new Date(a.date) - new Date(b.date));
+      
+      sortedDates.forEach(specialDate => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('special-date-item');
+        
+        const dateObj = new Date(specialDate.date);
+        const formattedDate = `${dateObj.getDate()} ${thaiMonths[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+        
+        listItem.innerHTML = `
+          <span class="special-date-name">${specialDate.name}</span>
+          <span class="special-date-date">${formattedDate}</span>
+        `;
+        
+        
+        listItem.addEventListener('click', function() {
+          showSpecialDatePopup(specialDate, specialDate.date);
+        });
+        
+        specialDatesListElement.appendChild(listItem);
+      });
+    }
+    
+    
+    function updateNextSpecialDateCountdown() {
+      if (!nextSpecialDateNameElement || !countdownDaysElement || 
+          !countdownHoursElement || !countdownMinutesElement || 
+          !countdownSecondsElement) return;
+          
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      
+      
+      let allUpcomingDates = [];
+      
+      
+      specialDates.forEach(specialDate => {
+        const dateObj = new Date(specialDate.date);
+        const month = dateObj.getMonth();
+        const day = dateObj.getDate();
+        
+       
+        const thisYearDate = new Date(currentYear, month, day);
+        
+        if (thisYearDate > now) {
+          const dateString = `${currentYear}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+          
+          
+          let name = specialDate.name;
+          if (specialDate.isAnnual && (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09')) {
+            const originalYear = parseInt(specialDate.date.split('-')[0]);
+            const yearDiff = currentYear - originalYear;
+            if (yearDiff > 0) {
+              name = `${specialDate.name} (ครบ ${yearDiff} ปี)`;
+            }
+          }
+          
+          allUpcomingDates.push({
+            date: dateString,
+            name: name
+          });
+        }
+        
+        
+        if (specialDate.isAnnual) {
+          const nextYearDate = new Date(currentYear + 1, month, day);
+          const dateString = `${currentYear + 1}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+          
+       
+          let name = specialDate.name;
+          if (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09') {
+            const originalYear = parseInt(specialDate.date.split('-')[0]);
+            const yearDiff = (currentYear + 1) - originalYear;
+            if (yearDiff > 0) {
+              name = `${specialDate.name} (ครบ ${yearDiff} ปี)`;
+            }
+          }
+          
+          allUpcomingDates.push({
+            date: dateString,
+            name: name
+          });
+        }
+      });
+      
+    
+      allUpcomingDates.sort((a, b) => new Date(a.date) - new Date(b.date));
+     
+      const upcomingSpecialDates = allUpcomingDates.filter(d => new Date(d.date) > now);
+      
+      if (upcomingSpecialDates.length === 0) {
+        nextSpecialDateNameElement.textContent = 'ไม่มีกำหนดการ';
+        countdownDaysElement.textContent = '--';
+        countdownHoursElement.textContent = '--';
+        countdownMinutesElement.textContent = '--';
+        countdownSecondsElement.textContent = '--';
+        return;
+      }
+      
+      const nextSpecialDate = upcomingSpecialDates[0];
+      const targetDate = new Date(nextSpecialDate.date);
+      
+   
+      const timeRemaining = targetDate - now;
+      
+      if (timeRemaining <= 0) {
+        nextSpecialDateNameElement.textContent = 'วันนี้คือ ' + nextSpecialDate.name + '!';
+        countdownDaysElement.textContent = '00';
+        countdownHoursElement.textContent = '00';
+        countdownMinutesElement.textContent = '00';
+        countdownSecondsElement.textContent = '00';
+        return;
+      }
+      
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      
+      nextSpecialDateNameElement.textContent = nextSpecialDate.name;
+      countdownDaysElement.textContent = String(days).padStart(2, '0');
+      countdownHoursElement.textContent = String(hours).padStart(2, '0');
+      countdownMinutesElement.textContent = String(minutes).padStart(2, '0');
+      countdownSecondsElement.textContent = String(seconds).padStart(2, '0');
+    }
+    
+    
+    renderCalendar();
+    renderSpecialDatesList();
+    updateNextSpecialDateCountdown();
+   
+    setInterval(updateNextSpecialDateCountdown, 1000);
+  }
+
+
+
+
+const calendarSpecialDates = [
+    { date: '2024-11-24', name: 'วันที่รู้จักกัน', isAnnual: true },
+    { date: '2025-03-09', name: 'วันที่คบกัน', isAnnual: true },
+    { date: '2024-07-01', name: 'วันเกิดวีวา', isAnnual: true },
+    { date: '2024-07-31', name: 'วันเกิดตี๋', isAnnual: true },
+];
+
+const calendarThaiMonths = [
+    'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+    'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+];
+
+
+let calendarCurrentDate = new Date();
+let calendarCurrentMonth = calendarCurrentDate.getMonth();
+let calendarCurrentYear = calendarCurrentDate.getFullYear();
+
+
+function initCalendar() {
+    const prevMonthBtn = document.getElementById('prev-month');
+    const nextMonthBtn = document.getElementById('next-month');
+    const currentMonthYearElement = document.getElementById('current-month-year');
+    const calendarDaysElement = document.getElementById('calendar-days');
+    const specialDatesListElement = document.getElementById('special-dates-list');
+    
+  
+    const nextSpecialDateNameElement = document.getElementById('next-special-date-name');
+    const countdownDaysElement = document.getElementById('date-countdown-days');
+    const countdownHoursElement = document.getElementById('date-countdown-hours');
+    const countdownMinutesElement = document.getElementById('date-countdown-minutes');
+    const countdownSecondsElement = document.getElementById('date-countdown-seconds');
+
+   
+    if (!prevMonthBtn || !nextMonthBtn || !currentMonthYearElement || !calendarDaysElement || 
+        !specialDatesListElement || !nextSpecialDateNameElement || !countdownDaysElement || 
+        !countdownHoursElement || !countdownMinutesElement || !countdownSecondsElement) {
+        console.log('ไม่พบองค์ประกอบที่จำเป็นสำหรับปฏิทิน');
+        return;
+    }
+
+
+    renderCalendar();
+    renderSpecialDatesList();
+    updateNextSpecialDateCountdown();
+    
+ 
+    setInterval(updateNextSpecialDateCountdown, 1000);
+
+    prevMonthBtn.addEventListener('click', function() {
+        calendarCurrentMonth--;
+        if (calendarCurrentMonth < 0) {
+            calendarCurrentMonth = 11;
+            calendarCurrentYear--;
+        }
+        renderCalendar();
+        
+       
+        if (!isMuted) {
+            starSound.currentTime = 0;
+            starSound.volume = 0.3;
+            starSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
+        }
+    });
+    
+    nextMonthBtn.addEventListener('click', function() {
+        calendarCurrentMonth++;
+        if (calendarCurrentMonth > 11) {
+            calendarCurrentMonth = 0;
+            calendarCurrentYear++;
+        }
+        renderCalendar();
+        
+     
+        if (!isMuted) {
+            starSound.currentTime = 0;
+            starSound.volume = 0.3;
+            starSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
+        }
+    });
+}
+
+
+function isSpecialDay(day, month, year) {
+    const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const exactMatch = calendarSpecialDates.find(d => d.date === dateString);
+    
+    if (exactMatch) {
+        return exactMatch;
+    }
+
+    const annualMatches = calendarSpecialDates.filter(d => d.isAnnual);
+    for (const special of annualMatches) {
+        const specialDate = new Date(special.date);
+        if (day === specialDate.getDate() && month === specialDate.getMonth()) {
+            
+            let name = special.name;
+            if (special.date === '2024-11-24' || special.date === '2025-03-09') {
+                const startYear = special.date.substring(0, 4);
+                const yearDiff = year - parseInt(startYear);
+                if (yearDiff > 0) {
+                    name = `${name} (ครบ ${yearDiff} ปี)`;
+                }
+            }
+            return { ...special, name };
+        }
+    }
+    
+    return null;
+}
+
+
+function renderCalendar() {
+    const calendarDaysElement = document.getElementById('calendar-days');
+    const currentMonthYearElement = document.getElementById('current-month-year');
+    
+    if (!calendarDaysElement || !currentMonthYearElement) return;
+    
+    const firstDayOfMonth = new Date(calendarCurrentYear, calendarCurrentMonth, 1).getDay();
+    const daysInMonth = new Date(calendarCurrentYear, calendarCurrentMonth + 1, 0).getDate();
+    
+    currentMonthYearElement.textContent = `${calendarThaiMonths[calendarCurrentMonth]} ${calendarCurrentYear}`;
+    calendarDaysElement.innerHTML = '';
+  
+    for (let i = 0; i < firstDayOfMonth; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.classList.add('calendar-day', 'empty');
+        calendarDaysElement.appendChild(emptyDay);
+    }
+    
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('calendar-day');
+        dayElement.textContent = day;
+        
+        const dateString = `${calendarCurrentYear}-${String(calendarCurrentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        
+   
+        if (
+            calendarCurrentYear === calendarCurrentDate.getFullYear() && 
+            calendarCurrentMonth === calendarCurrentDate.getMonth() && 
+            day === calendarCurrentDate.getDate()
+        ) {
+            dayElement.classList.add('current');
+        }
+        
+    
+        const specialDate = isSpecialDay(day, calendarCurrentMonth, calendarCurrentYear);
+        if (specialDate) {
+            dayElement.classList.add('special-date');
+            
+       
+            const tooltip = document.createElement('div');
+            tooltip.classList.add('date-tooltip');
+            tooltip.textContent = specialDate.name;
+            dayElement.appendChild(tooltip);
+            
+         
+            dayElement.addEventListener('click', function() {
+            
+                showSpecialDatePopup(specialDate, dateString);
+                
+             
+                if (!isMuted) {
+                    heartSound.currentTime = 0;
+                    heartSound.volume = 0.5;
+                    heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
+                }
+            });
+        }
+        
+        calendarDaysElement.appendChild(dayElement);
+    }
+}
+
+function showSpecialDatePopup(specialDate, dateString) {
+
+    const existingPopup = document.querySelector('.special-date-popup');
+    if (existingPopup) {
+        existingPopup.remove();
+    }
+    
+
+    const popup = document.createElement('div');
+    popup.classList.add('special-date-popup');
+    
+    const dateObj = new Date(dateString);
+    const formattedDate = `${dateObj.getDate()} ${calendarThaiMonths[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    dateObj.setHours(0, 0, 0, 0);
+    
+    const diffTime = dateObj - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    let timeMessage = '';
+    if (diffDays > 0) {
+        timeMessage = `อีก ${diffDays} วัน`;
+    } else if (diffDays < 0) {
+        timeMessage = `ผ่านมาแล้ว ${Math.abs(diffDays)} วัน`;
+    } else {
+        timeMessage = 'วันนี้!';
+    }
+    
+    popup.innerHTML = `
+        <div class="popup-header">
+            <h3>${specialDate.name}</h3>
+            <button class="popup-close">&times;</button>
+        </div>
+        <div class="popup-content">
+            <p class="popup-date">${formattedDate}</p>
+            <p class="popup-time">${timeMessage}</p>
+            <div class="popup-heart"></div>
+        </div>
+    `;
+
+    popup.querySelector('.popup-close').addEventListener('click', function() {
+        popup.remove();
+    });
+    
+  
+    document.body.appendChild(popup);
+    
+  
+    popup.style.opacity = '0';
+    popup.style.transition = 'all 0.3s ease';
+    setTimeout(() => {
+        popup.style.opacity = '1';
+    }, 10);
+    
+    
+    document.addEventListener('click', function closePopupOnOutsideClick(e) {
+        if (!popup.contains(e.target) && e.target !== popup) {
+            popup.remove();
+            document.removeEventListener('click', closePopupOnOutsideClick);
+        }
+    });
+}
+
+
+function renderSpecialDatesList() {
+    const specialDatesListElement = document.getElementById('special-dates-list');
+    if (!specialDatesListElement) return;
+    
+    specialDatesListElement.innerHTML = '';
+    
+    const currentYear = new Date().getFullYear();
+    let allSpecialDates = [];
+    
+    
+    calendarSpecialDates.forEach(specialDate => {
+        const dateObj = new Date(specialDate.date);
+        
+        if (specialDate.isAnnual) {
+            const baseName = specialDate.name;
+            const originalYear = parseInt(specialDate.date.split('-')[0]);
+            
+            
+            if (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09') {
+                
+                const yearDiff = currentYear - originalYear;
+                let name = baseName;
+                if (yearDiff > 0) {
+                    name = `${baseName} (ครบ ${yearDiff} ปี)`;
+                }
+                
+                allSpecialDates.push({
+                    date: `${currentYear}-${specialDate.date.substring(5)}`,
+                    name: name,
+                    isAnnual: true
+                });
+            } else {
+                
+                allSpecialDates.push({
+                    date: `${currentYear}-${specialDate.date.substring(5)}`,
+                    name: baseName,
+                    isAnnual: true
+                });
+            }
+        } else {
+         
+            allSpecialDates.push(specialDate);
+        }
+    });
+    
+    
+    const sortedDates = [...allSpecialDates].sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    sortedDates.forEach(specialDate => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('special-date-item');
+        
+        const dateObj = new Date(specialDate.date);
+        const formattedDate = `${dateObj.getDate()} ${calendarThaiMonths[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+        
+        listItem.innerHTML = `
+            <span class="special-date-name">${specialDate.name}</span>
+            <span class="special-date-date">${formattedDate}</span>
+        `;
+        
+       
+        listItem.addEventListener('click', function() {
+            showSpecialDatePopup(specialDate, specialDate.date);
+            
+          
+            if (!isMuted) {
+                heartSound.currentTime = 0;
+                heartSound.volume = 0.4;
+                heartSound.play().catch(e => console.log('เล่นเสียงไม่สำเร็จ:', e));
+            }
+        });
+        
+        specialDatesListElement.appendChild(listItem);
+    });
+}
+
+
+function updateNextSpecialDateCountdown() {
+    const nextSpecialDateNameElement = document.getElementById('next-special-date-name');
+    const countdownDaysElement = document.getElementById('date-countdown-days');
+    const countdownHoursElement = document.getElementById('date-countdown-hours');
+    const countdownMinutesElement = document.getElementById('date-countdown-minutes');
+    const countdownSecondsElement = document.getElementById('date-countdown-seconds');
+    
+    if (!nextSpecialDateNameElement || !countdownDaysElement || 
+        !countdownHoursElement || !countdownMinutesElement || !countdownSecondsElement) return;
+    
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    
+   
+    let allUpcomingDates = [];
+    
+    
+    calendarSpecialDates.forEach(specialDate => {
+        const dateObj = new Date(specialDate.date);
+        const month = dateObj.getMonth();
+        const day = dateObj.getDate();
+        
+        
+        const thisYearDate = new Date(currentYear, month, day);
+        if (thisYearDate > now) {
+            const dateString = `${currentYear}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            
+           
+            let name = specialDate.name;
+            if (specialDate.isAnnual && (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09')) {
+                const originalYear = parseInt(specialDate.date.split('-')[0]);
+                const yearDiff = currentYear - originalYear;
+                if (yearDiff > 0) {
+                    name = `${specialDate.name} (ครบ ${yearDiff} ปี)`;
+                }
+            }
+            
+            allUpcomingDates.push({
+                date: dateString,
+                name: name
+            });
+        }
+        
+        
+        if (specialDate.isAnnual) {
+            const nextYearDate = new Date(currentYear + 1, month, day);
+            const dateString = `${currentYear + 1}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            
+            
+            let name = specialDate.name;
+            if (specialDate.date === '2024-11-24' || specialDate.date === '2025-03-09') {
+                const originalYear = parseInt(specialDate.date.split('-')[0]);
+                const yearDiff = (currentYear + 1) - originalYear;
+                if (yearDiff > 0) {
+                    name = `${specialDate.name} (ครบ ${yearDiff} ปี)`;
+                }
+            }
+            
+            allUpcomingDates.push({
+                date: dateString,
+                name: name
+            });
+        }
+    });
+    
+
+    allUpcomingDates.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    
+    const upcomingSpecialDates = allUpcomingDates.filter(d => new Date(d.date) > now);
+    
+    if (upcomingSpecialDates.length === 0) {
+        nextSpecialDateNameElement.textContent = 'ไม่มีกำหนดการ';
+        countdownDaysElement.textContent = '--';
+        countdownHoursElement.textContent = '--';
+        countdownMinutesElement.textContent = '--';
+        countdownSecondsElement.textContent = '--';
+        return;
+    }
+    
+    const nextSpecialDate = upcomingSpecialDates[0];
+    const targetDate = new Date(nextSpecialDate.date);
+    
+    
+    const timeRemaining = targetDate - now;
+    
+    if (timeRemaining <= 0) {
+        nextSpecialDateNameElement.textContent = 'วันนี้คือ ' + nextSpecialDate.name + '!';
+        countdownDaysElement.textContent = '00';
+        countdownHoursElement.textContent = '00';
+        countdownMinutesElement.textContent = '00';
+        countdownSecondsElement.textContent = '00';
+        return;
+    }
+    
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    
+    nextSpecialDateNameElement.textContent = nextSpecialDate.name;
+    countdownDaysElement.textContent = String(days).padStart(2, '0');
+    countdownHoursElement.textContent = String(hours).padStart(2, '0');
+    countdownMinutesElement.textContent = String(minutes).padStart(2, '0');
+    countdownSecondsElement.textContent = String(seconds).padStart(2, '0');
+}
+
+
+setTimeout(initCalendar, 1000); 
 });
