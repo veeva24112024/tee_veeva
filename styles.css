@@ -1784,3 +1784,13 @@ body.no-scroll {
         font-size: 0.7rem;
     }
 }
+
+.light-beam {
+    /* เพิ่มบรรทัดนี้เข้าไป */
+    display: none;
+    
+    /* หรือใช้แบบนี้ */
+    opacity: 0;
+
+    /* code อื่นๆ ยังคงอยู่... */
+}
