@@ -1022,7 +1022,7 @@ body.no-scroll {
     100% { transform: scale(1.05); text-shadow: 0 0 20px rgba(255, 71, 120, 0.8), 0 0 30px rgba(255, 255, 255, 0.5); }
 }
 
-/* ระบบเช็คอินวันพิเศษ */
+
 .special-dates {
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
@@ -1046,7 +1046,7 @@ body.no-scroll {
     font-family: 'Mali', cursive;
   }
   
-  /* ส่วนนับถอยหลัง */
+  
   .next-special-date {
     text-align: center;
     margin-bottom: 30px;
@@ -1095,7 +1095,7 @@ body.no-scroll {
     margin-top: 5px;
   }
   
-  /* ปฏิทิน */
+
   .calendar-container {
     margin-bottom: 30px;
     background-color: rgba(255, 255, 255, 0.1);
@@ -1207,7 +1207,7 @@ body.no-scroll {
     cursor: default;
   }
   
-  /* ทูลทิปสำหรับวันพิเศษ */
+ 
   .date-tooltip {
     position: absolute;
     bottom: 100%;
@@ -1231,7 +1231,7 @@ body.no-scroll {
     bottom: calc(100% + 5px);
   }
   
-  /* รายการวันพิเศษ */
+  
   .special-dates-list {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
@@ -1280,7 +1280,7 @@ body.no-scroll {
     opacity: 0.9;
   }
   
-  /* ป๊อปอัพวันพิเศษ */
+
   .special-date-popup {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 200, 210, 0.9));
     border-radius: 20px;
@@ -1366,7 +1366,7 @@ body.no-scroll {
     }
   }
 
-  /* --- เพิ่มสไตล์สำหรับปฏิทินวันพิเศษ --- */
+
 
 .special-dates-calendar {
     background: rgba(255, 255, 255, 0.12);
@@ -1610,7 +1610,7 @@ body.no-scroll {
     background: none;
 }
 
-/* ทูลทิปสำหรับวันพิเศษ */
+
 .date-tooltip {
     position: absolute;
     bottom: 100%;
