@@ -1,10 +1,10 @@
-// Initialize AOS (Animate On Scroll) library
+
 AOS.init({ duration: 1000, once: true });
 
-// Variables to track timer values
+
 let prevMonths = 0, prevDays = 0, prevHours = 0, prevMinutes = 0, prevSeconds = 0;
 
-// Function to update the time counter
+
 function updateTimer() {
     const startDate = new Date('2024-11-24T22:34:00');
     const now = new Date();
@@ -29,7 +29,7 @@ function updateTimer() {
     prevSeconds = seconds;
 }
 
-// Update a number element with animation if changed
+
 function updateNumber(id, newValue, prevValue) {
     const element = document.getElementById(id);
     if (element) {
@@ -41,7 +41,7 @@ function updateNumber(id, newValue, prevValue) {
     }
 }
 
-// Create a floating heart animation
+
 function createHeart() {
     const heart = document.createElement('div');
     heart.className = 'floating-heart';
@@ -53,7 +53,7 @@ function createHeart() {
     setTimeout(() => heart.remove(), 5000);
 }
 
-// Show memory popup with content
+
 function showMemory(id) {
     const popup = document.getElementById('memoryPopup');
     const content = document.getElementById('memoryContent');
@@ -67,16 +67,16 @@ function showMemory(id) {
     popup.style.display = 'block';
 }
 
-// Close popup
+
 function closePopup() {
     document.getElementById('memoryPopup').style.display = 'none';
 }
 
-// "Yes" button action
+
 function sayYes() {
     localStorage.setItem('saidYes', 'true');
     
-    // Create multiple heart animations
+    
     for (let i = 0; i < 150; i++) {
         setTimeout(() => {
             const heart = document.createElement('div');
@@ -91,7 +91,7 @@ function sayYes() {
         }, i * 30);
     }
     
-    // Create firework animations
+    
     for (let i = 0; i < 20; i++) {
         setTimeout(() => {
             const firework = document.createElement('div');
@@ -103,7 +103,7 @@ function sayYes() {
         }, i * 50);
     }
     
-    // Create falling star animations
+    
     for (let i = 0; i < 30; i++) {
         setTimeout(() => {
             const star = document.createElement('div');
@@ -115,16 +115,16 @@ function sayYes() {
         }, i * 50);
     }
     
-    // Redirect to congratulations page using URL obfuscation
+   
     setTimeout(() => {
-        // Encode the URL to hide the actual destination
+        
         const encodedUrl = btoa('congratulations.html');
-        // Use the encoded URL and decode it when redirecting
+        
         window.location.href = decodeURL(encodedUrl);
     }, 2000);
 }
 
-// "No" button action
+
 function moveButton(btn) {
     const x = Math.random() * (window.innerWidth - btn.offsetWidth);
     const y = Math.random() * (window.innerHeight - btn.offsetHeight);
@@ -132,7 +132,7 @@ function moveButton(btn) {
     btn.style.left = x + 'px';
     btn.style.top = y + 'px';
     
-    // Add sad face animation
+    
     const sadFace = document.createElement('div');
     sadFace.innerHTML = '😢';
     sadFace.style.position = 'absolute';
@@ -145,7 +145,7 @@ function moveButton(btn) {
     setTimeout(() => sadFace.remove(), 1000);
 }
 
-// Heart explosion animation
+
 function explodeHearts() {
     for (let i = 0; i < 50; i++) {
         const heart = document.createElement('div');
@@ -160,7 +160,7 @@ function explodeHearts() {
     }
 }
 
-// Show/hide puzzle answer
+
 function solvePuzzle(card) {
     const answer = card.querySelector('.puzzle-text');
     if (answer) {
@@ -168,7 +168,7 @@ function solvePuzzle(card) {
     }
 }
 
-// Show rainbow animation
+
 function showRainbow(container) {
     const rainbow = container.querySelector('.rainbow');
     if (rainbow && !rainbow.classList.contains('visible')) {
@@ -176,17 +176,17 @@ function showRainbow(container) {
     }
 }
 
-// Open gate animation
+
 function openGate(gate) {
     if (!gate.classList.contains('opened')) {
         gate.classList.add('opened');
     }
 }
 
-// Star creation interval
+
 let starInterval;
 
-// Create stars in the starry sky
+
 function createStar(event, sky) {
     const rect = sky.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -212,13 +212,13 @@ function createStar(event, sky) {
     }
 }
 
-// Stop automatic star creation
+
 function stopStars(sky) {
     clearInterval(starInterval);
     starInterval = null;
 }
 
-// Release balloons animation
+
 function releaseBalloons() {
     const messages = ["รักวีวานะ", "", "ตี๋ ♥ วีวา "];
     const colors = ['#ff4b6e', '#ffeb3b', '#42a5f5', '#66bb6a', '#ab47bc', '#ff7043'];
@@ -239,7 +239,7 @@ function releaseBalloons() {
     }
 }
 
-// Add custom style for balloon strings
+
 document.head.insertAdjacentHTML('beforeend', `
     <style>
         .balloon::after {
@@ -248,23 +248,23 @@ document.head.insertAdjacentHTML('beforeend', `
     </style>
 `);
 
-// Initialize everything when page loads
+
 function initialize() {
-    // Start time counter
+    
     updateTimer();
     setInterval(updateTimer, 1000);
     
-    // Create floating hearts periodically
+   
     setInterval(createHeart, 500);
     
-    // Play background music
+   
     const bgMusic = document.getElementById('bgMusic');
     bgMusic.play().catch(error => {
         console.log("Autoplay prevented:", error);
         document.addEventListener('click', () => bgMusic.play(), { once: true });
     });
     
-    // Back to top button functionality
+   
     const backToTopBtn = document.getElementById('backToTop');
     if (backToTopBtn) {
         window.addEventListener('scroll', () => {
@@ -280,7 +280,7 @@ function initialize() {
         });
     }
     
-    // Create periodic falling stars in the final question section
+    
     setInterval(() => {
         const finalQuestion = document.querySelector('.final-question');
         if (finalQuestion) {
@@ -293,27 +293,27 @@ function initialize() {
     }, 2000);
 }
 
-// URL obfuscation functions
+
 function encodeURL(url) {
-    // Simple encoding using base64
+    
     return btoa(url);
 }
 
 function decodeURL(encodedUrl) {
-    // Decode the base64 encoded URL
+    
     return atob(encodedUrl);
 }
 
-// URL history obfuscation
+
 history.pushState = (function(originalPushState) {
     return function(state, title, url) {
-        // Encode URL for history
+        
         const encodedUrl = encodeURL(url);
         return originalPushState.call(this, state, title, encodedUrl);
     };
 })(history.pushState);
 
-// Handle all links on the page to use obfuscated URLs
+
 function obfuscateLinks() {
     const links = document.getElementsByTagName('a');
     for (let i = 0; i < links.length; i++) {
@@ -332,7 +332,7 @@ function obfuscateLinks() {
     }
 }
 
-// Run initialization when window loads
+
 window.addEventListener('load', function() {
     initialize();
     obfuscateLinks();

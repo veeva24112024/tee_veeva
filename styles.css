@@ -945,7 +945,7 @@ body.no-scroll {
 #currentDate {
     display: none;
 }
-/* เพิ่มส่วนนี้ในไฟล์ styles.css */
+
 .anniversary-date {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
@@ -1412,7 +1412,7 @@ body.no-scroll {
     z-index: -1;
 }
 
-/* ส่วนนับถอยหลัง */
+
 .next-special-date {
     text-align: center;
     margin-bottom: 25px;
@@ -1473,7 +1473,7 @@ body.no-scroll {
     font-family: 'Prompt', sans-serif;
 }
 
-/* ปฏิทิน */
+
 .calendar-container {
     margin-bottom: 25px;
     background-color: rgba(255, 255, 255, 0.1);
@@ -1635,7 +1635,7 @@ body.no-scroll {
     bottom: calc(100% + 5px);
 }
 
-/* รายการวันพิเศษ */
+
 .special-dates-list {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
@@ -1697,7 +1697,7 @@ body.no-scroll {
     font-family: 'Prompt', sans-serif;
 }
 
-/* สไตล์สำหรับป๊อปอัพ */
+
 .special-date-popup {
     position: fixed;
     top: 50%;
@@ -1758,7 +1758,7 @@ body.no-scroll {
     animation: heartbeat 1.5s infinite;
 }
 
-/* รองรับการแสดงผลบนอุปกรณ์มือถือ */
+
 @media (max-width: 768px) {
     .countdown-container {
         flex-wrap: wrap;
@@ -1786,20 +1786,20 @@ body.no-scroll {
 }
 
 .light-beam {
-    /* เพิ่มบรรทัดนี้เข้าไป */
+
     display: none;
     
-    /* หรือใช้แบบนี้ */
+
     opacity: 0;
 
-    /* code อื่นๆ ยังคงอยู่... */
+ 
 }
 
 .anniversary-timer {
     display: none;
 }
 
-/**/
+
 .celebration-mode .background {
     background: linear-gradient(45deg, #FFD700, #FF69B4, #00CED1);
     animation: rainbowGlow 5s infinite;

@@ -254,8 +254,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     function updateTimeTogether() {
-        // วันที่เริ่มรู้จักกัน (24 พฤศจิกายน 2024 22:34 น.)
-        const startDate = new Date(2024, 10, 24, 22, 34, 0); // เดือนใน JavaScript เริ่มจาก 0 (มกราคม = 0)
+       
+        const startDate = new Date(2024, 10, 24, 22, 34, 0); 
         const currentDate = new Date();
         
         
@@ -289,6 +289,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateTimeTogether();
     
-    // เริ่มการทำงาน
+    
     startAutoSlide();
 });
