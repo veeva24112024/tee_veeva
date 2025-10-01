@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>จากใจตี๋ถึงวีวา</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Sriracha&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="enhanced.css">
     <style>
         body {
             margin: 0;
@@ -810,7 +811,7 @@
         
         <div class="response-buttons">
             <button class="response-button yes-button" id="yesButton">ไปต่อ ♥</button>
-            <button class="response-button no-button" id="noButton">ขอคิดดูก่อน</button>
+            <button class="response-button no-button" id="noButton" style="font-weight: bold; color: white;">ขอคิดดูก่อน</button>
         </div>
     </div>
 
@@ -919,6 +920,11 @@
     <div class="spinning-heart" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
     <div class="spinning-heart" style="top: 70%; left: 80%; animation-delay: 4s;"></div>
 
+    <script src="enhanced.js"></script>
+    <script src="theme-switcher.js"></script>
+    <script src="theme-fix-v2.js"></script>
+    <link rel="stylesheet" href="carnival-features.css">
+    <script src="carnival-features.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.slide');
