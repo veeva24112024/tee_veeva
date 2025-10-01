@@ -6,7 +6,7 @@ let prevMonths = 0, prevDays = 0, prevHours = 0, prevMinutes = 0, prevSeconds = 
 
 
 function updateTimer() {
-    const startDate = new Date('2024-11-24T22:34:00');
+    const startDate = new Date('2024-11-24T22:32:00');
     const now = new Date();
     const diff = now - startDate;
 
