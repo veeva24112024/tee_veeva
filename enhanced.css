@@ -237,18 +237,16 @@
 }
 
 .loading-heart-item:nth-child(1) { animation-delay: 0s; }
-.loading-heart-item:nth-child(2) { animation-delay: 0.2s; }
-.loading-heart-item:nth-child(3) { animation-delay: 0.4s; }
-.loading-heart-item:nth-child(4) { animation-delay: 0.6s; }
-.loading-heart-item:nth-child(5) { animation-delay: 0.8s; }
+.loading-heart-item:nth-child(2) { animation-delay: 0.15s; }
+.loading-heart-item:nth-child(3) { animation-delay: 0.3s; }
 
 @keyframes heartBounce {
     0%, 100% {
         transform: scale(1) translateY(0);
-        opacity: 0.3;
+        opacity: 0.5;
     }
     50% {
-        transform: scale(1.5) translateY(-30px);
+        transform: scale(1.3) translateY(-20px);
         opacity: 1;
     }
 }
@@ -571,81 +569,187 @@
     }
 }
 
-/* ========== Fireflies (Glowing Flying Lights) ========== */
+/* ========== Fireflies (Glowing Flying Lights) - โครงสร้างใหม่สมจริง ========== */
 .firefly {
     position: fixed;
-    width: 20px;
-    height: 16px;
+    width: 60px;
+    height: 24px;
     pointer-events: none;
     z-index: 9996;
     animation: fireflyFloat 15s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
     transform: scale(var(--firefly-scale, 1));
+    filter: brightness(1.15) contrast(1.1);
 }
 
+/* หัว */
+.firefly::before {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 4px;
+    left: 50%;
+    top: 2px;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(60, 40, 20, 1), rgba(40, 25, 10, 1));
+    border-radius: 50% 50% 30% 30%;
+    z-index: 3;
+}
+
+/* ตัว - แบ่งเป็น 3 ส่วน */
 .firefly-body {
     position: absolute;
-    width: 8px;
-    height: 14px;
+    width: 7px;
+    height: 18px;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(180deg,
-        rgba(80, 50, 20, 1) 0%,
-        rgba(90, 55, 25, 1) 30%,
-        rgba(101, 67, 33, 1) 70%,
-        rgba(180, 140, 0, 0.9) 82%,
-        rgba(255, 215, 0, 1) 90%,
-        rgba(255, 255, 100, 1) 100%
-    );
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    top: 4px;
+    transform: translateX(-50%);
     z-index: 2;
-    animation: bodyWiggle 0.3s ease-in-out infinite;
+    animation: bodyWiggle 0.4s ease-in-out infinite;
 }
 
-.firefly-glow {
+/* ตัวแปรสำหรับความกว้างตัว */
+:root {
+    --firefly-body-width: 7px;
+}
+
+/* ส่วนหน้าอก */
+.firefly-body::before {
+    content: '';
     position: absolute;
-    width: 144%;
-    height: 48%;
-    bottom: -12%;
+    width: 6px;
+    height: 6px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
-    background: radial-gradient(circle,
-        rgba(255, 215, 0, 1) 0%,
-        rgba(255, 200, 0, 0.8) 20%,
-        rgba(255, 215, 0, 0.4) 50%,
-        rgba(255, 215, 0, 0) 70%);
-    border-radius: 50%;
-    animation: fireflyGlowPulse 1.8s ease-in-out infinite;
-    box-shadow:
-        0 0 20px rgba(255, 215, 0, 1),
-        0 0 40px rgba(255, 215, 0, 0.7),
-        0 0 60px rgba(255, 215, 0, 0.4),
-        0 0 80px rgba(255, 215, 0, 0.2);
+    background: linear-gradient(180deg,
+        rgba(80, 50, 25, 1) 0%,
+        rgba(70, 45, 20, 1) 100%
+    );
+    border-radius: 40% 40% 35% 35%;
+    box-shadow: inset 0 1px 1px rgba(100, 60, 30, 0.5);
 }
 
-.firefly-wing-left,
-.firefly-wing-right {
+/* ส่วนท้อง - มี segment สีน้ำตาลและสีทอง */
+.firefly-body::after {
+    content: '';
     position: absolute;
-    width: 10px;
-    height: 10px;
-    top: 2px;
-    background: radial-gradient(ellipse at center,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(240, 240, 255, 0.3) 40%,
-        rgba(200, 200, 220, 0.1) 70%,
-        rgba(150, 150, 180, 0) 100%
+    width: 7px;
+    height: 12px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background:
+        linear-gradient(180deg,
+            rgba(90, 60, 30, 1) 0%,
+            rgba(100, 70, 35, 1) 25%,
+            rgba(110, 75, 35, 1) 50%,
+            rgba(120, 85, 40, 1) 65%,
+            transparent 65%
+        ),
+        linear-gradient(180deg,
+            transparent 0%,
+            transparent 65%,
+            rgba(200, 160, 30, 1) 65%,
+            rgba(230, 190, 40, 1) 75%,
+            rgba(255, 215, 0, 1) 85%,
+            rgba(255, 240, 100, 1) 100%
+        );
+    border-radius: 45% 45% 50% 50% / 40% 40% 60% 60%;
+    box-shadow:
+        inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+        inset 0 2px 2px rgba(150, 100, 50, 0.3);
+    animation: abdomenGoldenGlow 1.5s ease-in-out infinite;
+}
+
+/* กระพริบส่วนทองที่ท้อง - แสงออกจากจุดนี้ */
+@keyframes abdomenGoldenGlow {
+    0%, 100% {
+        filter: brightness(1) drop-shadow(0 0 0px transparent);
+    }
+    50% {
+        filter: brightness(2) drop-shadow(0 0 15px rgba(255, 215, 0, 1)) drop-shadow(0 0 25px rgba(255, 240, 100, 0.8));
+    }
+}
+
+/* แสงเรืองแสง - ออกมาจากส่วนทองที่ท้อง (เพิ่มขนาด 20%) */
+.firefly-glow {
+    position: absolute;
+    width: 19.2px;
+    height: 12px;
+    bottom: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse,
+        rgba(255, 240, 100, 0.9) 0%,
+        rgba(255, 220, 50, 0.7) 15%,
+        rgba(255, 215, 0, 0.5) 30%,
+        rgba(255, 200, 0, 0.3) 50%,
+        rgba(255, 215, 0, 0.15) 70%,
+        rgba(255, 215, 0, 0) 100%
     );
     border-radius: 50%;
     z-index: 1;
-    opacity: 0.6;
+    animation: fireflyGlowPulse 1.5s ease-in-out infinite;
+}
+
+/* ปีก - ออกแบบใหม่ให้เรียวยาวตามแกน X (ลดขนาดอีก 20% และติดตัวเพิ่ม 50%) */
+.firefly-wing-left,
+.firefly-wing-right {
+    position: absolute;
+    width: 15.68px;
+    height: 4.48px;
+    top: 7px;
+    z-index: 0;
+    opacity: 0.88;
+    animation: wingFlap 0.12s ease-in-out infinite alternate;
+    box-shadow:
+        inset 0 0 3px rgba(255, 255, 255, 0.95),
+        inset 0 0.5px 1px rgba(200, 230, 255, 0.7),
+        0 0 4px rgba(255, 255, 255, 0.6),
+        0 1px 3px rgba(150, 180, 200, 0.3);
+    border: 0.3px solid rgba(255, 255, 255, 0.5);
 }
 
 .firefly-wing-left {
-    left: -4px;
+    left: 10px;
+    transform-origin: 100% 50%;
+    background: linear-gradient(90deg,
+        rgba(180, 210, 240, 0) 0%,
+        rgba(200, 225, 245, 0.15) 8%,
+        rgba(220, 235, 250, 0.35) 20%,
+        rgba(230, 242, 255, 0.55) 35%,
+        rgba(240, 248, 255, 0.75) 55%,
+        rgba(248, 252, 255, 0.88) 75%,
+        rgba(255, 255, 255, 0.95) 100%
+    );
+    border-radius: 70% 30% 30% 70% / 45% 45% 55% 55%;
 }
 
 .firefly-wing-right {
-    right: -4px;
+    right: 10px;
+    transform-origin: 0% 50%;
+    animation-delay: 0.06s;
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(248, 252, 255, 0.88) 25%,
+        rgba(240, 248, 255, 0.75) 45%,
+        rgba(230, 242, 255, 0.55) 65%,
+        rgba(220, 235, 250, 0.35) 80%,
+        rgba(200, 225, 245, 0.15) 92%,
+        rgba(180, 210, 240, 0) 100%
+    );
+    border-radius: 30% 70% 70% 30% / 45% 45% 55% 55%;
+}
+
+@keyframes wingFlap {
+    0% {
+        transform: scaleX(0.92) scaleY(1.08) translateY(0.5px) rotate(-2deg);
+        opacity: 0.82;
+    }
+    100% {
+        transform: scaleX(1.08) scaleY(0.92) translateY(-0.5px) rotate(2deg);
+        opacity: 0.94;
+    }
 }
 
 @keyframes fireflyFloat {
@@ -682,41 +786,36 @@
 
 @keyframes fireflyGlowPulse {
     0%, 100% {
-        opacity: 0.6;
-        filter: brightness(0.8);
-        transform: translateX(-50%) scale(0.9);
-    }
-    15% {
-        opacity: 1;
-        filter: brightness(1.3);
-        transform: translateX(-50%) scale(1.05);
-    }
-    30% {
-        opacity: 0.7;
-        filter: brightness(0.9);
-        transform: translateX(-50%) scale(0.95);
+        opacity: 0.4;
+        transform: translateX(-50%) scale(0.85);
+        box-shadow:
+            0 0 15px rgba(255, 215, 0, 0.5),
+            0 0 25px rgba(255, 215, 0, 0.3);
     }
     50% {
         opacity: 1;
-        filter: brightness(1.5);
-        transform: translateX(-50%) scale(1.1);
-    }
-    65% {
-        opacity: 0.8;
-        filter: brightness(1);
-        transform: translateX(-50%) scale(0.98);
+        transform: translateX(-50%) scale(1.25);
+        box-shadow:
+            0 0 30px rgba(255, 255, 150, 1),
+            0 0 50px rgba(255, 240, 100, 1),
+            0 0 70px rgba(255, 215, 0, 0.8),
+            0 0 100px rgba(255, 215, 0, 0.5),
+            0 0 130px rgba(255, 200, 0, 0.3);
     }
 }
 
 @keyframes bodyWiggle {
     0%, 100% {
-        transform: translate(-50%, -50%) rotate(0deg);
+        transform: translateX(-50%) rotate(0deg);
     }
     25% {
-        transform: translate(-50%, -50%) rotate(-1deg);
+        transform: translateX(-50%) rotate(-1.5deg);
+    }
+    50% {
+        transform: translateX(-50%) rotate(0deg);
     }
     75% {
-        transform: translate(-50%, -50%) rotate(1deg);
+        transform: translateX(-50%) rotate(1.5deg);
     }
 }
 
